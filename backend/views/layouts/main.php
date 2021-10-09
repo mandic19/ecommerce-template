@@ -44,7 +44,7 @@ AppAsset::register($this);
                     <!-- menu prile quick info -->
                     <div class="profile">
                         <div class="profile_pic">
-                            <img src="img/dummy_avatar.jpg" alt="..." class="img-circle profile_img">
+                            <img src="/img/dummy_avatar.jpg" alt="..." class="img-circle profile_img">
                         </div>
                         <div class="profile_info">
                             <span>Welcome,</span>
@@ -165,7 +165,7 @@ AppAsset::register($this);
                             <li class="">
                                 <a href="javascript:void(0);" class="user-profile dropdown-toggle" data-toggle="dropdown"
                                    aria-expanded="false">
-                                    <img src="img/dummy_avatar.jpg" alt="">John Doe
+                                    <img src="/img/dummy_avatar.jpg" alt="">John Doe
                                     <span class=" fa fa-angle-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -199,7 +199,7 @@ AppAsset::register($this);
                                     <li>
                                         <a>
                                     <span class="image">
-                                        <img src="img/dummy_avatar.jpg" alt="Profile Image"/>
+                                        <img src="/img/dummy_avatar.jpg" alt="Profile Image"/>
                                     </span>
                                             <span>
                                         <span>John Smith</span>
@@ -213,7 +213,7 @@ AppAsset::register($this);
                                     <li>
                                         <a>
                       <span class="image">
-                                        <img src="img/dummy_avatar.jpg" alt="Profile Image"/>
+                                        <img src="/img/dummy_avatar.jpg" alt="Profile Image"/>
                                     </span>
                                             <span>
                                         <span>John Smith</span>
@@ -227,7 +227,7 @@ AppAsset::register($this);
                                     <li>
                                         <a>
                       <span class="image">
-                                        <img src="img/dummy_avatar.jpg" alt="Profile Image"/>
+                                        <img src="/img/dummy_avatar.jpg" alt="Profile Image"/>
                                     </span>
                                             <span>
                                         <span>John Smith</span>
@@ -241,7 +241,7 @@ AppAsset::register($this);
                                     <li>
                                         <a>
                       <span class="image">
-                                        <img src="img/dummy_avatar.jpg" alt="Profile Image"/>
+                                        <img src="/img/dummy_avatar.jpg" alt="Profile Image"/>
                                     </span>
                                             <span>
                                         <span>John Smith</span>
