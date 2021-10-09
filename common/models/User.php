@@ -2,7 +2,9 @@
 
 namespace common\models;
 
+use common\components\behaviors\RbacBehavior;
 use common\components\orm\ActiveRecord;
+use common\helpers\RbacHelper;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
@@ -13,6 +15,7 @@ use yii\web\IdentityInterface;
  *
  * @property integer $id
  * @property string $username
+ * @property string $role
  * @property string $password_hash
  * @property string $password_reset_token
  * @property string $verification_token
@@ -37,6 +40,8 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
 
+    private $_role;
+
     /**
      * {@inheritdoc}
      */
@@ -52,6 +57,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             TimestampBehavior::className(),
+            'RbacBehavior' => RbacBehavior::class
         ];
     }
 
@@ -62,7 +68,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             [['email', 'first_name', 'last_name', 'username'], 'required'],
-            [['address', 'city', 'country', 'zip'], 'string'],
+            [['first_name', 'last_name', 'username', 'role', 'address', 'city', 'country', 'zip'], 'string'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE]],
             [['email'], 'email'],
@@ -251,5 +257,24 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    public function hasBackendAccess()
+    {
+        return !empty($this->role);
+    }
+
+    public function getRole()
+    {
+        if ($this->_role) {
+            return $this->_role;
+        }
+
+        if (empty($this->getOldAttributes()['role'])) {
+            $this->getBehavior('RbacBehavior')->initializeRole();
+            $this->_role = $this->getOldAttributes()['role'];
+        }
+
+        return $this->_role;
     }
 }

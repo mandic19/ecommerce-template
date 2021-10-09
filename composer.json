@@ -19,7 +19,8 @@
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
         "hosannahighertech/yii2-oauth2-server": "dev-master",
-        "yiister/yii2-gentelella": "~1.0"
+        "yiister/yii2-gentelella": "~1.0",
+        "2amigos/yii2-resource-manager-component": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

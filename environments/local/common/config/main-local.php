@@ -17,5 +17,9 @@ return [
             // for the mailer to send real emails.
             'useFileTransport' => true,
         ],
+        'resourceManager' => [
+            'class' => 'dosamigos\resourcemanager\FileSystemResourceManager',
+            'basePath' => '',
+        ]
     ],
 ];
