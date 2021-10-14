@@ -64,7 +64,7 @@ AppAsset::register($this);
                                 [
                                     "items" => [
                                         ["label" => "Home", "url" => "/", "icon" => "home"],
-                                        ["label" => "Layout", "url" => ["site/layout"], "icon" => "files-o"],
+                                        ["label" => "Users", "url" => ["/user"], "icon" => "users"],
                                         ["label" => "Error page", "url" => ["site/error-page"], "icon" => "close"],
                                         [
                                             "label" => "Widgets",

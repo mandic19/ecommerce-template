@@ -34,6 +34,8 @@ use yii\web\IdentityInterface;
  * @property integer $updated_by
  * @property integer $is_deleted
  * @property string $password write-only password
+ *
+ * @property string $fullName
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -277,4 +279,20 @@ class User extends ActiveRecord implements IdentityInterface
 
         return $this->_role;
     }
+
+    public function getFullName() {
+        return "{$this->first_name} {$this->last_name}";
+    }
+
+    public function getNameInitials()
+    {
+        $nameArray = explode(' ', self::getFullName());
+        if (empty($nameArray[1])) {
+            return " ? ";
+        }
+        $first = ($nameArray && array_key_exists(0, $nameArray) && count_chars($nameArray[0]) > 0) ? strtoupper($nameArray[0][0]) : '';
+        $second = ($nameArray && array_key_exists(1, $nameArray) && count_chars($nameArray[1]) > 0) ? strtoupper($nameArray[1][0]) : '';
+        return "{$first}{$second}";
+    }
+
 }
