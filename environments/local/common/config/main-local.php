@@ -18,8 +18,8 @@ return [
             'useFileTransport' => true,
         ],
         'resourceManager' => [
-            'class' => 'dosamigos\resourcemanager\FileSystemResourceManager',
-            'basePath' => '',
+            'class' => 'common\components\FileSystemResourceManager',
+            'basePath' => '../../storage_aws_s3',
         ]
     ],
 ];

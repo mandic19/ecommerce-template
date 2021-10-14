@@ -6,6 +6,7 @@ use common\components\orm\ActiveRecord;
 use common\helpers\EmailHelper;
 use common\helpers\FileHelper;
 use common\models\Image;
+use common\components\FileSystemResourceManager;
 use Yii;
 use yii\base\Behavior;
 use yii\db\BaseActiveRecord;
@@ -335,6 +336,12 @@ class FileBehavior extends Behavior
      */
     public function saveOnStorageAs($storageKey, $options = [])
     {
+        // TODO: Remove FileSystemResourceManagement code when you switch to AWS S3
+
+        if($this->getResourceManager() instanceof FileSystemResourceManager) {
+            return $this->getResourceManager()->save($this->fileAttribute, $storageKey, $options);
+        }
+
         if ($this->getResourceManager()->has($storageKey)) {
             EmailHelper::sendMessage(['html' => 'message'], Yii::$app->params['admin.email'], 'Image exists on storaget: ' . $storageKey, [
                 'message' => print_r([
