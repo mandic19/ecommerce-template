@@ -242,5 +242,5 @@ table .avatar-wrapper {
 }
 
 .btn-success:active, .btn-success:hover, .btn-success:focus {
-    filter: brightness(85%);
+    filter: brightness(90%);
 }

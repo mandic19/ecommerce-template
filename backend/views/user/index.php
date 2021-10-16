@@ -20,26 +20,24 @@ $pjaxId = 'user-index-pjax';
 ?>
 
 <div class="user-index">
-    <div class="page-title mb-4">
-        <div class="title_left">
-            <div class="d-flex align-items-center">
-                <h1><?= Html::encode($this->title) ?></h1>
-                <div class="form-group top_search m-0 mx-4">
-                    <div class="input-group m-0">
-                        <input type="text" class="form-control" placeholder="Search...">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </span>
-                    </div>
+    <div class="d-flex align-items-center flex-wrap mb-4">
+        <div class="d-flex align-items-center">
+            <h1><?= Html::encode($this->title) ?></h1>
+            <div class="form-group top_search m-0 mx-4">
+                <div class="input-group m-0">
+                    <input type="text" class="form-control" placeholder="Search...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
                 </div>
             </div>
         </div>
-        <div class="title_right">
+        <div class="ml-sm-auto">
             <?= Html::tag('span', '<i class="fa fa-user fa-lg mr-3"></i>' . Yii::t('app', 'Add New User'), [
                 'data-href' => Url::to(['user/create']),
-                'class' => 'btn btn-success pull-right btn-modal-control btn-loading',
+                'class' => 'btn btn-success btn-modal-control btn-loading m-0',
             ]); ?>
         </div>
     </div>
