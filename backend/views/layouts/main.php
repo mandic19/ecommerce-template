@@ -5,13 +5,13 @@
  * @var View $this
  */
 
-use frontend\assets\AppAsset;
+
+use backend\assets\AppAsset;
+use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use yii\web\View;
-use yiister\gentelella\assets\Asset;
 use yiister\gentelella\widgets\Menu;
 
-Asset::register($this);
 AppAsset::register($this);
 
 ?>
@@ -315,6 +315,8 @@ AppAsset::register($this);
         <div class="clearfix"></div>
         <div id="notif-group" class="tabbed_notifications"></div>
     </div>
+
+    <?= Modal::widget(['id' => 'main-modal', 'size' => Modal::SIZE_LARGE, 'options' => ['data-backdrop' => 'static']]); ?>
     <!-- /footer content -->
     <?php $this->endBody(); ?>
     </body>
