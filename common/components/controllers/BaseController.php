@@ -5,7 +5,6 @@ namespace common\components\controllers;
 use common\helpers\RbacHelper;
 use common\components\orm\ActiveRecord;
 use Yii;
-use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
 
@@ -14,18 +13,16 @@ use yii\filters\AccessControl;
  * @package common\components\controllers
  *
  * @property string $modelClass
- * @property string $searchModelClass
  *
  */
 class BaseController extends \yii\web\Controller
 {
     /** @var string */
     public $modelClass;
-    public $searchModelClass;
 
     public function behaviors()
     {
-        $behaviors = [
+        return [
             'access' => [
                 'class' => AccessControl::class,
                 'rules' => [
@@ -36,16 +33,6 @@ class BaseController extends \yii\web\Controller
                 ],
             ],
         ];
-
-        return ArrayHelper::merge(
-            $behaviors,
-            $this->extendedBehaviors()
-        );
-    }
-
-    public function extendedBehaviors()
-    {
-        return [];
     }
 
     /**
@@ -57,7 +44,7 @@ class BaseController extends \yii\web\Controller
             'error' => [
                 'class' => 'yii\web\ErrorAction',
                 'view' => '@app/views/site/error',
-                'layout' => 'blank',
+                'layout' => 'blank'
             ],
         ];
     }

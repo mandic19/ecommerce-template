@@ -2,17 +2,30 @@
 
 namespace backend\controllers;
 
+use common\components\actions\CreateAction;
+use common\components\actions\DeleteAction;
+use common\components\actions\SearchAction;
+use common\components\actions\UpdateAction;
+use common\components\actions\ViewAction;
+use common\components\controllers\BaseController;
+use common\components\orm\ActiveRecord;
 use common\models\User;
 use common\models\search\UserSearch;
-use yii\web\Controller;
+use Yii;
+use yii\bootstrap\ActiveForm;
+use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * UserController implements the CRUD actions for User model.
  */
-class UserController extends Controller
+class UserController extends BaseController
 {
+    public $modelClass = User::class;
+    public $searchModelClass = UserSearch::class;
+
     /**
      * @inheritDoc
      */
@@ -25,109 +38,105 @@ class UserController extends Controller
                     'class' => VerbFilter::className(),
                     'actions' => [
                         'delete' => ['POST'],
+                        'activate' => ['POST'],
+                        'reactivate' => ['POST'],
                     ],
                 ],
             ]
         );
     }
 
-    /**
-     * Lists all User models.
-     * @return mixed
-     */
-    public function actionIndex()
+    public function actions()
     {
-        $searchModel = new UserSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+        return ArrayHelper::merge(parent::actions(), [
+            'index' => [
+                'class' => SearchAction::class,
+                'searchModel' => $this->searchModelClass,
+            ],
+            'create' => [
+                'class' => CreateAction::class,
+                'modelClass' => $this->modelClass,
+                'scenario' => ActiveRecord::SCENARIO_CREATE
+            ],
+            'view' => [
+                'class' => ViewAction::class,
+                'modelClass' => $this->modelClass,
+            ],
+            'update' => [
+                'class' => UpdateAction::class,
+                'modelClass' => $this->modelClass,
+                'scenario' => ActiveRecord::SCENARIO_UPDATE,
+                'findModel' => function ($id) {
+                    return $this->findModel($id);
+                }
+            ],
+            'delete' => [
+                'class' => DeleteAction::class,
+                'modelClass' => $this->modelClass,
+            ],
         ]);
     }
 
-    /**
-     * Displays a single User model.
-     * @param int $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
+    public function actionActivate($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        $model = User::findOne(['id' => $id, 'status' => User::STATUS_INACTIVE]);
+
+        if (empty($model)) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        $model->status = User::STATUS_ACTIVE;
+
+        if ($model->save(false, ['status'])) {
+            return $this->formatResponse($model, 'success');
+        }
+
+        return $this->formatResponse($model, 'error');
     }
 
-    /**
-     * Creates a new User model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
+    public function actionDeactivate($id)
     {
-        $model = new User();
+        $model = User::findOne(['id' => $id, 'status' => User::STATUS_ACTIVE]);
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
+        if (empty($model)) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        $model->status = User::STATUS_INACTIVE;
+
+        if ($model->save(false, ['status'])) {
+            return $this->formatResponse($model, 'success');
+        }
+
+        return $this->formatResponse($model, 'error');
+    }
+
+    public function formatResponse(User $model, $type)
+    {
+
+        if ($type === 'success') {
+            $message = Yii::t('app', '{:model} successfully updated!', [':model' => $model->getPublicName()]);
+            $response =  [
+                'success' => true,
+                'message' => $message
+            ];
         } else {
-            $model->loadDefaultValues();
+            $message = $model->getPublicName() . ' canno\'t be updated!<br>' . implode('<br>', $model->getFirstErrors());
+            $response = [
+                'success' => false,
+                'message' =>  $message,
+                'errors' => ActiveForm::validate($model)
+            ];
         }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-    }
+        if (Yii::$app->request->getIsAjax()) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
 
-    /**
-     * Updates an existing User model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $response;
         }
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
+        \Yii::$app->getSession()->setFlash($type, $message);
 
-    /**
-     * Deletes an existing User model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the User model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id
-     * @return User the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = User::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        return $this->redirect(Yii::$app->request->referrer);
     }
 }

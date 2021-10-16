@@ -2,6 +2,7 @@
 
 namespace common\helpers;
 
+use common\models\User;
 use Exception;
 use Yii;
 use yii\helpers\ArrayHelper;
@@ -17,38 +18,6 @@ class RbacHelper
         self::ROLE_ADMIN => 'Admin'
     ];
 
-    public static function can($permission)
-    {
-        if (Yii::$app->user->isGuest) {
-            return false;
-        }
-        if (static::isAdmin()) {
-            return true;
-        }
-        return Yii::$app->user->can($permission);
-    }
-
-    public static function canAccessRoute($route)
-    {
-        if (Yii::$app->user->isGuest) {
-            return false;
-        }
-        $routePart = '';
-        foreach (array_filter(explode('/', $route)) as $part) {
-            $routePart .= "/$part";
-            if (static::can($routePart)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static function isAdmin()
-    {
-        $user = Yii::$app->user;
-        return $user->can(static::ROLE_ADMIN) || $user->can(static::ROLE_ADMIN);
-    }
-
     /**
      * @throws Exception
      */
@@ -58,5 +27,20 @@ class RbacHelper
             return Inflector::humanize($roleName);
         }
         return $roleLabel;
+    }
+
+    public static function getCustomerUsers() {
+        return User::findAll(['NOT IN', 'id', self::getBackendUserIds()]);
+    }
+
+    public static function getBackendUsers() {
+        return User::findAll(['IN', 'id', self::getBackendUserIds()]);
+    }
+
+    public static function getBackendUserIds() {
+        $superAdminIds = Yii::$app->authManager->getUserIdsByRole(static::ROLE_SUPER_ADMIN);
+        $adminIds = Yii::$app->authManager->getUserIdsByRole(static::ROLE_ADMIN);
+
+        return ArrayHelper::merge($adminIds, $superAdminIds);
     }
 }

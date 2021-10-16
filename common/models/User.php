@@ -4,7 +4,7 @@ namespace common\models;
 
 use common\components\behaviors\RbacBehavior;
 use common\components\orm\ActiveRecord;
-use common\helpers\RbacHelper;
+use common\helpers\BaseHelper;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
@@ -28,6 +28,7 @@ use yii\web\IdentityInterface;
  * @property string $city
  * @property string $country
  * @property integer $zip
+ * @property string $phone
  * @property integer $created_at
  * @property integer $created_by
  * @property integer $updated_at
@@ -70,7 +71,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             [['email', 'first_name', 'last_name', 'username'], 'required'],
-            [['first_name', 'last_name', 'username', 'role', 'address', 'city', 'country', 'zip'], 'string'],
+            [['first_name', 'last_name', 'username', 'role', 'address', 'city', 'country', 'zip', 'phone'], 'string'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE]],
             [['email'], 'email'],
@@ -96,6 +97,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * {@inheritdoc}
+     * @throws NotSupportedException
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
@@ -127,7 +129,7 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * Finds user by username or email
      *
-     * @param string $username
+     * @param string $key
      * @return array|\yii\db\ActiveRecord|null
      *
      */
@@ -281,7 +283,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     public function getFullName() {
-        return "{$this->first_name} {$this->last_name}";
+        return BaseHelper::formatToCharSeparatedString([$this->first_name, $this->last_name], ' ');
     }
 
     public function getNameInitials()
