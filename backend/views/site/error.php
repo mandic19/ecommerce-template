@@ -6,6 +6,8 @@
 
 /* @var $exception Exception */
 
+use yii\helpers\Url;
+
 $this->title = $name;
 $response = Yii::$app->response;
 ?>
@@ -39,7 +41,7 @@ $response = Yii::$app->response;
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search for...">
                             <span class="input-group-btn">
-                                <a href="index">
+                                <a href="<?= Url::to(['site/index']); ?>">
                                     <button class="btn btn-secondary" type="button">Go!</button>
                                 </a>
                             </span>
