@@ -88,10 +88,10 @@ class UserController extends BaseController
         $model->status = User::STATUS_ACTIVE;
 
         if ($model->save(false, ['status'])) {
-            return $this->formatResponse($model, 'success');
+            return $this->formatResponse($model, 'success', 'activated');
         }
 
-        return $this->formatResponse($model, 'error');
+        return $this->formatResponse($model, 'error', 'activated');
     }
 
     public function actionDeactivate($id)
@@ -105,23 +105,23 @@ class UserController extends BaseController
         $model->status = User::STATUS_INACTIVE;
 
         if ($model->save(false, ['status'])) {
-            return $this->formatResponse($model, 'success');
+            return $this->formatResponse($model, 'success', 'deactivated');
         }
 
-        return $this->formatResponse($model, 'error');
+        return $this->formatResponse($model, 'error', 'deactivated');
     }
 
-    public function formatResponse(User $model, $type)
+    public function formatResponse(User $model, $type, $action = 'updated')
     {
 
         if ($type === 'success') {
-            $message = Yii::t('app', '{:model} successfully updated!', [':model' => $model->getPublicName()]);
+            $message = Yii::t('app', "{:model} successfully {$action} !", [':model' => $model->getPublicName()]);
             $response =  [
                 'success' => true,
                 'message' => $message
             ];
         } else {
-            $message = $model->getPublicName() . ' canno\'t be updated!<br>' . implode('<br>', $model->getFirstErrors());
+            $message = $model->getPublicName() . " canno't be {$action} !<br>" . implode('<br>', $model->getFirstErrors());
             $response = [
                 'success' => false,
                 'message' =>  $message,

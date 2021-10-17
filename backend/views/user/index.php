@@ -20,28 +20,29 @@ $pjaxId = 'user-index-pjax';
 ?>
 
 <div class="user-index">
-    <div class="d-flex align-items-center flex-wrap mb-4">
-        <div class="d-flex align-items-center">
-            <h1><?= Html::encode($this->title) ?></h1>
-            <div class="form-group top_search m-0 mx-4">
-                <div class="input-group m-0">
-                    <input type="text" class="form-control" placeholder="Search...">
-                    <span class="input-group-btn">
+    <div class="row mb-2 mb-sm-4">
+        <div class="col-sm-6">
+            <div class="d-flex align-items-center">
+                <h1><?= Html::encode($this->title) ?></h1>
+                <div class="form-group top_search m-0 mx-4">
+                    <div class="input-group m-0">
+                        <input type="text" class="form-control" placeholder="Search...">
+                        <span class="input-group-btn">
                         <button class="btn btn-default" type="button">
                             <i class="fa fa-search"></i>
                         </button>
                     </span>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="ml-sm-auto">
+        <div class="col-sm-6 d-flex">
             <?= Html::tag('span', '<i class="fa fa-user fa-lg mr-3"></i>' . Yii::t('app', 'Add New User'), [
                 'data-href' => Url::to(['user/create']),
-                'class' => 'btn btn-success btn-modal-control btn-loading m-0',
+                'class' => 'btn btn-success btn-modal-control btn-loading my-auto ml-sm-auto',
             ]); ?>
         </div>
     </div>
-
     <?php Pjax::begin(['id' => $pjaxId]); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
     <?= GridView::widget([

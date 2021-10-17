@@ -8,6 +8,7 @@ use common\helpers\BaseHelper;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\Html;
 use yii\web\IdentityInterface;
 
 /**
@@ -81,9 +82,12 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function checkUniqueness($attribute, $params)
     {
+        /* @var $user User */
         $user = User::findByUsernameOrEmail($this->{$attribute});
-        if (!empty($user)) {
-            $this->addError($attribute, 'Email is already used');
+
+        if (!empty($user) && $user->id != $this->id) {
+            $attributeLabel = Html::tag('span', $attribute, ['class' => 'text-capitalize']);
+            $this->addError($attribute, "{$attributeLabel} is already used");
         }
     }
 
@@ -130,12 +134,19 @@ class User extends ActiveRecord implements IdentityInterface
      * Finds user by username or email
      *
      * @param string $key
+     * @param bool $onlyActive
      * @return array|\yii\db\ActiveRecord|null
      *
      */
-    protected function findByUsernameOrEmail($key)
+    protected function findByUsernameOrEmail($key, $onlyActive = false)
     {
-        return static::find()->where(['status' => self::STATUS_ACTIVE])->andWhere(['OR', ['username' => $key], ['email' => $key]])->one();
+        $query = static::find()->where(['OR', ['username' => $key], ['email' => $key]]);
+
+        if(!$onlyActive) {
+            return $query->one();
+        }
+
+        return $query->andWhere(['status' => self::STATUS_ACTIVE])->one();
     }
 
     /**
