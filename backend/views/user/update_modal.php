@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
         'title' => Html::encode($this->title)
     ]) ?>
 
-    <?= $this->render('_form', [
+    <?= $this->render('partials/_form', [
         'model' => $model,
     ]) ?>
 

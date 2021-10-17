@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="user-create">
     <?php ModalContent::begin(['title' => Html::encode($this->title)]) ?>
 
-    <?= $this->render('_form', [
+    <?= $this->render('partials/_form', [
         'model' => $model,
     ]) ?>
 

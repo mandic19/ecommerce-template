@@ -44,7 +44,7 @@ $pjaxId = 'user-index-pjax';
         </div>
     </div>
     <?php Pjax::begin(['id' => $pjaxId]); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('partials/_search', ['model' => $searchModel]); ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'options' => ['class' => 'table-responsive'],
