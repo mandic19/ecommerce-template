@@ -42,7 +42,3 @@ phpunit.phar
 /backend/web/index-test.php
 /backend/web/robots.txt
 
-
-/backend/web/assets/*
-/api/web/assets/*
-/frontend/web/assets/*

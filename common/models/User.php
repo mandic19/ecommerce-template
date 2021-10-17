@@ -2,10 +2,13 @@
 
 namespace common\models;
 
+use common\components\behaviors\RbacBehavior;
 use common\components\orm\ActiveRecord;
+use common\helpers\BaseHelper;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\Html;
 use yii\web\IdentityInterface;
 
 /**
@@ -13,6 +16,7 @@ use yii\web\IdentityInterface;
  *
  * @property integer $id
  * @property string $username
+ * @property string $role
  * @property string $password_hash
  * @property string $password_reset_token
  * @property string $verification_token
@@ -25,17 +29,22 @@ use yii\web\IdentityInterface;
  * @property string $city
  * @property string $country
  * @property integer $zip
+ * @property string $phone
  * @property integer $created_at
  * @property integer $created_by
  * @property integer $updated_at
  * @property integer $updated_by
  * @property integer $is_deleted
  * @property string $password write-only password
+ *
+ * @property string $fullName
  */
 class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
+
+    private $_role;
 
     /**
      * {@inheritdoc}
@@ -52,6 +61,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             TimestampBehavior::className(),
+            'RbacBehavior' => RbacBehavior::class
         ];
     }
 
@@ -62,7 +72,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             [['email', 'first_name', 'last_name', 'username'], 'required'],
-            [['address', 'city', 'country', 'zip'], 'string'],
+            [['first_name', 'last_name', 'username', 'role', 'address', 'city', 'country', 'zip', 'phone'], 'string'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE]],
             [['email'], 'email'],
@@ -72,9 +82,12 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function checkUniqueness($attribute, $params)
     {
+        /* @var $user User */
         $user = User::findByUsernameOrEmail($this->{$attribute});
-        if (!empty($user)) {
-            $this->addError($attribute, 'Email is already used');
+
+        if (!empty($user) && $user->id != $this->id) {
+            $attributeLabel = Html::tag('span', $attribute, ['class' => 'text-capitalize']);
+            $this->addError($attribute, "{$attributeLabel} is already used");
         }
     }
 
@@ -88,6 +101,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * {@inheritdoc}
+     * @throws NotSupportedException
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
@@ -119,13 +133,20 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * Finds user by username or email
      *
-     * @param string $username
+     * @param string $key
+     * @param bool $onlyActive
      * @return array|\yii\db\ActiveRecord|null
      *
      */
-    protected function findByUsernameOrEmail($key)
+    protected function findByUsernameOrEmail($key, $onlyActive = false)
     {
-        return static::find()->where(['status' => self::STATUS_ACTIVE])->andWhere(['OR', ['username' => $key], ['email' => $key]])->one();
+        $query = static::find()->where(['OR', ['username' => $key], ['email' => $key]]);
+
+        if(!$onlyActive) {
+            return $query->one();
+        }
+
+        return $query->andWhere(['status' => self::STATUS_ACTIVE])->one();
     }
 
     /**
@@ -252,4 +273,39 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+
+    public function hasBackendAccess()
+    {
+        return !empty($this->role);
+    }
+
+    public function getRole()
+    {
+        if ($this->_role) {
+            return $this->_role;
+        }
+
+        if (empty($this->getOldAttributes()['role'])) {
+            $this->getBehavior('RbacBehavior')->initializeRole();
+            $this->_role = $this->getOldAttributes()['role'];
+        }
+
+        return $this->_role;
+    }
+
+    public function getFullName() {
+        return BaseHelper::formatToCharSeparatedString([$this->first_name, $this->last_name], ' ');
+    }
+
+    public function getNameInitials()
+    {
+        $nameArray = explode(' ', self::getFullName());
+        if (empty($nameArray[1])) {
+            return " ? ";
+        }
+        $first = ($nameArray && array_key_exists(0, $nameArray) && count_chars($nameArray[0]) > 0) ? strtoupper($nameArray[0][0]) : '';
+        $second = ($nameArray && array_key_exists(1, $nameArray) && count_chars($nameArray[1]) > 0) ? strtoupper($nameArray[1][0]) : '';
+        return "{$first}{$second}";
+    }
+
 }

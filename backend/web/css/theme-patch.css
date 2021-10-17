@@ -1,0 +1,79 @@
+.custom-switch {
+    padding-left: 2.25rem;
+}
+
+.custom-control {
+    position: relative;
+    z-index: 1;
+    display: block;
+    min-height: 1.5rem;
+    padding-left: 1.5rem;
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+}
+
+.custom-control-input {
+    position: absolute;
+    left: 0;
+    z-index: -1;
+    width: 1rem;
+    height: 1.25rem;
+    opacity: 0;
+}
+
+.custom-control-label {
+    position: relative;
+    margin-bottom: 0;
+    vertical-align: top;
+}
+
+.btn-just-icon {
+    display: flex;
+    padding: 0;
+    border: 1px solid;
+}
+
+.btn-just-icon > i {
+    margin: auto;
+}
+
+.btn-just-icon.btn-sm {
+    height: 30px;
+    width: 30px;
+    max-width: 30px;
+    max-height: 30px;
+}
+
+.nav.side-menu > li {
+    width: 100%;
+}
+
+.top_nav .navbar-right {
+    flex-direction: row-reverse;
+}
+
+.nav.toggle {
+    padding: 0;
+}
+
+.top_nav .dropdown-toggle:after,
+.top_nav .dropdown-toggle:before {
+    content: unset;
+}
+
+.site_title {
+    padding: 0;
+}
+
+.container.body {
+    max-width: unset;
+    min-height: 100%;
+}
+
+.container.body .main_container {
+    min-height: 100vh;
+}
+
+.container.body .right_col {
+    min-height: calc(100vh - 45px)!important;
+}

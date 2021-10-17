@@ -5,12 +5,13 @@
  * @var View $this
  */
 
-use frontend\assets\AppAsset;
+
+use backend\assets\AppAsset;
+use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use yii\web\View;
-use yiister\gentelella\assets\Asset;
+use yiister\gentelella\widgets\Menu;
 
-Asset::register($this);
 AppAsset::register($this);
 
 ?>
@@ -18,20 +19,15 @@ AppAsset::register($this);
     <!DOCTYPE html>
     <html lang="<?= Yii::$app->language ?>">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta charset="<?= Yii::$app->charset ?>" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta charset="<?= Yii::$app->charset ?>"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <?= Html::csrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
-        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
     </head>
-    <body class="nav-<?= !empty($_COOKIE['menuIsCollapsed']) && $_COOKIE['menuIsCollapsed'] == 'true' ? 'sm' : 'md' ?>" >
+    <body class="nav-<?= !empty($_COOKIE['menuIsCollapsed']) && $_COOKIE['menuIsCollapsed'] == 'true' ? 'sm' : 'md' ?>">
     <?php $this->beginBody(); ?>
     <div class="container body">
 
@@ -48,7 +44,7 @@ AppAsset::register($this);
                     <!-- menu prile quick info -->
                     <div class="profile">
                         <div class="profile_pic">
-                            <img src="http://placehold.it/128x128" alt="..." class="img-circle profile_img">
+                            <img src="/img/dummy_avatar.jpg" alt="..." class="img-circle profile_img">
                         </div>
                         <div class="profile_info">
                             <span>Welcome,</span>
@@ -57,19 +53,18 @@ AppAsset::register($this);
                     </div>
                     <!-- /menu prile quick info -->
 
-                    <br />
+                    <br/>
 
                     <!-- sidebar menu -->
                     <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
 
                         <div class="menu_section">
-                            <h3>General</h3>
                             <?=
-                            \yiister\gentelella\widgets\Menu::widget(
+                            Menu::widget(
                                 [
                                     "items" => [
                                         ["label" => "Home", "url" => "/", "icon" => "home"],
-                                        ["label" => "Layout", "url" => ["site/layout"], "icon" => "files-o"],
+                                        ["label" => "Users", "url" => ["/user"], "icon" => "users"],
                                         ["label" => "Error page", "url" => ["site/error-page"], "icon" => "close"],
                                         [
                                             "label" => "Widgets",
@@ -168,21 +163,22 @@ AppAsset::register($this);
 
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
-                                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="http://placehold.it/128x128" alt="">John Doe
+                                <a href="javascript:void(0);" class="user-profile dropdown-toggle" data-toggle="dropdown"
+                                   aria-expanded="false">
+                                    <img src="/img/dummy_avatar.jpg" alt="">John Doe
                                     <span class=" fa fa-angle-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                    <li><a href="javascript:;">  Profile</a>
+                                    <li><a href="javascript:void(0);"> Profile</a>
                                     </li>
                                     <li>
-                                        <a href="javascript:;">
+                                        <a href="javascript:void(0);">
                                             <span class="badge bg-red pull-right">50%</span>
                                             <span>Settings</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="javascript:;">Help</a>
+                                        <a href="javascript:void(0);">Help</a>
                                     </li>
                                     <li>
                                         <?= Html::a('<i class="fa fa-sign-out pull-right"></i>Log Out</a>', ['/site/logout'], [
@@ -194,15 +190,16 @@ AppAsset::register($this);
                             </li>
 
                             <li role="presentation" class="dropdown">
-                                <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                                <a href="javascript:void(0);" class="dropdown-toggle info-number" data-toggle="dropdown"
+                                   aria-expanded="false">
                                     <i class="fa fa-envelope-o"></i>
                                     <span class="badge bg-green">6</span>
                                 </a>
                                 <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
                                     <li>
                                         <a>
-                      <span class="image">
-                                        <img src="http://placehold.it/128x128" alt="Profile Image" />
+                                    <span class="image">
+                                        <img src="/img/dummy_avatar.jpg" alt="Profile Image"/>
                                     </span>
                                             <span>
                                         <span>John Smith</span>
@@ -216,7 +213,7 @@ AppAsset::register($this);
                                     <li>
                                         <a>
                       <span class="image">
-                                        <img src="http://placehold.it/128x128" alt="Profile Image" />
+                                        <img src="/img/dummy_avatar.jpg" alt="Profile Image"/>
                                     </span>
                                             <span>
                                         <span>John Smith</span>
@@ -230,7 +227,7 @@ AppAsset::register($this);
                                     <li>
                                         <a>
                       <span class="image">
-                                        <img src="http://placehold.it/128x128" alt="Profile Image" />
+                                        <img src="/img/dummy_avatar.jpg" alt="Profile Image"/>
                                     </span>
                                             <span>
                                         <span>John Smith</span>
@@ -244,7 +241,7 @@ AppAsset::register($this);
                                     <li>
                                         <a>
                       <span class="image">
-                                        <img src="http://placehold.it/128x128" alt="Profile Image" />
+                                        <img src="/img/dummy_avatar.jpg" alt="Profile Image"/>
                                     </span>
                                             <span>
                                         <span>John Smith</span>
@@ -300,8 +297,7 @@ AppAsset::register($this);
             <!-- footer content -->
             <footer>
                 <div class="pull-right">
-                    Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com" rel="nofollow" target="_blank">Colorlib</a><br />
-                    Extension for Yii framework 2 by <a href="http://yiister.ru" rel="nofollow" target="_blank">Yiister</a>
+                    Ecommerce sample application made with <i class="fa fa-heart"></i> !
                 </div>
                 <div class="clearfix"></div>
             </footer>
@@ -316,6 +312,8 @@ AppAsset::register($this);
         <div class="clearfix"></div>
         <div id="notif-group" class="tabbed_notifications"></div>
     </div>
+
+    <?= Modal::widget(['id' => 'main-modal', 'size' => Modal::SIZE_LARGE, 'options' => ['data-backdrop' => 'static']]); ?>
     <!-- /footer content -->
     <?php $this->endBody(); ?>
     </body>

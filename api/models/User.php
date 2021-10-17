@@ -2,6 +2,7 @@
 
 namespace api\models;
 
+use common\models\User as UserAlias;
 use filsh\yii2\oauth2server\Module;
 use OAuth2\Storage\UserCredentialsInterface;
 use Yii;
@@ -30,7 +31,8 @@ class User extends \common\models\User implements UserCredentialsInterface
      */
     public function checkUserCredentials($username, $password)
     {
-        $user = $this->findByUsernameOrEmail($username);
+        /* @var $user User */
+        $user = $this->findByUsernameOrEmail($username, true);
         if (empty($user)) {
             return false;
         }
@@ -44,7 +46,7 @@ class User extends \common\models\User implements UserCredentialsInterface
      */
     public function getUserDetails($username)
     {
-        $user = $this->findByUsernameOrEmail($username);
+        $user = $this->findByUsernameOrEmail($username, true);
         return ['user_id' => $user->getId()];
     }
 
@@ -83,12 +85,19 @@ class User extends \common\models\User implements UserCredentialsInterface
     /**
      * Finds user by username or email
      *
-     * @param string $username
+     * @param string $key
+     * @param bool $onlyActive
      * @return array|ActiveRecord|null
      *
      */
-    protected function findByUsernameOrEmail($username)
+    protected function findByUsernameOrEmail($key, $onlyActive = false)
     {
-        return static::find()->where(['status' => self::STATUS_ACTIVE])->andWhere(['OR', ['username' => $username], ['email' => $username]])->one();
+        $query = static::find()->where(['OR', ['username' => $key], ['email' => $key]]);
+
+        if(!$onlyActive) {
+            return $query->one();
+        }
+
+        return $query->andWhere(['status' => self::STATUS_ACTIVE])->one();
     }
 }
