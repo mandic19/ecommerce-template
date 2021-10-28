@@ -2,6 +2,7 @@
 
 namespace common\models\search;
 
+use common\helpers\SearchHelper;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\User;
@@ -11,14 +12,17 @@ use common\models\User;
  */
 class UserSearch extends User
 {
+    public $q;
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'status', 'zip', 'created_at', 'created_by', 'updated_at', 'updated_by', 'is_deleted'], 'integer'],
-            [['email', 'username', 'password_hash', 'password_reset_token', 'verification_token', 'auth_key', 'first_name', 'last_name', 'address', 'city', 'country'], 'safe'],
+            [['id', 'status', 'zip'], 'integer'],
+            [['email', 'first_name', 'last_name', 'address', 'city', 'country'], 'safe'],
+            [['q'], 'string']
         ];
     }
 
@@ -42,13 +46,12 @@ class UserSearch extends User
     {
         $query = User::find();
 
-        // add conditions that should always apply here
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => $this->getSort()
         ]);
 
-        $this->load($params);
+        $this->load($params, '');
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -66,10 +69,45 @@ class UserSearch extends User
             ->andFilterWhere(['like', 'username', $this->username])
             ->andFilterWhere(['like', 'first_name', $this->first_name])
             ->andFilterWhere(['like', 'last_name', $this->last_name])
+            ->andFilterWhere(['like', 'phone', $this->phone])
             ->andFilterWhere(['like', 'address', $this->address])
             ->andFilterWhere(['like', 'city', $this->city])
             ->andFilterWhere(['like', 'country', $this->country]);
 
+        if (!empty($this->q)) {
+            $this->q = str_replace("'", '', $this->q);
+            $query = SearchHelper::addSearchQuery($query, $this->q, [
+                'CONCAT(first_name, " ", last_name)',
+                'CONCAT(city, ", ", country, ", ", zip)',
+                'email',
+                'phone',
+                'address',
+                'city',
+                'country',
+                'zip'
+            ]);
+        }
+
         return $dataProvider;
+    }
+
+    protected function getSort() {
+        return [
+            'attributes' => [
+                'user' => [
+                    'asc' => ['first_name' => SORT_ASC],
+                    'desc' => ['first_name' => SORT_DESC],
+                ],
+                'contact' => [
+                    'asc' => ['email' => SORT_ASC, 'phone' => SORT_ASC,],
+                    'desc' => ['email' => SORT_DESC, 'phone' => SORT_DESC],
+                ],
+                'location' => [
+                    'asc' => ['address' => SORT_ASC, 'city' => SORT_ASC, 'country' => SORT_ASC, 'zip' => SORT_ASC],
+                    'desc' => ['address' => SORT_DESC, 'city' => SORT_DESC, 'country' => SORT_DESC, 'zip' => SORT_DESC],
+                ],
+                'status'
+            ],
+        ];
     }
 }
