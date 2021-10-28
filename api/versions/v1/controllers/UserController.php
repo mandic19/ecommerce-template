@@ -5,8 +5,8 @@ namespace api\versions\v1\controllers;
 use api\components\responses\ErrorResponse;
 use api\components\responses\SuccessResponse;
 use api\components\web\BaseApiController;
-use api\models\RegistrationForm;
 use common\components\WebUser;
+use common\models\forms\RegistrationForm;
 use common\models\User;
 use Yii;
 use yii\helpers\ArrayHelper;
@@ -18,6 +18,7 @@ class UserController extends BaseApiController
 {
     public $modelClass = \api\models\User::class;
 
+    public $guestActions = ['register'];
     /**
      * @return array the access rules
      */
@@ -45,7 +46,7 @@ class UserController extends BaseApiController
                 'class' => CreateAction::class,
                 'modelClass' => RegistrationForm::class,
                 'checkAccess' => [$this, 'checkAccess'],
-                'scenario' => $this->createScenario,
+                'scenario' => RegistrationForm::SCENARIO_CUSTOMER_REGISTRATION
             ],
         ];
     }
