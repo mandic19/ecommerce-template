@@ -37,9 +37,7 @@ class RegistrationForm extends User
     {
         return ArrayHelper::merge(parent::rules(), [
             [['password', 'password_repeat'], 'required', 'on' => [static::SCENARIO_ADMIN_REGISTRATION, static::SCENARIO_CUSTOMER_REGISTRATION]],
-            [['password'], 'compare', 'compareAttribute' => 'password_repeat', 'operator' => '==', 'when' => function (RegistrationForm $model) {
-                return !empty($model->password) && !empty($model->password_repeat);
-            }],
+            [['password'], 'compare', 'compareAttribute' => 'password_repeat', 'operator' => '==', 'enableClientValidation' => false],
             [['role'], 'required', 'on' => [static::SCENARIO_ADMIN_REGISTRATION, static::SCENARIO_ADMIN_UPDATE]],
             [['role'], 'string']
         ]);
@@ -71,8 +69,13 @@ class RegistrationForm extends User
             return false;
         }
 
-        $this->setPassword($this->password);
-        $this->generateAuthKey();
+        if(!empty($this->password)) {
+            $this->setPassword($this->password);
+        }
+
+        if($this->isNewRecord) {
+            $this->generateAuthKey();
+        }
 
         $transaction = Yii::$app->db->beginTransaction();
 

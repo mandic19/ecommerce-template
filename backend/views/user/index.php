@@ -20,7 +20,7 @@ $pjaxLoaderTarget = "#{$gridId} tbody";
 
 <div class="user-index">
     <?php Pjax::begin(['id' => $pjaxId, 'timeout' => 5000, 'options' => ['data-pjax-loader-target' => $pjaxLoaderTarget]]); ?>
-    <div class="row mb-3 mb-sm-4">
+    <div class="row mb-2">
         <div class="col-sm-6">
             <?= $this->render('/shared/partials/_search') ?>
         </div>

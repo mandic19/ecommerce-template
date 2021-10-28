@@ -78,3 +78,7 @@
 .container.body .right_col {
     min-height: calc(100vh - 45px) !important;
 }
+
+.login_content form input[type="text"], .login_content form input[type="email"], .login_content form input[type="password"] {
+    margin: 0;
+}
