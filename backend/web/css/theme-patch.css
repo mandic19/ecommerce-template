@@ -68,6 +68,7 @@
 .container.body {
     max-width: unset;
     min-height: 100%;
+    overflow: hidden !important;
 }
 
 .container.body .main_container {
@@ -75,5 +76,5 @@
 }
 
 .container.body .right_col {
-    min-height: calc(100vh - 45px)!important;
+    min-height: calc(100vh - 45px) !important;
 }
