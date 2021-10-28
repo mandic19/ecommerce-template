@@ -7,8 +7,8 @@ use common\components\orm\ActiveRecord;
 use common\helpers\BaseHelper;
 use Yii;
 use yii\base\NotSupportedException;
+use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
-use yii\helpers\Html;
 use yii\web\IdentityInterface;
 
 /**
@@ -60,7 +60,8 @@ class User extends ActiveRecord implements IdentityInterface
     public function behaviors()
     {
         return [
-            TimestampBehavior::className(),
+            'timestamp' => TimestampBehavior::class,
+            'blamable' => BlameableBehavior::class,
             'RbacBehavior' => RbacBehavior::class
         ];
     }
@@ -86,7 +87,7 @@ class User extends ActiveRecord implements IdentityInterface
         $user = User::findByUsernameOrEmail($this->{$attribute});
 
         if (!empty($user) && $user->id != $this->id) {
-            $attributeLabel = Html::tag('span', $attribute, ['class' => 'text-capitalize']);
+            $attributeLabel = $this->getAttributeLabel($attribute);
             $this->addError($attribute, "{$attributeLabel} is already used");
         }
     }
