@@ -10,7 +10,7 @@ class ModalContent extends Widget
     /**
      * @var array HTML attributes for the header div tag. Default is `['class' => 'modal-header']`.
      */
-    public $headerOptions = ['class' => "modal-header d-flex"];
+    public $headerOptions = ['class' => "modal-header d-flex justify-content-between"];
     /**
      * @var string Title of modal window. If not set title tag is not rendered.
      */
@@ -61,7 +61,7 @@ class ModalContent extends Widget
     private function getHeaderButtons()
     {
         return Html::button('<span aria-hidden="true">&times;</span>', [
-                'class' => 'close ml-auto',
+                'class' => 'close py-0',
                 'data-dismiss' => 'modal',
                 'aria-label' => 'Close'
             ]) . "\n";

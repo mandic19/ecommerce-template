@@ -20,6 +20,7 @@ main.ui = (function ($) {
         buttonLoadingText: '<i class="fa fa-spinner fa-spin"></i> Loading...',
         buttonSavingText: '<i class="fa fa-spinner fa-spin"></i> Saving...',
         defaultConfirmMessage: 'Do you wish to delete this item?',
+        pjaxLoader: '<div class="loader img-frame pjax-loader-container"><i class="fa fa-spinner fa-spin fa-2x"></i></div>',
         messageDuration: 6000,
         color: {
             primary: '#2a3f54',
@@ -53,7 +54,6 @@ main.ui = (function ($) {
 
             SweetAlert.fire({
                 timer: 3000,
-                type: type,
                 html: message,
                 showConfirmButton: false,
                 customClass: {
@@ -131,8 +131,6 @@ main.ui = (function ($) {
                     success: function (data) {
                         if (data.success && $('#' + gridId).length) {
                             $.pjax.reload({container: '#' + gridId, timeout: 5000});
-
-                            main.ui.refreshNotificationWidgets();
                         }
 
                         main.ui.notify(data.message, data.success ? 'success' : 'error');
@@ -312,12 +310,18 @@ main.ui = (function ($) {
                     }
 
                     $('[data-pjax-container]:not([data-pjax-loader="0"]), [data-pjax-loader]:not([data-pjax-loader="0"])').each(function () {
-                        var self = $(this);
-                        var pjaxContainer = self.data('pjax-container-id') ? $('#' + self.data('pjax-container-id')) : self;
+                        let self = $(this);
+                        let target = $(self.data('pjax-loader-target'));
+
+                        if(target.length < 1){
+                            target = self;
+                        }
+
+                        let pjaxContainer = self.data('pjax-container-id') ? $('#' + self.data('pjax-container-id')) : self;
                         if (event.target === pjaxContainer[0]) {
-                            if (self.find('> .pjax-loader-container').length < 1) {
-                                self.append("<div class='loader img-frame pjax-loader-container'><i class='fa fa-spinner fa-spin fa-2x'></i></div>").find('> .pjax-loader-container').css('background-color');
-                                self.find('> .pjax-loader-container').addClass('fade-white');
+                            if (target.find('> .pjax-loader-container').length < 1) {
+                                target.append(main.ui.pjaxLoader).find('> .pjax-loader-container').css('background-color');
+                                target.find('> .pjax-loader-container').addClass('fade-white');
                             }
                         }
                     });

@@ -313,7 +313,7 @@ AppAsset::register($this);
         <div id="notif-group" class="tabbed_notifications"></div>
     </div>
 
-    <?= Modal::widget(['id' => 'main-modal', 'size' => Modal::SIZE_LARGE, 'options' => ['data-backdrop' => 'static']]); ?>
+    <?= Modal::widget(['id' => 'main-modal', 'size' => Modal::SIZE_LARGE, 'options' => ['data-backdrop' => 'static', 'class' => 'p-0']]); ?>
     <!-- /footer content -->
     <?php $this->endBody(); ?>
     </body>
