@@ -3,7 +3,7 @@
 use common\helpers\BaseHelper;
 use common\helpers\RbacHelper;
 use common\models\User;
-use common\widgets\GridView;
+use common\widgets\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -18,6 +18,11 @@ use yii\helpers\Url;
     'id' => $gridId,
     'pjaxId' => $pjaxId,
     'dataProvider' => $dataProvider,
+    'enableAdd' => true,
+    'addBtn' => [
+        'content' => '<i class="fa fa-user fa-lg mr-3"></i>' . Yii::t('app', 'Add New User'),
+        'url' => Url::to(['create'])
+    ],
     'columns' => [
         ['class' => 'yii\grid\SerialColumn'],
         [
