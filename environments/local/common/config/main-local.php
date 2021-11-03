@@ -19,7 +19,8 @@ return [
         ],
         'resourceManager' => [
             'class' => 'common\components\FileSystemResourceManager',
-            'basePath' => '../../storage_aws_s3',
+            'basePath' => 'storage_aws_s3',
+            'directory' => 'storage_aws_s3'
         ]
     ],
 ];
