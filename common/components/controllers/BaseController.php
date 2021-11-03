@@ -5,6 +5,7 @@ namespace common\components\controllers;
 use common\helpers\RbacHelper;
 use common\components\orm\ActiveRecord;
 use Yii;
+use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
 
@@ -30,6 +31,12 @@ class BaseController extends \yii\web\Controller
                         'allow' => true,
                         'roles' => [RbacHelper::ROLE_ADMIN],
                     ]
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
                 ],
             ],
         ];

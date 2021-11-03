@@ -62,68 +62,11 @@ AppAsset::register($this);
                             <?=
                             Menu::widget(
                                 [
+                                    'linkTemplate' => '<a class="d-flex align-items-center m-0" href="{url}">{icon}<span class="sidebar-label">{label}</span>{badge}</a>',
                                     "items" => [
                                         ["label" => "Home", "url" => "/", "icon" => "home"],
-                                        ["label" => "Users", "url" => ["/user"], "icon" => "users"],
-                                        ["label" => "Error page", "url" => ["site/error-page"], "icon" => "close"],
-                                        [
-                                            "label" => "Widgets",
-                                            "icon" => "th",
-                                            "url" => "#",
-                                            "items" => [
-                                                ["label" => "Menu", "url" => ["site/menu"]],
-                                                ["label" => "Panel", "url" => ["site/panel"]],
-                                            ],
-                                        ],
-                                        [
-                                            "label" => "Badges",
-                                            "url" => "#",
-                                            "icon" => "table",
-                                            "items" => [
-                                                [
-                                                    "label" => "Default",
-                                                    "url" => "#",
-                                                    "badge" => "123",
-                                                ],
-                                                [
-                                                    "label" => "Success",
-                                                    "url" => "#",
-                                                    "badge" => "new",
-                                                    "badgeOptions" => ["class" => "label-success"],
-                                                ],
-                                                [
-                                                    "label" => "Danger",
-                                                    "url" => "#",
-                                                    "badge" => "!",
-                                                    "badgeOptions" => ["class" => "label-danger"],
-                                                ],
-                                            ],
-                                        ],
-                                        [
-                                            "label" => "Multilevel",
-                                            "url" => "#",
-                                            "icon" => "table",
-                                            "items" => [
-                                                [
-                                                    "label" => "Second level 1",
-                                                    "url" => "#",
-                                                ],
-                                                [
-                                                    "label" => "Second level 2",
-                                                    "url" => "#",
-                                                    "items" => [
-                                                        [
-                                                            "label" => "Third level 1",
-                                                            "url" => "#",
-                                                        ],
-                                                        [
-                                                            "label" => "Third level 2",
-                                                            "url" => "#",
-                                                        ],
-                                                    ],
-                                                ],
-                                            ],
-                                        ],
+                                        ["label" => "Users", "url" => ["/user/index"], "icon" => "users"],
+                                        ["label" => "Categories", "url" => ["/product-category/index"], "icon" => "list"],
                                     ],
                                 ]
                             )
@@ -163,7 +106,8 @@ AppAsset::register($this);
 
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
-                                <a href="javascript:void(0);" class="user-profile dropdown-toggle" data-toggle="dropdown"
+                                <a href="javascript:void(0);" class="user-profile dropdown-toggle"
+                                   data-toggle="dropdown"
                                    aria-expanded="false">
                                     <img src="/img/dummy_avatar.jpg" alt="">John Doe
                                     <span class=" fa fa-angle-down"></span>

@@ -262,7 +262,7 @@ class FileBehavior extends Behavior
         $fileExtension = '.' . pathinfo($fileStorageKey, PATHINFO_EXTENSION);
         $filePath = tempnam($dirPath, md5($fileStorageKey) . '-') . $fileExtension;
         if(!is_file($filePath)){
-            $fileData = $this->getResourceManager()->read($fileStorageKey);
+            $fileData = $this->readFileData($fileStorageKey);
             file_put_contents($filePath, $fileData);
         }
 
@@ -310,7 +310,7 @@ class FileBehavior extends Behavior
     {
         $expireAt = $expireAt ?: strtotime('+1 hour');
         $fileStorageKey = $this->getStorageKey();
-        $fileData = $this->getResourceManager()->read($fileStorageKey);
+        $fileData = $this->readFileData($fileStorageKey);
         $fileExtension = '.' . pathinfo($fileStorageKey, PATHINFO_EXTENSION);
         $filePath = Yii::getAlias($path) . $fileStorageKey . '-' . $expireAt . $fileExtension;
 
@@ -339,7 +339,14 @@ class FileBehavior extends Behavior
         // TODO: Remove FileSystemResourceManagement code when you switch to AWS S3
 
         if($this->getResourceManager() instanceof FileSystemResourceManager) {
-            return $this->getResourceManager()->save($this->fileAttribute, $storageKey, $options);
+            if($this->owner->{$this->fileAttribute} instanceof UploadedFile) {
+                $file = $this->owner->{$this->fileAttribute};
+            } else {
+                $file = new UploadedFile([
+                    'tempName' => $this->getLocalFilePath()
+                ]);
+            }
+            return $this->getResourceManager()->save($file, $storageKey, $options);
         }
 
         if ($this->getResourceManager()->has($storageKey)) {
@@ -373,6 +380,10 @@ class FileBehavior extends Behavior
      */
     public function getUnsignedUrl()
     {
+        if($this->getResourceManager() instanceof FileSystemResourceManager) {
+            return $this->getResourceManager()->getUrl($this->owner->{$this->storageKeyAttribute});
+        }
+
         $client = $this->getResourceManager()->getAdapter()->getClient();
 
         return (string)$client->getObjectUrl($this->getResourceManager()->bucket,  $this->owner->{$this->storageKeyAttribute});
@@ -384,6 +395,10 @@ class FileBehavior extends Behavior
      */
     public function getUrl()
     {
+        if($this->getResourceManager() instanceof FileSystemResourceManager) {
+            return $this->getResourceManager()->getUrl($this->owner->{$this->storageKeyAttribute});
+        }
+
         $expire = Yii::$app->params['resourceManager']['s3.expire.time'];
         $client = $this->getResourceManager()->getAdapter()->getClient();
 
@@ -409,4 +424,14 @@ class FileBehavior extends Behavior
     }
 
 
+    protected function readFileData($storageKey) {
+        $resourceManager = $this->getResourceManager();
+
+        if($resourceManager instanceof FileSystemResourceManager) {
+            $path = $resourceManager->getUrl($storageKey);
+            return file_get_contents(Yii::getAlias('@webroot') . $path);
+        }
+
+       return $resourceManager->read($storageKey);
+    }
 }

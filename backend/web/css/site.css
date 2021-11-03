@@ -11,12 +11,19 @@
     --col-light-blue: #eff0f1;
     --col-gray-neutral: #f7f7f7;
     --col-light-slate-gray: #73879c;
+    --col-violet: #9884fc;
+    --col-violet-dimmed: #6554b9;
+
+    --font-sm: 10px;
+    --font-md: 12px;
+    --font-lg: 14px;
+    --font-xl: 16px;
 }
 
 html, body {
     height: 100%;
     min-height: 100%;
-    padding: 0!important;
+    padding: 0 !important;
 }
 
 footer {
@@ -24,8 +31,9 @@ footer {
 }
 
 .modal-dialog {
-    margin-left: auto!important;
-    margin-right: auto;!important;
+    margin-left: auto !important;
+    margin-right: auto;
+!important;
     padding: 0 10px;
 }
 
@@ -410,4 +418,40 @@ th a[data-sort].desc:after {
 
 table.table-body-relative tbody {
     position: relative;
+}
+
+.treegrid-expander {
+    background-image: none !important;
+    font-family: "FontAwesome", serif;
+    height: fit-content;
+    margin-right: 0.5rem;
+    font-size: var(--font-md);
+}
+
+.treegrid-expander-expanded:after {
+    content: '\f078';
+}
+
+.treegrid-expander-collapsed:after {
+    content: '\f054';
+}
+
+.treegrid-collapse-toggle {
+    font-size: var(--font-lg);
+    cursor: pointer;
+}
+
+.expand-all:not(.active),
+.collapse-all:not(.active) {
+    color: var(--col-violet);
+    font-weight: 600;
+}
+
+.expand-all:not(.active):hover, .expand-all:not(.active):active,
+.collapse-all:not(.active):hover, .collapse-all:not(.active):active {
+    color: var(--col-violet-dimmed);
+}
+
+.tinymce-content-container {
+    min-height: 150px;
 }

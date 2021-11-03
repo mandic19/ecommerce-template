@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
@@ -28,6 +29,9 @@ $queryParam = Yii::$app->request->getQueryParam('q');
                     'autocomplete' => 'off'
                 ]); ?>
                 <span class="input-group-btn">
+                    <?php if (!empty($queryParam)) : ?>
+                        <?= Html::a('<i class="fa fa-close"></i>', Url::to(['', 'q' => '']), ['class' => 'btn btn-default']) ?>
+                    <?php endif; ?>
                     <?= Html::submitButton('<i class="fa fa-search"></i>', ['class' => 'btn btn-default']) ?>
                 </span>
             </div>

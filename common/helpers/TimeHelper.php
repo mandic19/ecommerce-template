@@ -13,6 +13,8 @@ class TimeHelper
     const SQL_DATE_FORMAT = 'Y-m-d';
     const SQL_DATETIME_FORMAT = 'Y-m-d H:i:s';
 
+    const YEAR_SECONDS = 356 * 24 * 60 * 60;
+
     const DEFAULT_SERVER_TIMEZONE = 'Europe/Sarajevo';
 
 

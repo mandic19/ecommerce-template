@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\components\image\ImageBehavior;
 use common\components\orm\ActiveRecord;
 use Yii;
 
@@ -29,6 +30,18 @@ class ImageThumb extends ActiveRecord
     public static function tableName()
     {
         return 'image_thumb';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return array_merge(parent::behaviors(), [
+            'imageable' => [
+                'class' => ImageBehavior::class
+            ],
+        ]);
     }
 
     /**

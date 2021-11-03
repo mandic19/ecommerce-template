@@ -28,7 +28,7 @@ class UserController extends BaseController
      */
     public function behaviors()
     {
-        return array_merge(
+        return ArrayHelper::merge(
             parent::behaviors(),
             [
                 'verbs' => [

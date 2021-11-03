@@ -95,8 +95,8 @@ class UserSearch extends User
         return [
             'attributes' => [
                 'user' => [
-                    'asc' => ['first_name' => SORT_ASC],
-                    'desc' => ['first_name' => SORT_DESC],
+                    'asc' => ["CONCAT(first_name, ' ', last_name)" => SORT_ASC],
+                    'desc' => ["CONCAT(first_name, ' ', last_name)" => SORT_DESC],
                 ],
                 'contact' => [
                     'asc' => ['email' => SORT_ASC, 'phone' => SORT_ASC,],
