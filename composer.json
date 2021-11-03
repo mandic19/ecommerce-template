@@ -21,7 +21,12 @@
         "hosannahighertech/yii2-oauth2-server": "dev-master",
         "yiister/yii2-gentelella": "~1.0",
         "2amigos/yii2-resource-manager-component": "*",
-        "kartik-v/yii2-widget-select2": "*"
+        "kartik-v/yii2-widget-select2": "*",
+        "bower-asset/jquery-treegrid": "0.3.0",
+        "2amigos/yii2-tinymce-widget": "~1.1",
+        "enyo/dropzone": "^5.9",
+        "yiisoft/yii2-imagine": "^2.0@dev",
+        "ps/image-optimizer": "2.0.2"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
