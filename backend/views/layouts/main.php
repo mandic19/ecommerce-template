@@ -5,7 +5,6 @@
  * @var View $this
  */
 
-
 use backend\assets\AppAsset;
 use yii\bootstrap\Modal;
 use yii\helpers\Html;
@@ -57,22 +56,19 @@ AppAsset::register($this);
 
                     <!-- sidebar menu -->
                     <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-
                         <div class="menu_section">
-                            <?=
-                            Menu::widget(
+                            <?= Menu::widget(
                                 [
                                     'linkTemplate' => '<a class="d-flex align-items-center m-0" href="{url}">{icon}<span class="sidebar-label">{label}</span>{badge}</a>',
                                     "items" => [
                                         ["label" => "Home", "url" => "/", "icon" => "home"],
                                         ["label" => "Users", "url" => ["/user/index"], "icon" => "users"],
                                         ["label" => "Categories", "url" => ["/product-category/index"], "icon" => "list"],
+                                        ["label" => "Products", "url" => ["/product/index"], "icon" => "cubes"],
                                     ],
                                 ]
-                            )
-                            ?>
+                            ) ?>
                         </div>
-
                     </div>
                     <!-- /sidebar menu -->
 

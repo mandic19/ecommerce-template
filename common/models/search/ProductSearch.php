@@ -3,23 +3,25 @@
 namespace common\models\search;
 
 use common\helpers\SearchHelper;
+use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\ProductCategory;
+use common\models\Product;
 
 /**
- * ProductCategorySearch represents the model behind the search form of `common\models\ProductCategory`.
+ * ProductSearch represents the model behind the search form of `common\models\Product`.
  */
-class ProductCategorySearch extends ProductCategory
+class ProductSearch extends Product
 {
     public $q;
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'parent_category_id'], 'integer'],
-            [['q'], 'string']
+            [['id', 'category_id'], 'integer'],
+            [['q'], 'string'],
         ];
     }
 
@@ -32,12 +34,13 @@ class ProductCategorySearch extends ProductCategory
      */
     public function search($params)
     {
-        $query = ProductCategory::find();
+        $query = Product::find()->joinWith('category');
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => $this->getSort()
         ]);
 
         $this->load($params, '');
@@ -51,18 +54,36 @@ class ProductCategorySearch extends ProductCategory
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'parent_category_id' => $this->parent_category_id,
+            'category_id' => $this->category_id,
         ]);
 
         if (!empty($this->q)) {
-            $query->leftJoin('product_category as pc', 'pc.parent_category_id = product_category.id');
             $this->q = str_replace("'", '', $this->q);
             $query = SearchHelper::addSearchQuery($query, $this->q, [
-                'product_category.name',
-                'pc.name'
+                'product.name',
+                'product_category.name'
             ]);
         }
 
         return $dataProvider;
+    }
+
+    protected function getSort() {
+        return [
+            'attributes' => [
+                'product' => [
+                    'asc' => ['product.name' => SORT_ASC],
+                    'desc' => ['product.name' => SORT_DESC],
+                ],
+                'category' => [
+                    'asc' => ['product_category.name' => SORT_ASC],
+                    'desc' => ['product_category.name' => SORT_DESC],
+                ],
+                'active' => [
+                    'asc' => ['product.is_active' => SORT_ASC],
+                    'desc' => ['product.is_active' => SORT_DESC],
+                ]
+            ],
+        ];
     }
 }

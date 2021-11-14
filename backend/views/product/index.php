@@ -3,19 +3,19 @@
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\search\UserSearch */
+/* @var $searchModel common\models\search\ProductSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Users');
+$this->title = Yii::t('app', 'Products');
 $this->params['breadcrumbs'][] = $this->title;
 
-$gridId = 'user-grid';
-$pjaxId = 'user-index-pjax';
+$gridId = 'product-grid';
+$pjaxId = 'product-index-pjax';
 $pjaxLoaderTarget = "#{$gridId} tbody";
 
 ?>
 
-<div class="user-index">
+<div class="product-index">
     <?php Pjax::begin(['id' => $pjaxId, 'timeout' => 5000, 'options' => ['data-pjax-loader-target' => $pjaxLoaderTarget]]); ?>
     <?= $this->render('partials/_grid', [
         'dataProvider' => $dataProvider,

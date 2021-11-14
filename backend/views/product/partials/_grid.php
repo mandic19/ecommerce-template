@@ -1,8 +1,8 @@
 <?php
 
-use common\helpers\BaseHelper;
+use common\components\image\ImageSpecification;
 use common\helpers\RbacHelper;
-use common\models\User;
+use common\models\Product;
 use common\widgets\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -20,53 +20,44 @@ use yii\helpers\Url;
     'dataProvider' => $dataProvider,
     'enableAdd' => true,
     'addButtonOption' => [
-        'content' => '<i class="fa fa-user fa-lg mr-3"></i>' . Yii::t('app', 'Add New User')
+        'content' => '<i class="fa fa-cube fa-lg mr-3"></i>' . Yii::t('app', 'Add New Product')
     ],
     'columns' => [
         ['class' => 'yii\grid\SerialColumn'],
         [
-            'label' => Yii::t('app', 'User'),
-            'attribute' => 'user',
+            'label' => Yii::t('app', 'Product'),
+            'attribute' => 'product',
             'format' => 'raw',
-            'value' => function (User $model) {
-                return $this->render('_avatar', ['model' => $model]);
+            'value' => function (Product $model) {
+                if (!$model->cover_image_id) {
+                    return $model->name;
+                }
+
+                $src = Url::to(['/image/view', 'id' => $model->cover_image_id, 'spec' => ImageSpecification::THUMB_EXTRA_SMALL_SQUARED]);
+                $img = Html::img($src, [
+                    'class' => 'thumb thumb-xs mr-4',
+                    'alt' => $model->name
+                ]);
+
+                return "{$img} {$model->name}";
             }
         ],
         [
-            'label' => Yii::t('app', 'Contact Details'),
-            'attribute' => 'contact',
-            'format' => 'raw',
-            'value' => function (User $model) {
-                $emailRowContent = "<i class='fa fa-envelope mr-2'></i><a href='mailto:{$model->email}'>{$model->email}</a>";
-                $emailRow = !empty($model->email) ? Html::tag('div', $emailRowContent, ['class' => 'mb-1']) : "";
-
-                $phoneRowContent = "<i class='fa fa-phone mr-2'></i><a href='tel:{$model->phone}'>{$model->phone}</a>";
-                $phoneRow = !empty($model->email) ? Html::tag('div', $phoneRowContent) : "";
-
-                return "{$emailRow}{$phoneRow}";
-            }
-        ],
-        [
-            'label' => Yii::t('app', 'Location'),
-            'attribute' => 'location',
-            'format' => 'raw',
-            'value' => function (User $model) {
-                $addressRow = !empty($model->address) ? "<div class='mb-1'><strong>{$model->address}</strong></div>" : "";
-                $cityCountryZipRow = BaseHelper::formatToCharSeparatedString([$model->city, $model->country, $model->zip]);
-
-                $cityCountryZipRow = !empty($cityCountryZipRow) ? Html::tag('div', $cityCountryZipRow) : '';
-                return "{$addressRow}{$cityCountryZipRow}";
+            'label' => Yii::t('app', 'Category'),
+            'attribute' => 'category',
+            'value' => function(Product $model) {
+                return !empty($model->category) ? $model->category->name : null;
             }
         ],
         [
             'label' => Yii::t('app', 'Active'),
-            'attribute' => 'status',
+            'attribute' => 'active',
             'format' => 'raw',
-            'value' => function (User $model) use ($pjaxId) {
-                $input = Html::activeInput('checkbox', $model, "[{$model->id}]status", [
-                    'checked' => $model->status === User::STATUS_ACTIVE
+            'value' => function (Product $model) use ($pjaxId) {
+                $input = Html::activeInput('checkbox', $model, "[{$model->id}]is_active", [
+                    'checked' => $model->is_active === Product::STATUS_ACTIVE
                 ]);
-                $label = Html::label('', Html::getInputId($model, "[{$model->id}]status"));
+                $label = Html::label('', Html::getInputId($model, "[{$model->id}]is_active"));
 
                 $content =
                     "<div class='toggle-switch-wrap'>
@@ -76,17 +67,17 @@ use yii\helpers\Url;
                             </span>
                         </div>";
 
-                $action = $model->status === User::STATUS_ACTIVE ?
+                $action = $model->is_active === Product::STATUS_ACTIVE ?
                     Yii::t('app', 'activate') :
                     Yii::t('app', 'deactivate');
 
                 return Html::tag('div', $content, [
                     'class' => 'btn-control-confirm',
-                    'data-msg' => Yii::t('app', "Are you sure you want to {:action} user: {:user}?", [
+                    'data-msg' => Yii::t('app', "Are you sure you want to {:action} product: {:product}?", [
                         ':action' => $action,
-                        ':user' => $model->getFullName()
+                        ':product' => $model->name
                     ]),
-                    'data-url' => Url::to(['user/toggle-status', 'id' => $model->id]),
+                    'data-url' => Url::to(['product/toggle-status', 'id' => $model->id]),
                     'data-json-response' => 1,
                     'data-loader' => 0,
                     'data-pjax-id' => $pjaxId
@@ -96,12 +87,12 @@ use yii\helpers\Url;
             'class' => 'yii\grid\ActionColumn',
             'template' => '<div class="d-flex justify-content-end">{update}{delete}</div>',
             'buttons' => [
-                'update' => function ($url, User $model) {
+                'update' => function ($url, Product $model) {
                     if (!Yii::$app->user->can(RbacHelper::ROLE_SUPER_ADMIN)) {
                         return null;
                     }
 
-                    $url = Url::to(['user/update', 'id' => $model->id]);
+                    $url = Url::to(['product/update', 'id' => $model->id]);
 
                     return Html::tag('span', '<i class="fa fa-wrench"></i>', [
                         'data-href' => $url,
@@ -109,13 +100,13 @@ use yii\helpers\Url;
                         'title' => Yii::t('app', 'Update')
                     ]);
                 },
-                'delete' => function ($url, User $model) use ($pjaxId) {
+                'delete' => function ($url, Product $model) use ($pjaxId) {
                     if (!Yii::$app->user->can(RbacHelper::ROLE_SUPER_ADMIN)) {
                         return null;
                     }
 
-                    $url = Url::to(['/user/delete', 'id' => $model->id]);
-                    $msg = Yii::t('app', 'Are you sure you want to delete user: ') . $model->getFullName();
+                    $url = Url::to(['/product/delete', 'id' => $model->id]);
+                    $msg = Yii::t('app', 'Are you sure you want to delete product: ') . $model->name;
                     return Html::tag('span', '<i class="fa fa-trash"></i>', [
                         'data-href' => $url,
                         'data-confirm-msg' => $msg,

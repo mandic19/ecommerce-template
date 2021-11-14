@@ -12,6 +12,9 @@ modal = (function ($) {
             modal.id = 'main-modal';
             modal.instance = $('#' + modal.id);
             modal.instance.on('hidden.bs.modal', function () {
+                if (window.tinyMCE) {
+                    tinyMCE.EditorManager.remove('.modal-content *');
+                }
                 modal.instance.find('.modal-content').empty();
             });
 

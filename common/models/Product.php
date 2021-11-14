@@ -1,0 +1,137 @@
+<?php
+
+namespace common\models;
+
+use common\components\orm\ActiveRecord;
+use Yii;
+use yii\db\ActiveQuery;
+use yii\helpers\ArrayHelper;
+
+/**
+ * This is the model class for table "product".
+ *
+ * @property int $id
+ * @property int|null $category_id
+ * @property int|null $cover_image_id
+ * @property string|null $name
+ * @property float|null $price
+ * @property string|null $short_description
+ * @property string|null $description
+ * @property int|null $order
+ * @property int|null $is_active
+ * @property int|null $created_at
+ * @property int|null $created_by
+ * @property int|null $updated_at
+ * @property int|null $updated_by
+ * @property int|null $is_deleted
+ *
+ * @property ProductCategory $category
+ * @property Image $coverImage
+ * @property ProductImage[] $productImages
+ */
+class Product extends ActiveRecord
+{
+    const STATUS_ACTIVE = 1;
+    const STATUS_INACTIVE = 0;
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function tableName()
+    {
+        return 'product';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
+            [['name', 'category_id', 'price'], 'required'],
+            [['price'], 'number', 'min' => 0, 'max' => 99999999.99],
+            [['name', 'short_description'], 'string', 'max' => 255],
+            [['description'], 'string'],
+            [['category_id', 'cover_image_id', 'order', 'created_at', 'created_by', 'updated_at', 'updated_by', 'is_deleted'], 'integer'],
+            [['cover_image_id'], 'exist', 'skipOnError' => true, 'targetClass' => Image::className(), 'targetAttribute' => ['cover_image_id' => 'id']],
+            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductCategory::className(), 'targetAttribute' => ['category_id' => 'id']],
+            [['is_active'], 'default', 'value' => static::STATUS_INACTIVE],
+            ['is_active', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE]],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => Yii::t('app', 'ID'),
+            'category_id' => Yii::t('app', 'Category'),
+            'cover_image_id' => Yii::t('app', 'Cover Image ID'),
+            'name' => Yii::t('app', 'Name'),
+            'price' => Yii::t('app', 'Price'),
+            'short_description' => Yii::t('app', 'Short Description'),
+            'description' => Yii::t('app', 'Description'),
+            'order' => Yii::t('app', 'Order'),
+            'is_active' => Yii::t('app', 'Is Active'),
+            'created_at' => Yii::t('app', 'Created At'),
+            'created_by' => Yii::t('app', 'Created By'),
+            'updated_at' => Yii::t('app', 'Updated At'),
+            'updated_by' => Yii::t('app', 'Updated By'),
+            'is_deleted' => Yii::t('app', 'Is Deleted')
+        ];
+    }
+
+    public function getAllProductImages() {
+        $images = [];
+
+        if(!empty($this->coverImage)) {
+            $images[] = $this->coverImage;
+        }
+
+        foreach ($this->getOrderedProductImages() as $productImage) {
+            /* @var $productImage ProductImage */
+            $images[] = $productImage->image;
+        }
+
+        return $images;
+    }
+
+    /**
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    protected function getOrderedProductImages() {
+        return $this->getProductImages()->orderBy(['order' => SORT_ASC])->all();
+    }
+
+    /**
+     * Gets query for [[Category]].
+     *
+     * @return ActiveQuery
+     */
+    public function getCategory()
+    {
+        return $this->hasOne(ProductCategory::className(), ['id' => 'category_id']);
+    }
+
+    /**
+     * Gets query for [[CoverImage]].
+     *
+     * @return ActiveQuery
+     */
+    public function getCoverImage()
+    {
+        return $this->hasOne(Image::className(), ['id' => 'cover_image_id']);
+    }
+
+    /**
+     * Gets query for [[ProductImages]].
+     *
+     * @return ActiveQuery
+     */
+    public function getProductImages()
+    {
+        return $this->hasMany(ProductImage::className(), ['product_id' => 'id']);
+    }
+}

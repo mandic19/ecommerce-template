@@ -68,6 +68,8 @@ class TreeGrid extends GridView
 
     public $parentColumnWithAlias;
 
+    private $children;
+
 
     public function init()
     {
@@ -78,6 +80,7 @@ class TreeGrid extends GridView
             $this->clonedQuery = clone $this->dataProvider->query;
             $column = $this->parentColumnWithAlias ?: $this->parentColumnName;
             $this->dataProvider->query->andWhere(['IS', $column, null]);
+            $this->children = $this->findChildRecords($this->dataProvider->getModels());
         }
         if ($this->emptyText === null) {
             $this->emptyText = Yii::t('yii', 'No results found.');
@@ -145,13 +148,14 @@ class TreeGrid extends GridView
         return Html::tag('table', implode("\n", $table), $this->tableOptions);
     }
 
-    public function renderCollapseToggle(){
+    public function renderCollapseToggle()
+    {
         $collapsed = isset($this->pluginOptions['initialState']) && $this->pluginOptions['initialState'] == 'collapsed';
         $collapseAll = Html::tag('span', Yii::t("app", "Collapse All"), [
-            'class' => 'collapse-all '. ($collapsed ? ' active' : '')
+            'class' => 'collapse-all ' . ($collapsed ? ' active' : '')
         ]);
         $expandAll = Html::tag('span', Yii::t("app", "Expand All"), [
-            'class' => 'expand-all '. (!$collapsed ? ' active' : '')
+            'class' => 'expand-all ' . (!$collapsed ? ' active' : '')
         ]);
         return Html::tag('div', "{$expandAll} / {$collapseAll}", [
             'class' => 'treegrid-collapse-toggle'
@@ -167,11 +171,8 @@ class TreeGrid extends GridView
         $this->dataProvider->setKeys([]);
         $models = array_values($this->dataProvider->getModels());
 
-        if ($this->canBePaginated()) {
-            $children = $this->findChildRecords($models);
-            foreach ($children as $child) {
-                $models[] = $child;
-            }
+        foreach ($this->children as $child) {
+            $models[] = $child;
         }
 
         $models = $this->normalizeData($models, $this->parentRootValue);
@@ -290,5 +291,61 @@ class TreeGrid extends GridView
             return true;
         }
         return false;
+    }
+
+    public function renderSummary()
+    {
+        $count = $this->dataProvider->getCount();
+        if ($count <= 0) {
+            return '';
+        }
+        $summaryOptions = $this->summaryOptions;
+        $tag = ArrayHelper::remove($summaryOptions, 'tag', 'div');
+        if (($pagination = $this->dataProvider->getPagination()) !== false) {
+            $totalCount = $this->dataProvider->getTotalCount() + count($this->children);
+            $begin = $pagination->getPage() * $pagination->pageSize + 1;
+            $end = $begin + $count - 1;
+            if ($begin > $end) {
+                $begin = $end;
+            }
+            $page = $pagination->getPage() + 1;
+            $pageCount = $pagination->pageCount;
+            if (($summaryContent = $this->summary) === null) {
+                return Html::tag($tag, Yii::t('yii', 'Showing <b>{begin, number}-{end, number}</b> of <b>{totalCount, number}</b> {totalCount, plural, one{item} other{items}}.', [
+                    'begin' => $begin,
+                    'end' => $end,
+                    'count' => $count,
+                    'totalCount' => $totalCount,
+                    'page' => $page,
+                    'pageCount' => $pageCount,
+                ]), $summaryOptions);
+            }
+        } else {
+            $begin = $page = $pageCount = 1;
+            $end = $totalCount = $count;
+            if (($summaryContent = $this->summary) === null) {
+                return Html::tag($tag, Yii::t('yii', 'Total <b>{count, number}</b> {count, plural, one{item} other{items}}.', [
+                    'begin' => $begin,
+                    'end' => $end,
+                    'count' => $count,
+                    'totalCount' => $totalCount,
+                    'page' => $page,
+                    'pageCount' => $pageCount,
+                ]), $summaryOptions);
+            }
+        }
+
+        if ($summaryContent === '') {
+            return '';
+        }
+
+        return Html::tag($tag, Yii::$app->getI18n()->format($summaryContent, [
+            'begin' => $begin,
+            'end' => $end,
+            'count' => $count,
+            'totalCount' => $totalCount,
+            'page' => $page,
+            'pageCount' => $pageCount,
+        ], Yii::$app->language), $summaryOptions);
     }
 }

@@ -6,6 +6,7 @@ use common\helpers\RbacHelper;
 use common\components\orm\ActiveRecord;
 use Yii;
 use yii\filters\VerbFilter;
+use yii\web\ErrorAction;
 use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
 
@@ -49,7 +50,7 @@ class BaseController extends \yii\web\Controller
     {
         return [
             'error' => [
-                'class' => 'yii\web\ErrorAction',
+                'class' => ErrorAction::class,
                 'view' => '@app/views/site/error',
                 'layout' => 'blank'
             ],

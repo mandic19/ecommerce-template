@@ -25,7 +25,7 @@ class BaseHelper
             return [];
         }
 
-        $array = explode(', ', str_replace(['[', ']'], '', $value));
+        $array = explode(',', str_replace(['[', ']'], '', $value));
 
         if ($limit == false || !is_int($limit)) {
             return $array;

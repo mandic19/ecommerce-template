@@ -28,7 +28,7 @@ class ImageSpecification
     const THUMB_LARGE = 'w200_h200';
     const THUMB_EXTRA_LARGE = 'w1200_h1200';
 
-    const THUMB_EXTRA_SMALL_SQUARED = 'w25_h25_fs1';
+    const THUMB_EXTRA_SMALL_SQUARED = 'w35_h35_fs1';
     const THUMB_SMALL_SQUARED = 'w50_h50_fs1';
     const THUMB_MEDIUM_SQUARED = 'w120_h120_fs1';
     const THUMB_LARGE_SQUARED = 'w200_h200_fs1';
