@@ -16,7 +16,7 @@ $this->title = 'Login';
 <div class="login">
     <div class="login_wrapper">
         <div class="animate form login_form">
-            <section class="login_content">
+            <section class="login_content px-4 px-md-0">
                 <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
                 <h1><h1><?= Html::encode($this->title) ?></h1></h1>
                 <div>

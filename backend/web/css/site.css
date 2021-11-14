@@ -44,13 +44,19 @@ footer {
 .swal2-container.flash-message {
     padding: .65em;
     background: unset !important;
-    width: fit-content;
-    height: fit-content;
-    position: absolute;
+    width: auto;
+    height: auto;
+    position: fixed;
     top: unset;
     left: unset;
-    right: 2.2em;
-    bottom: 0;
+    right: 0;
+    bottom: 0 !important;
+}
+
+@media (min-width: 991px) {
+    .swal2-container.flash-message {
+        right: 10px;
+    }
 }
 
 .swal2-container.flash-message .swal2-popup {
@@ -343,6 +349,11 @@ th a[data-sort].desc:after {
     background: var(--col-secondary-dimmed) !important;
 }
 
+.tox-tinymce,
+.form-control {
+    border-radius: 4px;
+}
+
 .has-success .control-label,
 .has-success .radio,
 .has-success .checkbox,
@@ -356,26 +367,36 @@ th a[data-sort].desc:after {
 }
 
 .has-success .help-block {
-    color: var(--col-success);
+    color: var(--col-picton-blue);
 }
 
-.has-success .form-control {
-    border-color: var(--col-success);
+.has-success .form-control,
+.login_content form input[type="text"]:focus,
+.login_content form input[type="email"]:focus,
+.login_content form input[type="password"]:focus {
+    border-color: var(--col-picton-blue);
 }
 
 .has-success .form-control:focus {
-    border-color: var(--col-success);
-    box-shadow: inset 0 1px 1px var(--col-gray-neutral), 0 0 3px var(--col-success-dimmed) !important;
+    border-color: var(--col-picton-blue);
+    box-shadow: inset 0 1px 1px var(--col-gray-neutral), 0 0 3px var(--col-picton-blue) !important;
 }
 
 .has-success.select2-container--krajee .select2-dropdown,
 .has-success .select2-container--krajee .select2-selection {
-    border-color: var(--col-success) !important;
+    border-color: var(--col-picton-blue) !important;
 }
 
 .has-success .select2-container--open .select2-selection,
 .has-success .select2-container--krajee.select2-container--focus .select2-selection {
-    border-color: var(--col-success-dimmed) !important;
+    border-color: var(--col-picton-blue) !important;
+}
+
+.select2-results__options li,
+.select2-results__options li:before,
+.select2-results__options li:after {
+    background-color: #fff !important;
+    color: var(--col-primary) !important;
 }
 
 .has-error .help-block,
@@ -391,7 +412,10 @@ th a[data-sort].desc:after {
     color: var(--col-danger-dimmed);
 }
 
-.has-error .form-control {
+.has-error .form-control,
+.login_content form .has-error input[type="text"]:focus,
+.login_content form .has-error input[type="email"]:focus,
+.login_content form .has-error input[type="password"]:focus {
     border-color: var(--col-danger-dimmed);
 }
 
@@ -452,6 +476,17 @@ table.table-body-relative tbody {
     color: var(--col-violet-dimmed);
 }
 
-.tinymce-content-container {
-    min-height: 150px;
+.tox-tinymce {
+    min-height: 120px;
 }
+
+.thumb {
+    box-shadow: 0 2px 4px var(--col-light-slate-gray);
+    border-radius: 6px;
+}
+
+.thumb-xs {
+    width: 35px;
+    height: 35px;
+}
+
