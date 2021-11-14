@@ -3,7 +3,9 @@
 namespace common\widgets\dropzone;
 
 use common\widgets\dropzone\assets\depends\DropzoneJsAsset;
+use yii\jui\JuiAsset;
 use yii\web\AssetBundle;
+use yii\web\JqueryAsset;
 
 class DropzoneAsset extends AssetBundle
 {
@@ -18,7 +20,9 @@ class DropzoneAsset extends AssetBundle
     ];
 
     public $depends = [
-        DropzoneJsAsset::class
+        DropzoneJsAsset::class,
+        JqueryAsset::class,
+        JuiAsset::class
     ];
 
 }

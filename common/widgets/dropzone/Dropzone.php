@@ -11,6 +11,8 @@ use yii\helpers\Url;
 
 class Dropzone extends InputWidget
 {
+    public $enableSorting = false;
+
     public $items = [];
 
     public function run()
@@ -47,7 +49,8 @@ class Dropzone extends InputWidget
             'target' => "#{$this->getDropzoneId()}",
             'input' => "input#{$this->getInputId()}",
             'items' => $this->items,
-            'initialItems' => $this->items
+            'initialItems' => $this->items,
+            'enableSorting' => $this->enableSorting
         ]);
 
         $this->view->registerJs("dropzone.initialize({$config}, {$options});");

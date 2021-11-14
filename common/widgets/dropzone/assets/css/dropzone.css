@@ -36,11 +36,9 @@
     display: none
 }
 
-.dropzone .dz-preview.dz-error .dz-error-message, .dropzone .dz-preview.dz-error .dz-error-mark {
-    display: block
-}
-
-.dropzone .dz-preview.dz-success .dz-success-mark {
+.dropzone .dz-preview.dz-error .dz-error-message,
+.dropzone .dz-preview.dz-error .dz-error-mark,
+dropzone .dz-preview.dz-success .dz-success-mark {
     display: block
 }
 
@@ -58,4 +56,21 @@
 .dropzone .dz-preview .dz-details .dz-filename {
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.dropzone .dz-preview.dz-image-preview {
+    background: transparent;
+}
+
+.ui-sortable .dz-preview.ui-sortable-helper {
+    z-index: 1001!important;
+}
+
+.ui-sortable-helper.dz-preview:hover .dz-image img {
+    -webkit-filter: unset;
+    filter: unset;
+}
+
+.ui-sortable-helper.dz-preview:hover .dz-details {
+    display: none;
 }

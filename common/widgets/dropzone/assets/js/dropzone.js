@@ -44,11 +44,15 @@ let dropzone = (function ($) {
             };
 
             self.options = $.extend({}, defaults, options);
-
             self.dropzone = new Dropzone(self.config.target, self.options);
 
             self.initExistingItems();
             self.updateInput();
+            
+            if(self.config.enableSorting) {
+                self.initializeSortablePlugin();
+            }
+
             dropzone.instances.push(self);
         },
         updateInput: function () {
@@ -64,6 +68,14 @@ let dropzone = (function ($) {
             $.each(items, function (key, value) {
                 inputValue.push(value.id);
             });
+
+            self.config.items.reverse();
+            $.each(self.config.items, function (key, item) {
+                let imageElements = $(self.dropzone.element).children();
+                let index = imageElements.length - (key + 1);
+                $(imageElements[index]).attr('data-id', item.id);
+            });
+            self.config.items.reverse();
 
             input.val(JSON.stringify(inputValue));
         },
@@ -85,6 +97,33 @@ let dropzone = (function ($) {
             let initialMaxFiles = self.dropzone.options.maxFiles + self.config.initialItems.length;
             self.config.initialItems = self.config.initialItems.filter(x => self.config.items.filter(y => y.id == x.id).length > 0);
             self.dropzone.options.maxFiles = initialMaxFiles - self.config.initialItems.length;
+        },
+        initializeSortablePlugin: function () {
+            let self = this;
+            $(self.config.target).sortable({
+                containment: 'parent',
+                items: '> div.dz-preview',
+                tolerance: 'pointer',
+                cursor: 'move',
+                delay: 150,
+                update: function (e, ui) {
+                    self.updateItemsOrder();
+                }
+            });
+        },
+        updateItemsOrder: function () {
+            let self = this;
+            let updatedItems = [];
+            let imageElements = $(self.dropzone.element).children('div.dz-preview');
+
+            $.each(imageElements.get(), function (key, element) {
+                let imageId = $(element).data('id');
+                let item = self.config.items.find(x => x.id === parseInt(imageId));
+                updatedItems.push(item);
+            });
+
+            self.config.items = updatedItems;
+            self.updateInput();
         }
     };
 })(jQuery);
