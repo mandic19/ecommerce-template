@@ -48,8 +48,8 @@ let dropzone = (function ($) {
 
             self.initExistingItems();
             self.updateInput();
-            
-            if(self.config.enableSorting) {
+
+            if (self.config.enableSorting) {
                 self.initializeSortablePlugin();
             }
 
@@ -61,7 +61,7 @@ let dropzone = (function ($) {
             let items = self.config.items;
             let inputValue = [];
 
-            if(input.length < 1) {
+            if (input.length < 1) {
                 return;
             }
 

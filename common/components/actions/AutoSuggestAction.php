@@ -23,7 +23,7 @@ class AutoSuggestAction extends Action
     {
         $searchClass = $this->searchModel;
 
-        if(!\Yii::$app->request->isAjax) {
+        if (!\Yii::$app->request->isAjax) {
             throw new NotFoundHttpException();
         }
 

@@ -61,8 +61,9 @@ class Dropzone extends InputWidget
         return ArrayHelper::getValue($this->clientOptions, 'id', "dropzone-{$this->getId()}");
     }
 
-    protected function getInputId() {
-        if($this->hasModel()) {
+    protected function getInputId()
+    {
+        if ($this->hasModel()) {
             return Html::getInputId($this->model, $this->attribute);
         }
 
