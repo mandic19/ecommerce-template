@@ -17,6 +17,7 @@ use common\models\User;
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * ProductCategoryController implements the CRUD actions for ProductCategory model.
@@ -48,5 +49,23 @@ class ProductCategoryController extends BaseController
                 'modelClass' => $this->modelClass,
             ],
         ]);
+    }
+
+    public function actionSuggest()
+    {
+        \Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $searchModel = new $this->searchModelClass();
+        $queryParams = ArrayHelper::merge(['per-page' => 5, 'page' => 1], \Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search($queryParams);
+
+        $results = [];
+        foreach ($dataProvider->getModels() as $model) {
+            $results[] = ['id' => $model->id, 'text' => $model->name];
+        }
+
+        return [
+            'results' => $results
+        ];
     }
 }
