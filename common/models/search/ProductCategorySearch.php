@@ -3,7 +3,6 @@
 namespace common\models\search;
 
 use common\helpers\SearchHelper;
-use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\ProductCategory;
 
@@ -20,18 +19,8 @@ class ProductCategorySearch extends ProductCategory
     {
         return [
             [['id', 'parent_category_id'], 'integer'],
-            [['name', 'description'], 'safe'],
             [['q'], 'string']
         ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function scenarios()
-    {
-        // bypass scenarios() implementation in the parent class
-        return Model::scenarios();
     }
 
     /**

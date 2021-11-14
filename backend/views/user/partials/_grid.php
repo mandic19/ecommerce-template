@@ -19,9 +19,8 @@ use yii\helpers\Url;
     'pjaxId' => $pjaxId,
     'dataProvider' => $dataProvider,
     'enableAdd' => true,
-    'addBtn' => [
-        'content' => '<i class="fa fa-user fa-lg mr-3"></i>' . Yii::t('app', 'Add New User'),
-        'url' => Url::to(['create'])
+    'addButtonOption' => [
+        'content' => '<i class="fa fa-user fa-lg mr-3"></i>' . Yii::t('app', 'Add New User')
     ],
     'columns' => [
         ['class' => 'yii\grid\SerialColumn'],
@@ -107,6 +106,7 @@ use yii\helpers\Url;
                     return Html::tag('span', '<i class="fa fa-wrench"></i>', [
                         'data-href' => $url,
                         'class' => 'btn btn-sm btn-round btn-white btn-just-icon btn-loading btn-modal-control mr-2',
+                        'title' => Yii::t('app', 'Update')
                     ]);
                 },
                 'delete' => function ($url, User $model) use ($pjaxId) {
@@ -122,7 +122,7 @@ use yii\helpers\Url;
                         'data-grid' => $pjaxId,
                         'data-type' => 'post',
                         'class' => 'btn btn-sm btn-round btn-white btn-just-icon btn-control-pjax-action',
-                        'title' => 'Delete'
+                        'title' => Yii::t('app', 'Delete')
                     ]);
                 },
             ],

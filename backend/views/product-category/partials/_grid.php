@@ -1,5 +1,6 @@
 <?php
 
+use common\components\image\ImageSpecification;
 use common\models\ProductCategory;
 use common\widgets\grid\TreeGrid;
 use yii\data\ActiveDataProvider;
@@ -21,14 +22,27 @@ use yii\helpers\Url;
     'parentColumnWithAlias' => 'product_category.parent_category_id',
     'collapsable' => true,
     'enableAdd' => true,
-    'addBtn' => [
-        'content' => '<i class="fa fa-list fa-lg mr-3"></i>' . Yii::t('app', 'Add New Category'),
-        'url' => Url::to(['create'])
+    'addButtonOption' => [
+        'content' => '<i class="fa fa-list fa-lg mr-3"></i>' . Yii::t('app', 'Add New Category')
     ],
     'columns' => [
         [
-            'label' => Yii::t("app", "Name"),
-            'attribute' => 'name'
+            'label' => Yii::t("app", "Category"),
+            'attribute' => 'name',
+            'format' => 'raw',
+            'value' => function (ProductCategory $model) {
+                if(!$model->cover_image_id) {
+                    return $model->name;
+                }
+
+                $src = Url::to(['/image/view', 'id' => $model->cover_image_id, 'spec' => ImageSpecification::THUMB_EXTRA_SMALL_SQUARED]);
+                $img = Html::img($src, [
+                    'class' => 'thumb thumb-xs mr-4',
+                    'alt' => $model->name
+                ]);
+
+                return "{$img} {$model->name}";
+            }
         ],
         [
             'class' => 'yii\grid\ActionColumn',
@@ -40,11 +54,12 @@ use yii\helpers\Url;
                     return Html::tag('span', '<i class="fa fa-wrench"></i>', [
                         'data-href' => $url,
                         'class' => 'btn btn-sm btn-round btn-white btn-just-icon btn-loading btn-modal-control mr-2',
+                        'title' => Yii::t('app', 'Update')
                     ]);
                 },
                 'delete' => function ($url, ProductCategory $model) use ($pjaxId) {
                     $url = Url::to(['/product-category/delete', 'id' => $model->id]);
-                    $msg = Yii::t('app', 'Are you sure you want to delete category: :name', [':name' => $model->name]);
+                    $msg = Yii::t('app', 'Are you sure you want to delete category: {:name}', [':name' => $model->name]);
 
                     return Html::tag('span', '<i class="fa fa-trash"></i>', [
                         'data-href' => $url,
@@ -52,7 +67,7 @@ use yii\helpers\Url;
                         'data-grid' => $pjaxId,
                         'data-type' => 'post',
                         'class' => 'btn btn-sm btn-round btn-white btn-just-icon btn-control-pjax-action',
-                        'title' => 'Delete'
+                        'title' => Yii::t('app', 'Delete')
                     ]);
                 },
             ],

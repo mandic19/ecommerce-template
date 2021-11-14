@@ -3,7 +3,6 @@
 namespace common\models\search;
 
 use common\helpers\SearchHelper;
-use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\User;
 
@@ -20,19 +19,9 @@ class UserSearch extends User
     public function rules()
     {
         return [
-            [['id', 'status', 'zip'], 'integer'],
-            [['email', 'first_name', 'last_name', 'address', 'city', 'country'], 'safe'],
+            [['id', 'status'], 'integer'],
             [['q'], 'string']
         ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function scenarios()
-    {
-        // bypass scenarios() implementation in the parent class
-        return Model::scenarios();
     }
 
     /**
@@ -64,15 +53,6 @@ class UserSearch extends User
             'id' => $this->id,
             'status' => $this->status
         ]);
-
-        $query->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'username', $this->username])
-            ->andFilterWhere(['like', 'first_name', $this->first_name])
-            ->andFilterWhere(['like', 'last_name', $this->last_name])
-            ->andFilterWhere(['like', 'phone', $this->phone])
-            ->andFilterWhere(['like', 'address', $this->address])
-            ->andFilterWhere(['like', 'city', $this->city])
-            ->andFilterWhere(['like', 'country', $this->country]);
 
         if (!empty($this->q)) {
             $this->q = str_replace("'", '', $this->q);
