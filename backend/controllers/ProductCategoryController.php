@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\components\actions\AutoSuggestAction;
 use common\components\actions\CreateAction;
 use common\components\actions\DeleteAction;
 use common\components\actions\SearchAction;
@@ -34,6 +35,10 @@ class ProductCategoryController extends BaseController
                 'class' => SearchAction::class,
                 'searchModel' => $this->searchModelClass,
             ],
+            'suggest' => [
+                'class' => AutoSuggestAction::class,
+                'searchModel' => $this->searchModelClass,
+            ],
             'create' => [
                 'class' => CreateAction::class,
                 'modelClass' => $this->modelClass,
@@ -49,23 +54,5 @@ class ProductCategoryController extends BaseController
                 'modelClass' => $this->modelClass,
             ],
         ]);
-    }
-
-    public function actionSuggest()
-    {
-        \Yii::$app->response->format = Response::FORMAT_JSON;
-
-        $searchModel = new $this->searchModelClass();
-        $queryParams = ArrayHelper::merge(['per-page' => 5, 'page' => 1], \Yii::$app->request->queryParams);
-        $dataProvider = $searchModel->search($queryParams);
-
-        $results = [];
-        foreach ($dataProvider->getModels() as $model) {
-            $results[] = ['id' => $model->id, 'text' => $model->name];
-        }
-
-        return [
-            'results' => $results
-        ];
     }
 }
