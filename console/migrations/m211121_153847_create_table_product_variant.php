@@ -14,7 +14,7 @@ class m211121_153847_create_table_product_variant extends Migration
     {
         $this->createTable('product_variant', [
             'id' => $this->primaryKey(),
-            'product_id' => $this->integer(),
+            'product_id' => $this->integer()->notNull(),
             'name' => $this->string(255),
             'sku' => $this->string(255),
             'quantity' => $this->integer(),

@@ -10,7 +10,7 @@ use yii\db\ActiveQuery;
  * This is the model class for table "product_variant".
  *
  * @property int $id
- * @property int|null $product_id
+ * @property int $product_id
  * @property string|null $name
  * @property string|null $sku
  * @property int|null $quantity
@@ -41,6 +41,7 @@ class ProductVariant extends ActiveRecord
     {
         return [
             [['id'], 'integer'],
+            [['name', 'sku', 'quantity', 'price'], 'required'],
             [['product_id', 'quantity', 'order', 'created_at', 'created_by', 'updated_at', 'updated_by', 'is_deleted'], 'integer'],
             [['price'], 'number'],
             [['name', 'sku'], 'string', 'max' => 255],

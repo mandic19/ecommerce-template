@@ -1,5 +1,6 @@
 <?php
 
+use backend\models\forms\ProductForm;
 use common\models\ProductVariant;
 use common\widgets\FlashMessage;
 use yii\helpers\Html;
@@ -7,7 +8,7 @@ use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Product */
+/* @var $model ProductForm */
 /* @var $form yii\widgets\ActiveForm */
 
 $formId = 'product-form-dynamic';
@@ -30,8 +31,7 @@ $formId = 'product-form-dynamic';
     <div class="card">
         <div class="card-body">
             <?php $form = ActiveForm::begin([
-                'id' => $formId,
-                'validateOnSubmit' => false
+                'id' => $formId
             ]); ?>
             <div class="tab-content">
                 <div class="tab-pane active" id="general-info" role="tabpanel">
@@ -41,7 +41,7 @@ $formId = 'product-form-dynamic';
                     <?= $this->render('_product_variant_tab', [
                         'form' => $form,
                         'formId' => $formId,
-                        'productVariants' => !empty($model->productVariants) ? $model->productVariants : [new ProductVariant()]
+                        'productVariants' => !empty($model->getAllProductVariants()) ? $model->getAllProductVariants() : [new ProductVariant()]
                     ]) ?>
                 </div>
             </div>
@@ -54,3 +54,25 @@ $formId = 'product-form-dynamic';
     </div>
     <?= FlashMessage::widget(); ?>
 </div>
+
+<?php
+
+$js = <<<JS
+$('form#{$formId}').on('afterValidate',  function (e, messages, errorAttributes) {
+    let errorAttribute = errorAttributes[0];
+    if(errorAttribute !== undefined) {
+        let tab = $('input' + errorAttribute.input).closest('.tab-pane');
+        
+        if(!tab.hasClass('active')) {
+            let tabId = tab.attr('id');
+            let tabSelector = $('.nav-tabs [href="#'+ tabId +'"]');
+            
+            if(tabSelector.length) {
+                tabSelector.tab('show');
+            }
+        }
+    }
+});
+JS;
+
+$this->registerJs($js);
