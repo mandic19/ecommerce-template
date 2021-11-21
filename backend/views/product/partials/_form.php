@@ -1,11 +1,11 @@
 <?php
 
 use common\helpers\BaseHelper;
+use common\models\ProductVariant;
 use common\widgets\dropzone\Dropzone;
 use common\widgets\FlashMessage;
 use common\widgets\TinyMce;
 use kartik\select2\Select2;
-
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
@@ -13,6 +13,8 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model common\models\Product */
 /* @var $form yii\widgets\ActiveForm */
+
+$formId = 'product-form-dynamic';
 
 ?>
 
@@ -31,7 +33,10 @@ use yii\widgets\ActiveForm;
     </ul>
     <div class="card">
         <div class="card-body">
-            <?php $form = ActiveForm::begin(); ?>
+            <?php $form = ActiveForm::begin([
+                'id' => $formId,
+                'validateOnSubmit' => false
+            ]); ?>
             <div class="tab-content">
                 <div class="tab-pane active" id="general-info" role="tabpanel">
                     <div class="row">
@@ -57,10 +62,13 @@ use yii\widgets\ActiveForm;
                                         ],
                                     ]); ?>
                                 </div>
-                                <div class="col-md-6">
-                                    <?= $form->field($model, 'quantity')->textInput(); ?>
+                                <div class="col-md-4">
+                                    <?= $form->field($model, 'sku')->textInput(); ?>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
+                                    <?= $form->field($model, 'quantity')->textInput(['type' => 'number', 'min' => 0]); ?>
+                                </div>
+                                <div class="col-md-4">
                                     <?= $form->field($model, 'price')->textInput(); ?>
                                 </div>
                                 <div class="col-12">
@@ -88,10 +96,14 @@ use yii\widgets\ActiveForm;
                     </div>
                 </div>
                 <div class="tab-pane" id="product-variants" role="tabpanel">
-                    To be implemented...
+                    <?= $this->render('_product_variant_tab', [
+                        'form' => $form,
+                        'formId' => $formId,
+                        'productVariants' => !empty($model->productVariants) ? $model->productVariants : [new ProductVariant()]
+                    ]) ?>
                 </div>
             </div>
-            <div class="form-group d-flex justify-content-end my-3">
+            <div class="form-group d-flex justify-content-end mb-0">
                 <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
                 <?= Html::a(Yii::t('app', 'Cancel'), Url::to(['index']), ['class' => 'btn btn-secondary ml-2']) ?>
             </div>

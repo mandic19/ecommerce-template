@@ -5,13 +5,17 @@ namespace backend\models\forms;
 use common\helpers\BaseHelper;
 use common\models\Product;
 use common\models\ProductImage;
+use common\models\ProductVariant;
 use Yii;
+use yii\base\Model;
 use yii\helpers\ArrayHelper;
 
 class ProductForm extends Product
 {
     public $productImageIds;
     private $imageIds;
+    private $productVariantModels = [];
+    private $oldProductVariantIds = [];
 
     public function getPublicName()
     {
@@ -37,7 +41,7 @@ class ProductForm extends Product
         $coverImageId = null;
         $this->imageIds = BaseHelper::extractIdsFromDropzoneValue($this->productImageIds);
 
-        if(!empty($this->imageIds) && isset($this->imageIds[0])) {
+        if (!empty($this->imageIds) && isset($this->imageIds[0])) {
             $coverImageId = $this->imageIds[0];
             unset($this->imageIds[0]);
         }
@@ -51,12 +55,17 @@ class ProductForm extends Product
     {
         $transaction = Yii::$app->db->beginTransaction();
 
-        if(!parent::save($runValidation, $attributeNames)) {
+        if (!parent::save($runValidation, $attributeNames)) {
             $transaction->rollBack();
             return false;
         }
 
-        if(!$this->saveProductImages()) {
+        if (!$this->saveProductImages()) {
+            $transaction->rollBack();
+            return false;
+        }
+
+        if (!$this->saveProductVariants()) {
             $transaction->rollBack();
             return false;
         }
@@ -69,17 +78,18 @@ class ProductForm extends Product
     /**
      * @return bool
      */
-    protected function saveProductImages() {
+    protected function saveProductImages()
+    {
         $previousImageIds = ArrayHelper::map($this->productImages, 'id', 'image_id');
         $looseImageIds = array_diff($previousImageIds, $this->imageIds);
 
-        if(!empty($looseImageIds) && !$this->deleteLooseImages($looseImageIds)) {
+        if (!empty($looseImageIds) && !$this->deleteLooseImages($looseImageIds)) {
             return false;
         }
 
         $newImageIds = array_diff($this->imageIds, $previousImageIds);
 
-        if(!empty($this->imageIds) && !$this->createOrUpdateImages($newImageIds)) {
+        if (!empty($this->imageIds) && !$this->createOrUpdateImages($newImageIds)) {
             return false;
         }
 
@@ -90,7 +100,8 @@ class ProductForm extends Product
      * @param array $imageIds
      * @return int
      */
-    protected function deleteLooseImages($imageIds = []) {
+    protected function deleteLooseImages($imageIds = [])
+    {
         $this->imageIds = array_diff($this->imageIds, $imageIds);
 
         return ProductImage::deleteAll([
@@ -104,11 +115,12 @@ class ProductForm extends Product
      * @param array $newImageIds
      * @return bool
      */
-    protected function createOrUpdateImages($newImageIds = []) {
+    protected function createOrUpdateImages($newImageIds = [])
+    {
         $counter = 1;
 
         foreach ($this->imageIds as $imageId) {
-            if(!in_array($imageId, $newImageIds)) {
+            if (!in_array($imageId, $newImageIds)) {
                 $model = $this->findExistingImage($imageId);
                 $model->order = $counter;
             } else {
@@ -119,7 +131,7 @@ class ProductForm extends Product
                 ]);
             }
 
-            if(!$model->save()) {
+            if (!$model->save()) {
                 $this->addError('product_image', implode('\n\r', $this->getFirstErrors()));
                 return false;
             }
@@ -129,12 +141,83 @@ class ProductForm extends Product
         return true;
     }
 
-    protected function findExistingImage($imageId) {
+    protected function findExistingImage($imageId)
+    {
         foreach ($this->productImages as $productImage) {
-            if($productImage->image_id == $imageId) {
+            if ($productImage->image_id == $imageId) {
                 return $productImage;
             }
         }
         return null;
+    }
+
+    protected function saveProductVariants()
+    {
+        foreach (Yii::$app->request->post('ProductVariant', []) as $item) {
+            $model = new ProductVariant(['product_id' => $this->id]);
+            $productVariantId = $item['id'] ?? null;
+            if (!empty($productVariantId)) {
+                foreach ($this->productVariants as $productVariant) {
+                    if ($productVariant->id == $productVariantId) {
+                        $model = $productVariant;
+                        $this->oldProductVariantIds[] = $productVariant->id;
+                        break;
+                    }
+                }
+            }
+            $this->productVariantModels[] = $model;
+        }
+
+        Model::loadMultiple($this->productVariantModels, Yii::$app->request->post());
+
+        return $this->deleteLooseProductVariants() && $this->updateOldProductVariants() && $this->saveNewProductVariants();
+    }
+
+    protected function deleteLooseProductVariants()
+    {
+        $looseProductVariants = array_filter($this->productVariants, function (ProductVariant $model) {
+            return !$model->isNewRecord && !in_array($model->id, $this->oldProductVariantIds);
+        });
+
+        foreach ($looseProductVariants as $model) {
+            if (!$model->delete()) {
+                $this->addError('product_variant', implode('<br>', $model->getFirstErrors()));
+                return false;
+            }
+        }
+        return true;
+    }
+
+    protected function updateOldProductVariants()
+    {
+        foreach ($this->productVariantModels as $key => $model) {
+            /* @var $model ProductVariant */
+            if ($model->isNewRecord) {
+                continue;
+            }
+
+            if (!$model->save()) {
+                $this->addError('product_variant', implode('<br>', $model->getFirstErrors()));
+                return false;
+            }
+
+            unset($this->productVariantModels[$key]);
+        }
+
+        return true;
+    }
+
+    protected function saveNewProductVariants()
+    {
+        foreach ($this->productVariantModels as $key => $model) {
+            if (!$model->save()) {
+                $this->addError('product_variant', implode('<br>', $model->getFirstErrors()));
+                return false;
+            }
+
+            unset($this->productVariantModels[$key]);
+        }
+
+        return true;
     }
 }
