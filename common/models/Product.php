@@ -14,6 +14,7 @@ use yii\helpers\ArrayHelper;
  * @property int|null $category_id
  * @property int|null $cover_image_id
  * @property string|null $name
+ * @property int|null $quantity
  * @property float|null $price
  * @property string|null $short_description
  * @property string|null $description
@@ -50,6 +51,8 @@ class Product extends ActiveRecord
         return [
             [['name', 'category_id', 'price'], 'required'],
             [['price'], 'number', 'min' => 0, 'max' => 99999999.99],
+            [['quantity'], 'integer', 'min' => 0],
+            [['quantity'], 'default', 'value' => 0],
             [['name', 'short_description'], 'string', 'max' => 255],
             [['description'], 'string'],
             [['category_id', 'cover_image_id', 'order', 'created_at', 'created_by', 'updated_at', 'updated_by', 'is_deleted'], 'integer'],
@@ -70,6 +73,7 @@ class Product extends ActiveRecord
             'category_id' => Yii::t('app', 'Category'),
             'cover_image_id' => Yii::t('app', 'Cover Image ID'),
             'name' => Yii::t('app', 'Name'),
+            'quantity' => Yii::t('app', 'Quantity'),
             'price' => Yii::t('app', 'Price'),
             'short_description' => Yii::t('app', 'Short Description'),
             'description' => Yii::t('app', 'Description'),
