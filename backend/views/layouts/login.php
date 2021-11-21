@@ -24,7 +24,7 @@ AppAsset::register($this);
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
     </head>
-    <body class="login">
+    <body>
     <?php $this->beginBody(); ?>
     <?= $content ?>
     <?php $this->endBody(); ?>

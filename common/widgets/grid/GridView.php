@@ -55,13 +55,19 @@ class GridView extends \yii\grid\GridView
     protected function renderAdd()
     {
         $this->addButtonOption = ArrayHelper::merge([
-            'content' => Yii::t('app', 'Add New'),
-            'action' => Url::to(['create'])
+            'class' => 'btn btn-success btn-modal-control btn-loading'
         ], $this->addButtonOption);
 
-        return Html::tag('span', $this->addButtonOption['content'], [
-            'data-href' => $this->addButtonOption['action'],
-            'class' => 'btn btn-success btn-modal-control btn-loading my-auto ml-sm-auto mr-0',
-        ]);
+        $link = ArrayHelper::remove($this->addButtonOption, 'link', false);
+        $url = ArrayHelper::remove($this->addButtonOption, 'url', Url::to(['create']));
+        $content = ArrayHelper::remove($this->addButtonOption, 'content', Yii::t('app', 'Add New'));
+
+        if ($link) {
+            return Html::a($content, $url, $this->addButtonOption);
+        }
+
+        $this->addButtonOption['data-href'] = $url;
+
+        return Html::tag('span', $content, $this->addButtonOption);
     }
 }

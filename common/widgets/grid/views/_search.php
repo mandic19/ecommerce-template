@@ -19,9 +19,9 @@ $queryParam = Yii::$app->request->getQueryParam('q');
             'data-pjax' => 1
         ],
     ]); ?>
-    <div class="d-flex align-items-center">
-        <h1><?= Html::encode($this->title) ?></h1>
-        <div class="form-group top_search m-0 mx-4 <?= !empty($queryParam) ? 'flex-grow-1' : '' ?>">
+    <div class="d-flex align-items-center flex-wrap flex-md-nowrap">
+        <h1 class="m-0 mr-3 py-3 py-md-0"><?= Html::encode($this->title) ?></h1>
+        <div class="form-group top_search my-0 <?= !empty($queryParam) ? ' flex-grow-1' : '' ?>">
             <div class="input-group m-0">
                 <?= Html::input('text', 'q', $queryParam, [
                     'class' => 'form-control',
