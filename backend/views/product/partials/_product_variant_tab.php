@@ -16,12 +16,12 @@ use yii\widgets\ActiveForm;
 ?>
 
 <?php DynamicForm::begin([
-    'widgetContainer' => 'dynamicform_wrapper', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
-    'widgetBody' => '.container-items', // required: css class selector
-    'widgetItem' => '.item', // required: css class
-    'min' => 0, // 0 or 1 (default 1)
-    'insertButton' => '.add-item', // css class
-    'deleteButton' => '.remove-item', // css class
+    'widgetContainer' => 'dynamicform_wrapper',
+    'widgetBody' => '.container-items',
+    'widgetItem' => '.item',
+    'min' => 0,
+    'insertButton' => '.add-item',
+    'deleteButton' => '.remove-item',
     'model' => $productVariants[0],
     'formId' => $formId,
     'formFields' => [
@@ -32,7 +32,7 @@ use yii\widgets\ActiveForm;
     ],
 ]); ?>
 
-<?= Html::button('<i class="fa fa-plus"></i> ' . Yii::t('app', 'Add Product Variant'), [
+<?= Html::button('<i class="fa fa-cube mr-2"></i> ' . Yii::t('app', 'Add Product Variant'), [
     'class' => 'btn btn-success add-item d-block'
 ]); ?>
 <div class="container-items row mt-3">
