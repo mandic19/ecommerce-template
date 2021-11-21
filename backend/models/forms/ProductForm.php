@@ -13,6 +13,11 @@ class ProductForm extends Product
     public $productImageIds;
     private $imageIds;
 
+    public function getPublicName()
+    {
+        return Yii::t('app', 'Product');
+    }
+
     public function rules()
     {
         return ArrayHelper::merge(parent::rules(), [

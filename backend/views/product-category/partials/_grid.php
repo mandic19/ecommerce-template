@@ -42,7 +42,8 @@ use yii\helpers\Url;
                 ]);
 
                 return "{$img} {$model->name}";
-            }
+            },
+            'contentOptions' => ['class' => 'text-nowrap']
         ],
         [
             'class' => 'yii\grid\ActionColumn',

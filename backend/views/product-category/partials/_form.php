@@ -2,11 +2,9 @@
 
 use common\helpers\BaseHelper;
 use common\helpers\ProductCategoryHelper;
-use common\models\ProductCategory;
 use common\widgets\dropzone\Dropzone;
 use common\widgets\TinyMce;
 use kartik\select2\Select2;
-use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
