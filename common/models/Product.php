@@ -14,6 +14,7 @@ use yii\helpers\ArrayHelper;
  * @property int|null $category_id
  * @property int|null $cover_image_id
  * @property string|null $name
+ * @property string|null $sku
  * @property int|null $quantity
  * @property float|null $price
  * @property string|null $short_description
@@ -29,6 +30,7 @@ use yii\helpers\ArrayHelper;
  * @property ProductCategory $category
  * @property Image $coverImage
  * @property ProductImage[] $productImages
+ * @property ProductVariant[] $productVariants
  */
 class Product extends ActiveRecord
 {
@@ -53,13 +55,14 @@ class Product extends ActiveRecord
             [['price'], 'number', 'min' => 0, 'max' => 99999999.99],
             [['quantity'], 'integer', 'min' => 0],
             [['quantity'], 'default', 'value' => 0],
-            [['name', 'short_description'], 'string', 'max' => 255],
+            [['name', 'short_description', 'sku'], 'string', 'max' => 255],
             [['description'], 'string'],
             [['category_id', 'cover_image_id', 'order', 'created_at', 'created_by', 'updated_at', 'updated_by', 'is_deleted'], 'integer'],
             [['cover_image_id'], 'exist', 'skipOnError' => true, 'targetClass' => Image::className(), 'targetAttribute' => ['cover_image_id' => 'id']],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductCategory::className(), 'targetAttribute' => ['category_id' => 'id']],
             [['is_active'], 'default', 'value' => static::STATUS_INACTIVE],
             ['is_active', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE]],
+            [['sku'], 'unique']
         ];
     }
 
@@ -73,6 +76,7 @@ class Product extends ActiveRecord
             'category_id' => Yii::t('app', 'Category'),
             'cover_image_id' => Yii::t('app', 'Cover Image ID'),
             'name' => Yii::t('app', 'Name'),
+            'sku' => Yii::t('app', 'SKU'),
             'quantity' => Yii::t('app', 'Quantity'),
             'price' => Yii::t('app', 'Price'),
             'short_description' => Yii::t('app', 'Short Description'),
@@ -137,5 +141,15 @@ class Product extends ActiveRecord
     public function getProductImages()
     {
         return $this->hasMany(ProductImage::className(), ['product_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[ProductVariants]].
+     *
+     * @return ActiveQuery
+     */
+    public function getProductVariants()
+    {
+        return $this->hasMany(ProductVariant::className(), ['product_id' => 'id']);
     }
 }
