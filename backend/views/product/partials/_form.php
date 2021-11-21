@@ -41,7 +41,7 @@ $formId = 'product-form-dynamic';
                     <?= $this->render('_product_variant_tab', [
                         'form' => $form,
                         'formId' => $formId,
-                        'productVariants' => !empty($model->getAllProductVariants()) ? $model->getAllProductVariants() : [new ProductVariant()]
+                        'productVariants' => !empty($model->productVariants) ? $model->productVariants : [new ProductVariant()]
                     ]) ?>
                 </div>
             </div>
