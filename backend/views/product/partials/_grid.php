@@ -54,6 +54,9 @@ use yii\helpers\Url;
                 return !empty($model->category) ? $model->category->name : null;
             }
         ],
+        'sku',
+        'quantity',
+        'price',
         [
             'label' => Yii::t('app', 'Active'),
             'attribute' => 'active',

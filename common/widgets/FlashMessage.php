@@ -3,6 +3,7 @@
 namespace common\widgets;
 
 use Yii;
+use yii\helpers\Html;
 
 /**
  * Alert widget renders a message from session flash. All flash messages are displayed
@@ -44,7 +45,7 @@ class FlashMessage extends \yii\bootstrap4\Widget
             }
 
             foreach ((array)$flash as $message) {
-                $this->view->registerJs("main.ui.notify('{$message}', '{$type}');");
+                $this->view->registerJs("main.ui.notify(`{$message}`, `{$type}`);");
             }
 
             $session->removeFlash($type);
