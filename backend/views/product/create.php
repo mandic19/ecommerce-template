@@ -11,11 +11,7 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Products'), 'url' =>
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="product-create">
-    <?php ModalContent::begin(['title' => Html::encode($this->title)]); ?>
-
     <?= $this->render('partials/_form', [
         'model' => $model,
     ]) ?>
-
-    <?php ModalContent::end(); ?>
 </div>

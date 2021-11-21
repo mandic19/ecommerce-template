@@ -12,6 +12,7 @@ use yii\helpers\Url;
 /* @var $gridId string */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+
 ?>
 
 <?= GridView::widget([
@@ -20,7 +21,10 @@ use yii\helpers\Url;
     'dataProvider' => $dataProvider,
     'enableAdd' => true,
     'addButtonOption' => [
-        'content' => '<i class="fa fa-cube fa-lg mr-3"></i>' . Yii::t('app', 'Add New Product')
+        'content' => '<i class="fa fa-cube fa-lg mr-3"></i>' . Yii::t('app', 'Add New Product'),
+        'link' => true,
+        'data-pjax' => 0,
+        'class' => 'btn btn-success'
     ],
     'columns' => [
         ['class' => 'yii\grid\SerialColumn'],
@@ -40,7 +44,8 @@ use yii\helpers\Url;
                 ]);
 
                 return "{$img} {$model->name}";
-            }
+            },
+            'contentOptions' => ['class' => 'text-nowrap']
         ],
         [
             'label' => Yii::t('app', 'Category'),
@@ -94,9 +99,9 @@ use yii\helpers\Url;
 
                     $url = Url::to(['product/update', 'id' => $model->id]);
 
-                    return Html::tag('span', '<i class="fa fa-wrench"></i>', [
-                        'data-href' => $url,
-                        'class' => 'btn btn-sm btn-round btn-white btn-just-icon btn-loading btn-modal-control mr-2',
+                    return Html::a('<i class="fa fa-wrench"></i>', $url, [
+                        'data-pjax' => 0,
+                        'class' => 'btn btn-sm btn-round btn-white btn-just-icon mr-2',
                         'title' => Yii::t('app', 'Update')
                     ]);
                 },

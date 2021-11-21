@@ -4,9 +4,9 @@ namespace common\components\actions;
 
 use Yii;
 use yii\base\Model;
+use yii\bootstrap4\ActiveForm;
 use yii\web\Response;
 use yii\db\BaseActiveRecord;
-use yii\bootstrap\ActiveForm;
 use common\components\orm\ActiveRecord;
 
 /**
