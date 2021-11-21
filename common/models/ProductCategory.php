@@ -44,6 +44,7 @@ class ProductCategory extends ActiveRecord
     public function rules()
     {
         return [
+            [['name'], 'required'],
             [['parent_category_id', 'cover_image_id', 'order', 'created_at', 'created_by', 'updated_at', 'updated_by', 'is_deleted'], 'integer'],
             [['description'], 'string'],
             [['name'], 'string', 'max' => 255],
