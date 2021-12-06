@@ -60,9 +60,10 @@ AppAsset::register($this);
                     'itemOptions' => ['class' => 'list-group-item'],
                     'items' => [
                         ["label" => "<i class='fa fa-home fa-lg'></i><span>Home</span>", "url" => ['site/index']],
-                        ["label" => "<i class='fa fa-users fa-lg'></i><span>Users</span>", "url" => ["/user/index"]],
+                        ["label" => "<i class='fa fa-shopping-cart fa-lg'></i><span>Orders</span>", "url" => ["/order/index"]],
                         ["label" => "<i class='fa fa-list fa-lg'></i><span>Categories</span>", "url" => ["/product-category/index"]],
                         ["label" => "<i class='fa fa-cubes fa-lg'></i><span>Products</span>", "url" => ["/product/index"]],
+                        ["label" => "<i class='fa fa-users fa-lg'></i><span>Users</span>", "url" => ["/user/index"]],
                     ],
                 ]
             ); ?>
