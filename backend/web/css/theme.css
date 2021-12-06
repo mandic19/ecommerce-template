@@ -521,8 +521,12 @@ section.empty-layout .search {
 
 /************ TABLES START ************/
 
+.table td {
+    line-height: 1.15rem;
+}
+
 .table th, .table td {
-    padding: 0.535rem!important;
+    padding: 0.535rem !important;
 }
 
 .table > thead > tr > th,
@@ -564,7 +568,7 @@ table.table-primary td a {
 }
 
 .table-primary th, .table-primary td, .table-primary thead th, .table-primary tbody + tbody {
-    border-color: var(--col-secondary-dimmed)!important;
+    border-color: var(--col-secondary-dimmed) !important;
 }
 
 table.table-body-relative tbody {
@@ -874,3 +878,37 @@ section.empty-layout .top_search .form-control {
 .select2-container--krajee-bs4 .select2-selection--single .select2-selection__clear {
     margin-top: 3px;
 }
+
+/************ BADGES START ************/
+
+.badge.badge-circle {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    justify-content: center;
+}
+
+.badge.badge-info {
+    color: var(--col-white);
+    background-color: var(--col-picton-blue);
+}
+
+.badge.badge-violet {
+    color: var(--col-white);
+    background-color: var(--col-violet);
+}
+
+.badge.badge-success {
+    color: var(--col-white);
+    background-color: var(--col-success);
+}
+
+.badge.badge-danger {
+    color: var(--col-white);
+    background-color: var(--col-danger-dimmed);
+}
+
+/************ BADGES END ************/
