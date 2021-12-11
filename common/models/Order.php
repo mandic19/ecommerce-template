@@ -10,6 +10,7 @@ use yii\db\ActiveQuery;
  * This is the model class for table "order".
  *
  * @property int $id
+ * @property int|null $user_id
  * @property string|null $code
  * @property float|null $subtotal
  * @property float|null $total_tax
@@ -36,6 +37,7 @@ use yii\db\ActiveQuery;
  * @property int|null $is_deleted
  *
  * @property OrderItem[] $orderItems
+ * @property User $user
  */
 class Order extends ActiveRecord
 {
@@ -61,14 +63,15 @@ class Order extends ActiveRecord
     {
         return [
             [['subtotal', 'total_tax', 'total_discount', 'shipping_cost', 'total'], 'number'],
-            [['created_at', 'created_by', 'updated_at', 'updated_by', 'is_deleted'], 'integer'],
+            [['user_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'is_deleted'], 'integer'],
             [['request'], 'string'],
             [['code', 'delivery_phone'], 'string', 'max' => 45],
             [['currency'], 'string', 'max' => 3],
             [['delivery_first_name', 'delivery_last_name', 'delivery_address', 'delivery_city', 'delivery_zip', 'delivery_country', 'delivery_notes', 'customer_ip_address', 'customer_user_agent'], 'string', 'max' => 255],
             [['status'],  'in', 'range' => [
                 self::STATUS_PENDING, self::STATUS_PROCESSING, self::STATUS_COMPLETED, self::STATUS_CANCELLED, self::STATUS_FAILED, self::STATUS_REFUNDED
-            ]]
+            ]],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -79,6 +82,7 @@ class Order extends ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
+            'user_id' => Yii::t('app', 'User ID'),
             'code' => Yii::t('app', 'Code'),
             'subtotal' => Yii::t('app', 'Subtotal'),
             'total_tax' => Yii::t('app', 'Total Tax'),
@@ -106,6 +110,10 @@ class Order extends ActiveRecord
         ];
     }
 
+    public function getTotalOrderItems() {
+        return $this->getOrderItems()->count();
+    }
+
     /**
      * Gets query for [[OrderItems]].
      *
@@ -114,5 +122,15 @@ class Order extends ActiveRecord
     public function getOrderItems()
     {
         return $this->hasMany(OrderItem::className(), ['order_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[User]].
+     *
+     * @return ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 }
