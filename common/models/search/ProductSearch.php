@@ -22,6 +22,7 @@ class ProductSearch extends Product
         return [
             [['id', 'category_id'], 'integer'],
             [['q'], 'string'],
+            [['q'], 'filter', 'filter' => 'trim']
         ];
     }
 

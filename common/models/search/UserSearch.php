@@ -20,7 +20,8 @@ class UserSearch extends User
     {
         return [
             [['id', 'status'], 'integer'],
-            [['q'], 'string']
+            [['q'], 'string'],
+            [['q'], 'filter', 'filter' => 'trim']
         ];
     }
 
