@@ -71,7 +71,7 @@ class OrderStatusHelper
             Order::STATUS_PENDING => 'spinner',
             Order::STATUS_PROCESSING => 'stack-overflow',
             Order::STATUS_COMPLETED => 'check',
-            Order::STATUS_CANCELLED => 'times',
+            Order::STATUS_CANCELLED => 'ban',
             Order::STATUS_FAILED => 'warning',
             Order::STATUS_REFUNDED => 'undo',
         ];

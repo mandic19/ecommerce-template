@@ -883,12 +883,16 @@ section.empty-layout .top_search .form-control {
 
 .badge.badge-circle {
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
+    width: 38px;
+    height: 38px;
     display: flex;
     align-items: center;
     padding: 0;
     justify-content: center;
+}
+
+.badge.badge-circle > i {
+    font-size: 1.65em;
 }
 
 .badge.badge-info {
