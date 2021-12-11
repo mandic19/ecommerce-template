@@ -4,12 +4,11 @@
  * Email: marko.mandic.engr@gmail.com
  */
 
-use common\components\image\ImageSpecification;
+use common\helpers\BaseHelper;
 use common\helpers\OrderStatusHelper;
-use common\helpers\RbacHelper;
+use common\helpers\PriceHelper;
 use common\helpers\TimeHelper;
 use common\models\Order;
-use common\models\Product;
 use common\widgets\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -18,7 +17,6 @@ use yii\helpers\Url;
 /* @var $pjaxId string */
 /* @var $gridId string */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
 
 ?>
 
@@ -31,7 +29,8 @@ use yii\helpers\Url;
         [
             'label' => Yii::t('app', 'Order #'),
             'format' => 'raw',
-            'value' => function(Order $model) {
+            'attribute' => 'order',
+            'value' => function (Order $model) {
                 $statusBadge = OrderStatusHelper::getStatusBadge($model->status);
                 $code = Html::a($model->code, Url::to(['order/view', 'id' => $model->id]), [
                     'data-pjax' => 0,
@@ -48,8 +47,34 @@ use yii\helpers\Url;
         ],
         [
             'label' => Yii::t('app', 'Customer'),
+            'attribute' => 'customer',
             'format' => 'raw',
+            'value' => function (Order $model) {
+                return $this->render(Url::to(['shared/partials/_avatar']), [
+                    'model' => $model->user
+                ]);
+            }
         ],
-        'total'
+        [
+            'label' => Yii::t('app', 'Delivery Address'),
+            'attribute' => 'delivery_address',
+            'format' => 'raw',
+            'value' => function (Order $model) {
+                $addressRow = !empty($model->delivery_address) ? "<div class='mb-1'><strong>{$model->delivery_address}</strong></div>" : "";
+                $cityCountryZipRow = BaseHelper::formatToCharSeparatedString([$model->delivery_city, $model->delivery_country, $model->delivery_zip]);
+
+                $cityCountryZipRow = !empty($cityCountryZipRow) ? Html::tag('div', $cityCountryZipRow) : '';
+                return "{$addressRow}{$cityCountryZipRow}";
+            }
+        ],
+        [
+            'label' => Yii::t('app', 'Total'),
+            'attribute' => 'total',
+            'format' => 'raw',
+            'value' => function (Order $model) {
+                $formattedPrice = PriceHelper::format($model->total);
+                return Html::tag('strong', $formattedPrice);
+            }
+        ],
     ],
 ]); ?>

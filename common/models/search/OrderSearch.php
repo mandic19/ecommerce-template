@@ -2,6 +2,7 @@
 
 namespace common\models\search;
 
+use common\helpers\SearchHelper;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\Order;
@@ -11,15 +12,16 @@ use common\models\Order;
  */
 class OrderSearch extends Order
 {
+    public $q;
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'is_deleted'], 'integer'],
-            [['code', 'currency', 'delivery_first_name', 'delivery_last_name', 'delivery_address', 'delivery_city', 'delivery_zip', 'delivery_country', 'delivery_phone', 'delivery_notes', 'customer_ip_address', 'customer_user_agent', 'request'], 'safe'],
-            [['subtotal', 'total_tax', 'total_discount', 'shipping_cost', 'total'], 'number'],
+            [['q'], 'string'],
+            [['q'], 'filter', 'filter' => 'trim']
         ];
     }
 
@@ -41,15 +43,16 @@ class OrderSearch extends Order
      */
     public function search($params)
     {
-        $query = Order::find();
+        $query = Order::find()->joinWith(['user']);
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => $this->getSort()
         ]);
 
-        $this->load($params);
+        $this->load($params, '');
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -57,36 +60,49 @@ class OrderSearch extends Order
             return $dataProvider;
         }
 
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'subtotal' => $this->subtotal,
-            'total_tax' => $this->total_tax,
-            'total_discount' => $this->total_discount,
-            'shipping_cost' => $this->shipping_cost,
-            'total' => $this->total,
-            'status' => $this->status,
-            'created_at' => $this->created_at,
-            'created_by' => $this->created_by,
-            'updated_at' => $this->updated_at,
-            'updated_by' => $this->updated_by,
-            'is_deleted' => $this->is_deleted,
-        ]);
-
-        $query->andFilterWhere(['like', 'code', $this->code])
-            ->andFilterWhere(['like', 'currency', $this->currency])
-            ->andFilterWhere(['like', 'delivery_first_name', $this->delivery_first_name])
-            ->andFilterWhere(['like', 'delivery_last_name', $this->delivery_last_name])
-            ->andFilterWhere(['like', 'delivery_address', $this->delivery_address])
-            ->andFilterWhere(['like', 'delivery_city', $this->delivery_city])
-            ->andFilterWhere(['like', 'delivery_zip', $this->delivery_zip])
-            ->andFilterWhere(['like', 'delivery_country', $this->delivery_country])
-            ->andFilterWhere(['like', 'delivery_phone', $this->delivery_phone])
-            ->andFilterWhere(['like', 'delivery_notes', $this->delivery_notes])
-            ->andFilterWhere(['like', 'customer_ip_address', $this->customer_ip_address])
-            ->andFilterWhere(['like', 'customer_user_agent', $this->customer_user_agent])
-            ->andFilterWhere(['like', 'request', $this->request]);
+        if (!empty($this->q)) {
+            $this->q = str_replace("'", '', $this->q);
+            $query = SearchHelper::addSearchQuery($query, $this->q, [
+                'CONCAT(user.first_name, " ", user.last_name)',
+                'CONCAT(delivery_city, ", ", delivery_country, ", ", delivery_zip)',
+                'delivery_address',
+                'delivery_city',
+                'delivery_country',
+                'delivery_zip',
+                'code'
+            ]);
+        }
 
         return $dataProvider;
+    }
+
+    protected function getSort() {
+        return [
+            'attributes' => [
+                'order' => [
+                    'asc' => ["order.created_at" => SORT_ASC],
+                    'desc' => ["order.created_at" => SORT_DESC],
+                ],
+                'customer' => [
+                    'asc' => ["CONCAT(user.first_name, ' ', user.last_name)" => SORT_ASC],
+                    'desc' => ["CONCAT(user.first_name, ' ', user.last_name)" => SORT_DESC],
+                ],
+                'delivery_address' => [
+                    'asc' => [
+                        'delivery_address' => SORT_ASC,
+                        'delivery_city' => SORT_ASC,
+                        'delivery_country' => SORT_ASC,
+                        'delivery_zip' => SORT_ASC
+                    ],
+                    'desc' => [
+                        'delivery_address' => SORT_DESC,
+                        'delivery_city' => SORT_DESC,
+                        'delivery_country' => SORT_DESC,
+                        'delivery_zip' => SORT_DESC
+                    ],
+                ],
+                'total'
+            ],
+        ];
     }
 }
