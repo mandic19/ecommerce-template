@@ -31,10 +31,10 @@ $queryParams = Yii::$app->request->queryParams;
                     'placeholder' => Yii::t('app', 'Search...'),
                     'autocomplete' => 'off'
                 ]); ?>
-                <span class="input-group-btn">
+                <span class="input-group-btn d-flex">
                     <?php if (!empty($queryParam)) : ?>
-                        <?= Html::a('<i class="fa fa-close"></i>', Url::to(ArrayHelper::merge($queryParams, ['', 'q' => ''])), [
-                            'class' => 'btn btn-default'
+                        <?= Html::a('<i class="fa fa-times"></i>', Url::to(ArrayHelper::merge($queryParams, ['', 'q' => ''])), [
+                            'class' => 'btn btn-default search-dismiss'
                         ]) ?>
                     <?php endif; ?>
                     <?= Html::submitButton('<i class="fa fa-search"></i>', ['class' => 'btn btn-default']) ?>
