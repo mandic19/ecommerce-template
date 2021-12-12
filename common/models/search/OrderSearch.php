@@ -20,6 +20,7 @@ class OrderSearch extends Order
     public function rules()
     {
         return [
+            [['id'], 'integer'],
             [['q'], 'string'],
             [['q'], 'filter', 'filter' => 'trim']
         ];
@@ -59,6 +60,10 @@ class OrderSearch extends Order
             // $query->where('0=1');
             return $dataProvider;
         }
+
+        $query->andFilterWhere([
+            'user_id' => $this->user_id
+        ]);
 
         if (!empty($this->q)) {
             $this->q = str_replace("'", '', $this->q);

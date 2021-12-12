@@ -1,54 +1,48 @@
 <?php
 
-use yii\helpers\Html;
-use yii\widgets\DetailView;
+use yii\data\ActiveDataProvider;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\User */
+/* @var $orderDataProvider ActiveDataProvider */
 
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Users'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
+
+$gridId = 'user-order-grid';
+$pjaxId = 'user-order-index-pjax';
+$pjaxLoaderTarget = "#{$gridId} tbody";
+
+$this->title = Yii::t('app', 'Users - {:user}', [':user' => $model->getFullName()]);
+
 ?>
+
 <div class="user-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'email:email',
-            'username',
-            'password_hash',
-            'password_reset_token',
-            'verification_token',
-            'auth_key',
-            'status',
-            'first_name',
-            'last_name',
-            'address',
-            'city',
-            'country',
-            'zip',
-            'created_at',
-            'created_by',
-            'updated_at',
-            'updated_by',
-            'is_deleted',
-        ],
-    ]) ?>
-
+    <div class="row">
+        <div class="col-lg-5 mb-3">
+            <?= $this->render('partials/_general-info', ['model' => $model]); ?>
+        </div>
+        <div class="col-lg-7">
+            <?= $this->render('partials/_widget-cards', ['model' => $model]); ?>
+            <div class="card">
+                <div class="card-body">
+                    <?php Pjax::begin([
+                        'id' => $pjaxId,
+                        'enablePushState' => false,
+                        'timeout' => 5000,
+                        'options' => ['data-pjax-loader-target' => $pjaxLoaderTarget]
+                    ]); ?>
+                    <?= $this->render('../order/partials/_grid', [
+                        'dataProvider' => $orderDataProvider,
+                        'pjaxId' => $pjaxId,
+                        'gridId' => $gridId,
+                        'customerColumnVisible' => false
+                    ]); ?>
+                    <?php Pjax::end(); ?>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

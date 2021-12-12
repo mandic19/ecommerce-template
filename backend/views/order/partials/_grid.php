@@ -17,6 +17,7 @@ use yii\helpers\Url;
 /* @var $pjaxId string */
 /* @var $gridId string */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $customerColumnVisible boolean */
 
 ?>
 
@@ -24,6 +25,7 @@ use yii\helpers\Url;
     'id' => $gridId,
     'pjaxId' => $pjaxId,
     'dataProvider' => $dataProvider,
+    'title' => Yii::t('app', 'Orders'),
     'columns' => [
         ['class' => 'yii\grid\SerialColumn'],
         [
@@ -49,6 +51,7 @@ use yii\helpers\Url;
             'label' => Yii::t('app', 'Customer'),
             'attribute' => 'customer',
             'format' => 'raw',
+            'visible' => $customerColumnVisible ?? true,
             'value' => function (Order $model) {
                 return $this->render(Url::to(['shared/partials/_avatar']), [
                     'model' => $model->user

@@ -10,6 +10,7 @@ use common\components\actions\UpdateAction;
 use common\components\actions\ViewAction;
 use common\components\controllers\BaseController;
 use common\models\forms\RegistrationForm;
+use common\models\search\OrderSearch;
 use common\models\User;
 use common\models\search\UserSearch;
 use yii\helpers\ArrayHelper;
@@ -57,6 +58,17 @@ class UserController extends BaseController
             'view' => [
                 'class' => ViewAction::class,
                 'modelClass' => $this->modelClass,
+                'params' => function($action, User $model) {
+                    $orderSearchModel = new OrderSearch(['user_id' => $model->id]);
+
+                    $orderDataProvider = $orderSearchModel->search(\Yii::$app->request->queryParams);
+                    $orderDataProvider->pagination->pageSize = 5;
+
+                    return [
+                        'orderDataProvider' => $orderDataProvider
+                    ];
+                },
+                'ajaxView' => 'view'
             ],
             'update' => [
                 'class' => UpdateAction::class,

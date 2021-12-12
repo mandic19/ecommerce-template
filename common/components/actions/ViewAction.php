@@ -17,7 +17,7 @@ class ViewAction extends ItemAction
     /**
      * @var string the name of the view action.
      */
-    public $modalView = 'view_modal';
+    public $ajaxView = 'view_modal';
 
     /**
      * @param string $id
@@ -37,7 +37,7 @@ class ViewAction extends ItemAction
 
     private function render(array $params = [])
     {
-        $view = Yii::$app->request->getIsAjax() ? $this->modalView : $this->view;
+        $view = Yii::$app->request->getIsAjax() ? $this->ajaxView : $this->view;
 
         return $this->controller->renderAjaxConditional($view, $params);
     }
