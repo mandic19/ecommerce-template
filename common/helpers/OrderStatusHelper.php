@@ -29,7 +29,7 @@ class OrderStatusHelper
         $label = self::getLabelById($status);
 
         $iconElement = Html::tag('i', null, [
-            'class' => "fa fa-{$icon} fa-lg text-white"
+            'class' => "{$icon} fa-lg text-white"
         ]);
 
         return Html::tag('span', $iconElement, [
@@ -68,12 +68,12 @@ class OrderStatusHelper
 
     public static function getIcons() {
         return [
-            Order::STATUS_PENDING => 'spinner',
-            Order::STATUS_PROCESSING => 'stack-overflow',
-            Order::STATUS_COMPLETED => 'check',
-            Order::STATUS_CANCELLED => 'ban',
-            Order::STATUS_FAILED => 'warning',
-            Order::STATUS_REFUNDED => 'undo',
+            Order::STATUS_PENDING => 'fa fa-spinner',
+            Order::STATUS_PROCESSING => 'fab fa-stack-overflow',
+            Order::STATUS_COMPLETED => 'fa fa-check',
+            Order::STATUS_CANCELLED => 'fa fa-ban',
+            Order::STATUS_FAILED => 'fas fa-exclamation-triangle',
+            Order::STATUS_REFUNDED => 'fa fa-undo',
         ];
     }
 }

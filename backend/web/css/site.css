@@ -29,10 +29,11 @@
 
 .treegrid-expander {
     background-image: none !important;
-    font-family: "FontAwesome", serif;
+    font-family: 'Font Awesome 5 Free', serif;
     height: fit-content;
     margin-right: 0.5rem;
     font-size: var(--font-md);
+    font-weight: 900;
 }
 
 .treegrid-expander-expanded:after {

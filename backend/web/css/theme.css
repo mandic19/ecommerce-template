@@ -26,6 +26,9 @@
     --font-md: 12px;
     --font-lg: 14px;
     --font-xl: 16px;
+
+    --lh-lg: 22px;
+    --lh-xl: 24px;
 }
 
 html, body {
@@ -46,6 +49,30 @@ body {
     font-size: 13px !important;
     color: var(--col-light-slate-gray) !important;
     background-color: var(--col-gray-neutral) !important;
+}
+
+hr {
+    width: 100%;
+}
+
+._font-sm {
+    font-size: var(--font-sm) !important;
+}
+
+._font-md {
+    font-size: var(--font-md) !important;
+}
+
+._font-lg {
+    font-size: var(--font-lg) !important;
+}
+
+._font-xl {
+    font-size: var(--font-xl) !important;
+}
+
+._lh-lg {
+    line-height: var(--lh-lg) !important;
 }
 
 * {
@@ -112,7 +139,7 @@ section.left-sidebar > .navbar.nav_title {
 
 .site_title i {
     border: 1px solid #EAEAEA;
-    padding: 5px 6px;
+    padding: 5px;
     border-radius: 50%;
 }
 
@@ -204,8 +231,12 @@ section.left-sidebar > .user-profile > .info {
     line-height: 1em;
 }
 
-.sidebar-menu .list-group-item i.fa-home {
-    font-size: 24px !important;
+.sidebar-menu .list-group-item i.fa-cubes {
+    font-size: 24px;
+}
+
+.sidebar-menu .list-group-item i.fa-list {
+    padding-left: 3px;
 }
 
 /************ START SIDEBAR SECTION ************/
@@ -239,9 +270,10 @@ nav .btn-toggle-sidebar {
 }
 
 nav .btn-toggle-sidebar:before {
-    font-family: "FontAwesome", serif;
+    font-family: 'Font Awesome 5 Free', serif;
     content: '\f0c9';
     font-size: 1.5rem;
+    font-weight: 900;
 }
 
 section.content-container .content-body {
@@ -583,7 +615,7 @@ table.table-body-relative tbody {
     background-color: var(--col-gray-neutral);
 }
 
-table .avatar-wrapper {
+.avatar-wrapper {
     display: flex;
     width: 38px;
     height: 38px;
@@ -591,6 +623,13 @@ table .avatar-wrapper {
     align-items: center;
     justify-content: center;
     text-align: center;
+    line-height: var(--lh-xl);
+}
+
+.avatar-wrapper.avatar-lg {
+    width: 75px;
+    height: 75px;
+    font-size: 1.8rem;
 }
 
 th > a[data-sort] {
@@ -600,11 +639,10 @@ th > a[data-sort] {
 th > a[data-sort]:not(.asc):not(.desc):after,
 th > a[data-sort].asc:after,
 th a[data-sort].desc:after {
-    font-family: "FontAwesome", serif;
-    font-weight: normal;
+    font-family: 'Font Awesome 5 Free', serif;
+    font-weight: 900;
     margin-left: 16px;
 }
-
 
 th > a[data-sort]:not(.asc):not(.desc):after {
     content: '\f0dc';
@@ -736,7 +774,17 @@ select.is-valid + .select2-container--krajee-bs4 .select2-selection--single,
 
 .top_search {
     flex-grow: 0;
-    transition: 0.5s flex-grow;
+    transition: 1s flex-grow;
+    will-change: flex-grow;
+    min-width: 235px;
+}
+
+@media (min-width: 768px) {
+    .col-search {
+        -ms-flex: 0 0 50%;
+        flex: 0 0 50%;
+        max-width: 100%;
+    }
 }
 
 .top_search:focus-within {
@@ -885,6 +933,8 @@ section.empty-layout .top_search .form-control {
     border-radius: 50%;
     width: 38px;
     height: 38px;
+    min-width: 38px;
+    min-height: 38px;
     display: flex;
     align-items: center;
     padding: 0;
@@ -916,3 +966,31 @@ section.empty-layout .top_search .form-control {
 }
 
 /************ BADGES END ************/
+
+/************ PAGER START ************/
+
+.pagination > .page-item.disabled,
+.pagination > .page-item > .page-link {
+    border-radius: 50%;
+    transition: all .3s;
+    padding: 0;
+    margin: 0 3px;
+    min-width: 30px;
+    max-width: 30px;
+    height: 30px;
+    line-height: 30px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.pagination > .page-item > .page-link {
+    border: 1px solid var(--col-primary);
+    color: var(--col-primary);
+}
+
+.pagination > .page-item.active > a {
+    background-color: var(--col-primary);
+    color: var(--col-white)
+}
+
+/************ PAGER END ************/

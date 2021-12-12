@@ -92,14 +92,14 @@ AppAsset::register($this);
                     <div class="dropdown-menu right mt-2 p-0" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item d-flex justify-content-between align-items-center py-2" href="#">
                             <?= Yii::t('app', 'Edit Profile') ?>
-                            <i class="fa fa-pencil"></i>
+                            <i class="fas fa-pencil-alt"></i>
                         </a>
                         <a class="dropdown-item d-flex justify-content-between align-items-center py-2"
                            data-method="post"
                            href="<?= Url::to(['site/logout']) ?>"
                         >
                             <?= Yii::t('app', 'Log Out') ?>
-                            <i class="fa fa-sign-out"></i>
+                            <i class="fas fa-sign-out-alt"></i>
                         </a>
                     </div>
                 </li>
