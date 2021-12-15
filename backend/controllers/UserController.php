@@ -9,10 +9,12 @@ use common\components\actions\ToggleAction;
 use common\components\actions\UpdateAction;
 use common\components\actions\ViewAction;
 use common\components\controllers\BaseController;
+use common\models\forms\ChangePasswordForm;
 use common\models\forms\RegistrationForm;
 use common\models\search\OrderSearch;
 use common\models\User;
 use common\models\search\UserSearch;
+use Yii;
 use yii\helpers\ArrayHelper;
 use yii\filters\VerbFilter;
 
@@ -68,7 +70,7 @@ class UserController extends BaseController
                         'orderDataProvider' => $orderDataProvider
                     ];
                 },
-                'ajaxView' => 'view'
+                'modalView' => 'view'
             ],
             'update' => [
                 'class' => UpdateAction::class,
@@ -76,6 +78,23 @@ class UserController extends BaseController
                 'scenario' => RegistrationForm::SCENARIO_ADMIN_UPDATE,
                 'findModel' => function ($id) {
                     return RegistrationForm::findOne($id);
+                }
+            ],
+            'edit-profile' => [
+                'class' => UpdateAction::class,
+                'modelClass' => RegistrationForm::class,
+                'scenario' => RegistrationForm::SCENARIO_ADMIN_UPDATE,
+                'findModel' => function () {
+                    return RegistrationForm::findOne(Yii::$app->user->id);
+                }
+            ],
+            'change-password' => [
+                'class' => UpdateAction::class,
+                'modelClass' => ChangePasswordForm::class,
+                'scenario' => ChangePasswordForm::SCENARIO_CHANGE_PASSWORD,
+                'modalView' => 'change-password-modal',
+                'findModel' => function () {
+                    return ChangePasswordForm::findOne(Yii::$app->user->id);
                 }
             ],
             'toggle-status' => [

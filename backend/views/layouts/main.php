@@ -79,7 +79,7 @@ AppAsset::register($this);
             </span>
             <ul class="list-unstyled my-auto ml-auto">
                 <li class="nav-item dropdown">
-                    <span class="nav-link dropdown-toggle nav-avatar p-0 mx-2"
+                    <span class="nav-link dropdown-toggle nav-avatar px-2 py-0"
                           id="navbarDropdownMenuLink"
                           role="button"
                           data-toggle="dropdown"
@@ -89,10 +89,20 @@ AppAsset::register($this);
                         <img src="/img/dummy_avatar.jpg" alt="..." class="mr-2">
                         <?= Yii::t('app', 'Hi, {:user}', [':user' => Yii::$app->user->getIdentity()->getFullName()]); ?>
                     </span>
-                    <div class="dropdown-menu right mt-2 p-0" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item d-flex justify-content-between align-items-center py-2" href="#">
+                    <div class="dropdown-menu dropdown-menu-right right mt-2 p-0"
+                         aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item d-flex justify-content-between align-items-center py-2 btn-modal-control btn-loading btn-loading-right"
+                           data-href="<?= Url::to(['user/edit-profile']) ?>"
+                        >
                             <?= Yii::t('app', 'Edit Profile') ?>
                             <i class="fas fa-pencil-alt"></i>
+                        </a>
+                        <a class="dropdown-item d-flex justify-content-between align-items-center py-2 btn-modal-control btn-loading btn-loading-right"
+                           data-href="<?= Url::to(['user/change-password']) ?>"
+                           data-size="modal-md"
+                        >
+                            <?= Yii::t('app', 'Change Password') ?>
+                            <i class="fas fa-lock"></i>
                         </a>
                         <a class="dropdown-item d-flex justify-content-between align-items-center py-2"
                            data-method="post"
@@ -121,7 +131,11 @@ AppAsset::register($this);
     <!-- /content container -->
 
     <!-- main modal -->
-    <?= Modal::widget(['id' => 'main-modal', 'size' => Modal::SIZE_LARGE, 'options' => ['data-backdrop' => 'static', 'class' => 'p-0']]); ?>
+    <?= Modal::widget(['id' => 'main-modal', 'size' => Modal::SIZE_LARGE, 'options' => [
+        'data-backdrop' => 'static',
+        'class' => 'p-0',
+        'tabindex' => null
+    ]]); ?>
     <!-- /main modal -->
     <?php $this->endBody(); ?>
     </body>
