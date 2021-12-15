@@ -312,7 +312,13 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     public function getAverageOrderValue() {
-        return $this->getTotalSpent() / $this->getTotalOrders();
+        $totalOrders = $this->getTotalOrders();
+
+        if($totalOrders < 1) {
+            return 0;
+        }
+
+        return $this->getTotalSpent() / $totalOrders;
     }
 
     public function getTotalSpent() {
