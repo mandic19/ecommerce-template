@@ -5,6 +5,7 @@ namespace common\helpers;
 use common\components\image\ImageSpecification;
 use common\models\Image;
 use Yii;
+use yii\helpers\Html;
 use yii\helpers\Url;
 
 class BaseHelper
@@ -60,5 +61,23 @@ class BaseHelper
                 'src' => Url::to(['/image/view', 'id' => $model->id, 'spec' => ImageSpecification::MAX_WIDTH])
             ];
         }, $images);
+    }
+
+    public static function getPasswordInfoIcon(){
+        $tooltipContent = Yii::t('app', 'Password must contain at least:') . "<br>
+            <ul class='pl-4 my-2 text-left'>
+                <li>8 ". Yii::t('app', 'characters') ."</li>
+                <li>1 ". Yii::t('app', 'letter') ."</li>
+                <li>1 ". Yii::t('app', 'number') ."</li>
+                <li>1 ". Yii::t('app', 'special characters') ."</li>
+            </ul>";
+
+        return Html::tag('i', '', [
+            'class' => 'far fa-question-circle ml-2 cursor-pointer',
+            'data-toggle' => 'tooltip',
+            'data-placement' => 'top',
+            'data-html' => 'true',
+            'title' => $tooltipContent
+        ]);
     }
 }
