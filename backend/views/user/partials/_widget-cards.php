@@ -16,7 +16,7 @@ use common\helpers\PriceHelper;
         <div class="card">
             <div class="card-body d-flex align-items-center justify-content-between">
                 <strong><?= Yii::t('app', 'Total Spent') ?></strong>
-                <h4 class="mb-0"><?= PriceHelper::format(150) ?></h4>
+                <h4 class="mb-0"><?= PriceHelper::format($model->getTotalSpent()) ?></h4>
             </div>
         </div>
     </div>
@@ -24,7 +24,7 @@ use common\helpers\PriceHelper;
         <div class="card">
             <div class="card-body d-flex align-items-center justify-content-between">
                 <strong><?= Yii::t('app', 'Average Order') ?></strong>
-                <h4 class="mb-0"><?= PriceHelper::format(150) ?></h4>
+                <h4 class="mb-0"><?= PriceHelper::format($model->getAverageOrderValue()) ?></h4>
             </div>
         </div>
     </div>
@@ -32,7 +32,7 @@ use common\helpers\PriceHelper;
         <div class="card">
             <div class="card-body d-flex align-items-center justify-content-between">
                 <strong><?= Yii::t('app', 'Total Orders') ?></strong>
-                <h4 class="mb-0">5</h4>
+                <h4 class="mb-0"><?= $model->getTotalOrders() ?></h4>
             </div>
         </div>
     </div>
@@ -40,7 +40,7 @@ use common\helpers\PriceHelper;
         <div class="card">
             <div class="card-body d-flex align-items-center justify-content-between">
                 <strong><?= Yii::t('app', 'Total Items') ?></strong>
-                <h4 class="mb-0">13</h4>
+                <h4 class="mb-0"><?= $model->getTotalOrderItems() ?></h4>
             </div>
         </div>
     </div>

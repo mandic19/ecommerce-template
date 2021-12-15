@@ -4,7 +4,6 @@
  * Email: marko.mandic.engr@gmail.com
  */
 
-
 use common\helpers\BaseHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
