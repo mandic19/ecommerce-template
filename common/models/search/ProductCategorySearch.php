@@ -19,7 +19,8 @@ class ProductCategorySearch extends ProductCategory
     {
         return [
             [['id', 'parent_category_id'], 'integer'],
-            [['q'], 'string']
+            [['q'], 'string'],
+            [['q'], 'filter', 'filter' => 'trim']
         ];
     }
 

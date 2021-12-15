@@ -1,3 +1,8 @@
+/**
+ * Created by Marko Mandić on Nov, 2021
+ * Email: marko.mandic.engr@gmail.com
+ */
+
 let dropzone = (function ($) {
     return {
         instances: [],
@@ -8,6 +13,7 @@ let dropzone = (function ($) {
             self.config = config;
 
             let defaults = {
+                autoDiscover: false,
                 sending: function (file, xhr, formData) {
                     formData.append(yii.getCsrfParam(), yii.getCsrfToken());
                 },
@@ -44,6 +50,7 @@ let dropzone = (function ($) {
             };
 
             self.options = $.extend({}, defaults, options);
+            $(self.config.target).addClass('dropzone');
             self.dropzone = new Dropzone(self.config.target, self.options);
 
             self.initExistingItems();

@@ -9,6 +9,7 @@ use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\web\IdentityInterface;
 
 /**
@@ -38,6 +39,7 @@ use yii\web\IdentityInterface;
  * @property string $password write-only password
  *
  * @property string $fullName
+ * @property Order[] $orders
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -309,4 +311,35 @@ class User extends ActiveRecord implements IdentityInterface
         return "{$first}{$second}";
     }
 
+    public function getAverageOrderValue() {
+        $totalOrders = $this->getTotalOrders();
+
+        if($totalOrders < 1) {
+            return 0;
+        }
+
+        return $this->getTotalSpent() / $totalOrders;
+    }
+
+    public function getTotalSpent() {
+        return $this->getOrders()->sum('total');
+    }
+
+    public function getTotalOrders() {
+        return $this->getOrders()->count();
+    }
+
+    public function getTotalOrderItems() {
+        return $this->getOrders()->joinWith('orderItems')->sum('quantity');
+    }
+
+    /**
+     * Gets query for [[Orders]].
+     *
+     * @return ActiveQuery
+     */
+    public function getOrders()
+    {
+        return $this->hasMany(Order::className(), ['user_id' => 'id']);
+    }
 }

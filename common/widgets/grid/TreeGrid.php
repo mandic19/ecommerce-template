@@ -158,7 +158,7 @@ class TreeGrid extends GridView
             'class' => 'expand-all ' . (!$collapsed ? ' active' : '')
         ]);
         return Html::tag('div', "{$expandAll} / {$collapseAll}", [
-            'class' => 'treegrid-collapse-toggle'
+            'class' => 'treegrid-collapse-toggle mr-4 py-2'
         ]);
     }
 

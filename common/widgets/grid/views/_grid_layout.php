@@ -9,11 +9,13 @@ use yii\web\View;
 ?>
 
 <div class="grid-layout">
-    <div class="row mb-3">
-        <div class="col-sm-6"></div>
-        <div class="col-sm-6 text-sm-right">{collapsable}</div>
-        <div class="col-sm-6">{search}</div>
-        <div class="col-sm-6 d-flex">{add}</div>
+    <div class="d-flex flex-wrap mb-3 flex-column-reverse flex-md-row">
+        <div class="col-search">{search}</div>
+        <div class="ml-md-auto my-auto">
+            <div class="d-flex align-items-center justify-content-md-end flex-wrap flex-md-nowrap">
+                {collapsable}{add}
+            </div>
+        </div>
     </div>
     <div class="table-responsive">
         {items}

@@ -29,7 +29,7 @@ use yii\helpers\Url;
             'attribute' => 'user',
             'format' => 'raw',
             'value' => function (User $model) {
-                return $this->render('_avatar', ['model' => $model]);
+                return $this->render(Url::to(['shared/partials/_avatar']), ['model' => $model]);
             }
         ],
         [

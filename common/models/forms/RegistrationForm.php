@@ -37,6 +37,16 @@ class RegistrationForm extends User
     {
         return ArrayHelper::merge(parent::rules(), [
             [['password', 'password_repeat'], 'required', 'on' => [static::SCENARIO_ADMIN_REGISTRATION, static::SCENARIO_CUSTOMER_REGISTRATION]],
+            [['password'], 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
+            [['password'], 'match', 'pattern' => Yii::$app->params['pattern']['letter'],
+                'message' => Yii::t('app', 'New Password must contain at least 1 letter.')
+            ],
+            [['password'], 'match', 'pattern' => Yii::$app->params['pattern']['digit'],
+                'message' => Yii::t('app', 'New Password must contain at least 1 number.')
+            ],
+            [['password'], 'match', 'pattern' => Yii::$app->params['pattern']['specialChar'],
+                'message' => Yii::t('app', 'New Password must contain at least 1 special character.')
+            ],
             [['password'], 'compare', 'compareAttribute' => 'password_repeat', 'operator' => '==', 'enableClientValidation' => false],
             [['role'], 'required', 'on' => [static::SCENARIO_ADMIN_REGISTRATION, static::SCENARIO_ADMIN_UPDATE]],
             [['role'], 'string']

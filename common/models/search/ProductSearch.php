@@ -22,6 +22,7 @@ class ProductSearch extends Product
         return [
             [['id', 'category_id'], 'integer'],
             [['q'], 'string'],
+            [['q'], 'filter', 'filter' => 'trim']
         ];
     }
 
@@ -61,6 +62,7 @@ class ProductSearch extends Product
             $this->q = str_replace("'", '', $this->q);
             $query = SearchHelper::addSearchQuery($query, $this->q, [
                 'product.name',
+                'product.sku',
                 'product_category.name'
             ]);
         }
@@ -78,6 +80,18 @@ class ProductSearch extends Product
                 'category' => [
                     'asc' => ['product_category.name' => SORT_ASC],
                     'desc' => ['product_category.name' => SORT_DESC],
+                ],
+                'sku' => [
+                    'asc' => ['product.sku' => SORT_ASC],
+                    'desc' => ['product.sku' => SORT_DESC],
+                ],
+                'quantity' => [
+                    'asc' => ['product.quantity' => SORT_ASC],
+                    'desc' => ['product.quantity' => SORT_DESC],
+                ],
+                'price' => [
+                    'asc' => ['product.price' => SORT_ASC],
+                    'desc' => ['product.price' => SORT_DESC],
                 ],
                 'active' => [
                     'asc' => ['product.is_active' => SORT_ASC],

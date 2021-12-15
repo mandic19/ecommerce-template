@@ -1,5 +1,6 @@
 <?php
 
+use common\helpers\BaseHelper;
 use common\helpers\CountryHelper;
 use common\helpers\RbacHelper;
 use kartik\select2\Select2;
@@ -50,9 +51,10 @@ use yii\widgets\ActiveForm;
         <div class="col-md-6 col-sm-12">
             <?= $form->field($model, 'zip')->textInput() ?>
         </div>
-        <?php if($model->isNewRecord): ?>
+        <?php if ($model->isNewRecord): ?>
             <div class="col-md-6 col-sm-12">
-                <?= $form->field($model, 'password')->passwordInput() ?>
+                <?php $passwordLabel = $model->getAttributeLabel('password') . BaseHelper::getPasswordInfoIcon(); ?>
+                <?= $form->field($model, 'password')->passwordInput()->label($passwordLabel) ?>
             </div>
             <div class="col-md-6 col-sm-12">
                 <?= $form->field($model, 'password_repeat')->passwordInput() ?>

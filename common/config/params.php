@@ -6,7 +6,11 @@ return [
     'senderName' => 'Example.com mailer',
     'user.passwordResetTokenExpire' => 3600,
     'user.passwordMinLength' => 8,
-
+    'pattern' => [
+        'letter' => '/[a-zA-Z]/',
+        'digit' => '/[0-9]/',
+        'specialChar' => '/[^A-Za-z0-9\s]/'
+    ],
     'resourceManager' => [
         's3.path.prefix' => 'local',
         's3.file.prefix' => '',

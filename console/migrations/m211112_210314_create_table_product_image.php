@@ -38,19 +38,4 @@ class m211112_210314_create_table_product_image extends Migration
 
         $this->dropTable('product_image');
     }
-
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m211112_210314_create_table_product_image cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

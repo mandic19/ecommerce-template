@@ -61,7 +61,7 @@ class ModalContent extends Widget
     private function getHeaderButtons()
     {
         return Html::button('<span aria-hidden="true">&times;</span>', [
-                'class' => 'close py-0',
+                'class' => 'close',
                 'data-dismiss' => 'modal',
                 'aria-label' => 'Close'
             ]) . "\n";

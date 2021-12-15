@@ -13,21 +13,15 @@ $(function () {
 main.ui = (function ($) {
 
     return {
-        cachedTemplates: {},
-        modal: null,
         loadingIcon: '<i class="fa fa-spinner fa-spin"></i> ',
-        hiddenLoadingIcon: '<i class="fa fa-spinner fa-spin hidden"></i> ',
-        buttonLoadingText: '<i class="fa fa-spinner fa-spin"></i> Loading...',
-        buttonSavingText: '<i class="fa fa-spinner fa-spin"></i> Saving...',
         defaultConfirmMessage: 'Do you wish to delete this item?',
-        pjaxLoader: '<div class="loader img-frame pjax-loader-container"><i class="fa fa-spinner fa-spin fa-2x"></i></div>',
-        messageDuration: 6000,
+        pjaxLoader: '<div class="pjax-loader-container"><i class="fa fa-spinner fa-spin fa-2x"></i></div>',
+        messageDuration: 3000,
         color: {
             primary: '#2a3f54',
             secondary: '#ededed',
             danger: '#ff2851',
             success: '#26b99a',
-            info: '#11cdef'
         },
 
 
@@ -53,9 +47,10 @@ main.ui = (function ($) {
             }
 
             SweetAlert.fire({
-                timer: 3000,
+                timer: main.ui.messageDuration,
                 html: message,
                 showConfirmButton: false,
+                backdrop: false,
                 customClass: {
                     container: 'flash-message flash-' + type
                 }
@@ -240,6 +235,10 @@ main.ui = (function ($) {
             });
         },
 
+        initTooltips: function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        },
+
         yiiConfirm: function (message, ok, cancel) {
             main.ui.confirm(message, function (result) {
                 if (result) {
@@ -298,6 +297,7 @@ main.ui = (function ($) {
         init: function () {
             modal.init();
             main.ui.initButtonSpinners();
+            main.ui.initTooltips();
 
             $(document)
                 .on('click', '.btn-control-confirm', this.controlConfirm)
@@ -317,13 +317,7 @@ main.ui = (function ($) {
                             target = self;
                         }
 
-                        let pjaxContainer = self.data('pjax-container-id') ? $('#' + self.data('pjax-container-id')) : self;
-                        if (event.target === pjaxContainer[0]) {
-                            if (target.find('> .pjax-loader-container').length < 1) {
-                                target.append(main.ui.pjaxLoader).find('> .pjax-loader-container').css('background-color');
-                                target.find('> .pjax-loader-container').addClass('fade-white');
-                            }
-                        }
+                        target.append(main.ui.pjaxLoader);
                     });
 
                     return true;
@@ -334,34 +328,10 @@ main.ui = (function ($) {
                         var pjaxContainer = self.data('pjax-container-id') ? $('#' + self.data('pjax-container-id')) : self;
                         if (event.target === pjaxContainer[0]) {
                             self.find('> .pjax-loader-container').remove();
+                            main.ui.initTooltips();
                         }
                     });
-                })
-                .on('show.bs.popover', '.btn-popover-ajax-control', function () {
-                    var self = $(this);
-                    var url = self.data('url');
-                    if (url) {
-                        $.get(url, function (data) {
-                            if ($(`[data-toggle="popover"][data-url="${url}"]:hover`).length) {
-                                var popover = $('.popover');
-                                popover.removeClass('loading');
-                                if (data.trim()) {
-                                    popover.find('.popover-body').html(data);
-                                } else {
-                                    popover.find('.popover-body').html("No results found.");
-                                }
-                                popover.addClass('ajax-finished');
-                            }
-                        });
-                    }
-                })
-                .on('shown.bs.popover', '.btn-popover-ajax-control', function () {
-                    var content = $('.popover-body');
-                    if (content && (!content.html() || !content.html().trim())) {
-                        $('.popover').addClass('loading');
-                        content.html('<div class="loader img-frame"><i class="fa fa-spinner fa-spin fa-2x"></i></div>');
-                    }
-                })
+                });
 
             yii.confirm = main.ui.yiiConfirm;
 

@@ -5,13 +5,11 @@
  * @var View $this
  */
 
-use frontend\assets\AppAsset;
+use backend\assets\AppAsset;
 use yii\helpers\Html;
 use yii\web\View;
-use yiister\gentelella\assets\Asset;
 
-Asset::register($this);
-AppAsset::register($this);
+AppAsset::register($this)
 
 ?>
 <?php $this->beginPage(); ?>
@@ -28,11 +26,11 @@ AppAsset::register($this);
     </head>
     <body>
     <?php $this->beginBody(); ?>
-    <div class="container body">
-        <div class="main_container">
+    <section class="empty-layout">
+        <div class="container">
             <?= $content ?>
         </div>
-    </div>
+    </section>
     <?php $this->endBody(); ?>
     </body>
     </html>

@@ -35,7 +35,7 @@ class Dropzone extends InputWidget
             $input = Html::hiddenInput($this->name, $this->value, $this->options);
         }
 
-        echo Html::tag('div', $input, ['id' => $this->getDropzoneId(), 'class' => 'dropzone']);
+        echo Html::tag('div', $input, ['id' => $this->getDropzoneId(), 'class' => '']);
 
         $this->registerAssets();
         parent::run();

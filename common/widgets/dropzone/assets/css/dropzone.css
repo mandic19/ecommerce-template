@@ -1,6 +1,7 @@
 .dropzone {
     border: 1px dashed var(--col-light-slate-gray);
     border-radius: 5px;
+    text-align: center;
 }
 
 .dropzone, .dropzone * {
@@ -38,7 +39,7 @@
 
 .dropzone .dz-preview.dz-error .dz-error-message,
 .dropzone .dz-preview.dz-error .dz-error-mark,
-dropzone .dz-preview.dz-success .dz-success-mark {
+.dropzone .dz-preview.dz-success .dz-success-mark {
     display: block
 }
 
