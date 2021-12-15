@@ -774,7 +774,7 @@ select.is-valid + .select2-container--krajee-bs4 .select2-selection--single,
 
 .top_search .input-group-btn .btn.search-dismiss {
     border-radius: 0;
-    border-right: 0!important;
+    border-right: 0 !important;
 }
 
 .top_search {
@@ -901,11 +901,7 @@ section.empty-layout .top_search .form-control {
 /************ LOGIN PAGE END ************/
 
 .dropdown-menu {
-    min-width: 12rem;
-}
-
-.dropdown-menu.right {
-    right: 0;
+    min-width: 14rem;
 }
 
 .open > .dropdown-menu {
@@ -999,3 +995,29 @@ section.empty-layout .top_search .form-control {
 }
 
 /************ PAGER END ************/
+
+/************ TOOLTIP START ************/
+
+.tooltip.show {
+    opacity: 1 !important;
+}
+
+.tooltip > .tooltip-inner {
+    background-color: var(--col-primary);
+    padding-bottom: 0.5rem !important;
+    padding-top: 0.5rem !important;
+}
+
+.tooltip > .arrow::before {
+    border-top-color: var(--col-primary);
+}
+
+/************ TOOLTIP END ************/
+
+/************ MODAL START ************/
+
+.modal.show .modal-dialog {
+    transform: none !important;
+}
+
+/************ MODAL END ************/

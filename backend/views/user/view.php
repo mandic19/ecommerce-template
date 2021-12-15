@@ -7,15 +7,13 @@ use yii\widgets\Pjax;
 /* @var $model common\models\User */
 /* @var $orderDataProvider ActiveDataProvider */
 
-$this->title = $model->id;
+$this->title = Yii::t('app', 'Users - {:user}', [':user' => $model->getFullName()]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Users'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 $gridId = 'user-order-grid';
 $pjaxId = 'user-order-index-pjax';
 $pjaxLoaderTarget = "#{$gridId} tbody";
-
-$this->title = Yii::t('app', 'Users - {:user}', [':user' => $model->getFullName()]);
 
 ?>
 

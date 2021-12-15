@@ -76,3 +76,7 @@
     height: 35px;
 }
 
+.dropdown .dropdown-item,
+.cursor-pointer {
+    cursor: pointer;
+}

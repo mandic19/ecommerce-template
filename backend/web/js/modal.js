@@ -68,6 +68,7 @@ modal = (function ($) {
                     modal.instance.modal(options);
                     main.ui.buttonLoading(self, false);
                     $(document).trigger('modal-opened', [modal]);
+                    main.ui.initTooltips();
                 });
             }, 200);
             return false;
