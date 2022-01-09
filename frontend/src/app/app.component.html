@@ -2,7 +2,7 @@
   id="main-container"
   class="position-relative"
 >
-  <app-header></app-header>
-  <app-home></app-home>
+  <app-header [categories]="categories"></app-header>
+  <app-home [popularCategories]="categories"></app-home>
   <app-footer></app-footer>
 </section>

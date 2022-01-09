@@ -1,0 +1,17 @@
+<div class="product-card m-auto">
+  <img
+    [src]="getImageUrl(product.cover_image_id)"
+    [alt]="product.name"
+    loading="lazy"
+    class="w-auto"
+  >
+  <div class="product-card-footer text-start m-3">
+    <h6>{{product.name}}</h6>
+    <div class="d-flex align-items-center justify-content-between mb-2">
+      <small class="text-muted">{{product.sku}}</small>
+      <strong>{{product.price | currency: '$':'symbol':'1.2-2'}}</strong>
+    </div>
+    <p>{{product.short_description}}</p>
+  </div>
+</div>
+
