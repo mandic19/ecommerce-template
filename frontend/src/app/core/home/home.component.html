@@ -1,0 +1,18 @@
+<div class="container py-4 text-center">
+  <h4 class="py-3">Explore popular categories</h4>
+  <owl-carousel-o [options]="getOwlCarouselOptions()">
+    <ng-container *ngFor="let category of popularCategories">
+      <ng-template carouselSlide>
+        <app-category-card [category]="category"></app-category-card>
+      </ng-template>
+    </ng-container>
+  </owl-carousel-o>
+  <h4 class="mt-4 py-3">Explore popular products</h4>
+  <owl-carousel-o [options]="getOwlCarouselOptions()">
+    <ng-container *ngFor="let product of popularProducts">
+      <ng-template carouselSlide>
+        <app-product-card [product]="product"></app-product-card>
+      </ng-template>
+    </ng-container>
+  </owl-carousel-o>
+</div>

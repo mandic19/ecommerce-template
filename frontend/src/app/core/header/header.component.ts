@@ -1,7 +1,5 @@
-import {Component, OnDestroy, OnInit} from "@angular/core";
-import {CategoryService} from "../../category/category.service";
+import {Component, Input, OnChanges} from "@angular/core";
 import {ICategory} from "../../category/category";
-import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-header',
@@ -9,25 +7,11 @@ import {Subscription} from "rxjs";
   styleUrls: ['./header.component.css']
 })
 
-export class HeaderComponent implements OnInit, OnDestroy {
-  categories: ICategory[] = [];
-  sub!: Subscription;
+export class HeaderComponent implements OnChanges {
+  @Input() categories: ICategory[] = [];
 
-  constructor(private categoryService: CategoryService) {}
-
-  ngOnInit(): void {
-    this.categoryService.getCategories().subscribe({
-      next: categories => this.categories = this.buildCategoryTree(categories),
-      error: err => this.handleError(err)
-    })
-  }
-
-  ngOnDestroy(): void {
-    this.sub.unsubscribe();
-  }
-
-  handleError(err): void {
-    console.log(err.m);
+  ngOnChanges(): void {
+    this.categories = this.buildCategoryTree(this.categories);
   }
 
   buildCategoryTree(categories: ICategory[], id = null): ICategory[] {
