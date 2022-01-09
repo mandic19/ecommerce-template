@@ -28,7 +28,7 @@ main.ui = (function ($) {
         confirm: function (message, type, title) {
             type = type || 'question';
 
-            return SweetAlert.fire({
+            return Swal.fire({
                 title: title,
                 html: message,
                 icon: type,
@@ -41,18 +41,21 @@ main.ui = (function ($) {
         },
 
         notify: function (message, type) {
-
             if (!message) {
                 return;
             }
 
-            SweetAlert.fire({
+            Swal.fire({
                 timer: main.ui.messageDuration,
                 html: message,
                 showConfirmButton: false,
                 backdrop: false,
                 customClass: {
                     container: 'flash-message flash-' + type
+                },
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
                 }
             });
 

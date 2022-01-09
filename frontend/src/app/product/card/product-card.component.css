@@ -1,0 +1,14 @@
+.product-card {
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  overflow: hidden;
+  max-width: 250px;
+  font-size: 14px;
+}
+
+.product-card > .product-card-footer {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

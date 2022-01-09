@@ -1,0 +1,43 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~font-awesome/css/font-awesome.min.css";
+@import '~ngx-owl-carousel-o/lib/styles/scss/owl.carousel';
+@import '~ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
+
+:root {
+  --col-lemon-yellow: #fffcc6;
+  --col-violet: #9884fc;
+  --col-violet-dimmed: #6554b9;
+  --col-primary: #2a3f54;
+  --col-primary-light: #4a6f95;
+}
+
+.btn.btn-just-icon {
+  border-radius: 50%;
+  height: 34px;
+  width: 34px;
+  min-width: 34px;
+  padding: 5px;
+  font-size: 16px;
+  line-height: 21px;
+}
+
+.text-yellow {
+  color: var(--col-lemon-yellow);
+}
+
+.text-violet {
+  color: var(--col-violet);
+}
+
+.bg-deep-blue {
+  background-color: var(--col-primary);
+}
+
+.btn-light {
+  color: var(--col-primary);
+}
+
+.btn-light:hover {
+  color: var(--col-primary-light);
+}

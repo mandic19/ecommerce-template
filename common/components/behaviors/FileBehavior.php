@@ -428,8 +428,8 @@ class FileBehavior extends Behavior
         $resourceManager = $this->getResourceManager();
 
         if($resourceManager instanceof FileSystemResourceManager) {
-            $path = $resourceManager->getUrl($storageKey);
-            return file_get_contents(Yii::getAlias('@webroot') . $path);
+            $path = $resourceManager->getBasePath() . DIRECTORY_SEPARATOR . $storageKey;
+            return file_get_contents($path);
         }
 
        return $resourceManager->read($storageKey);
