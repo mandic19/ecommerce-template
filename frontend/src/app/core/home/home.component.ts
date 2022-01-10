@@ -1,10 +1,10 @@
 import {Component, OnDestroy, OnInit} from "@angular/core";
-import {ICategory} from "../../category/category";
 import {OwlOptions} from "ngx-owl-carousel-o";
+import {CategoryService} from "../../category/services/category.service";
 import {ProductService} from "../../product/services/product.service";
 import {Subscription} from "rxjs";
+import {ICategory} from "../../category/category";
 import {IProduct} from "../../product/product";
-import {CategoryService} from "../../category/services/category.service";
 
 @Component({
   templateUrl: './home.component.html',
