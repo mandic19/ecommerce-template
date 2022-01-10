@@ -9,6 +9,8 @@ import {CarouselModule} from "ngx-owl-carousel-o";
 import {HomeComponent} from "./core/home/home.component";
 import {CategoryCardComponent} from "./category/card/category-card.component";
 import {ProductCardComponent} from "./product/card/product-card.component";
+import {RouterModule} from "@angular/router";
+import {PageNotFoundComponent} from './core/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -17,13 +19,18 @@ import {ProductCardComponent} from "./product/card/product-card.component";
     FooterComponent,
     HomeComponent,
     CategoryCardComponent,
-    ProductCardComponent
+    ProductCardComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    CarouselModule
+    CarouselModule,
+    RouterModule.forRoot([
+      {path: '', component: HomeComponent},
+      {path: '**', component: PageNotFoundComponent}
+    ])
   ],
   providers: [],
   bootstrap: [AppComponent]
