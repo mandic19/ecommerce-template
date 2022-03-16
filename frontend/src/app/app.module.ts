@@ -11,6 +11,8 @@ import {CategoryCardComponent} from "./category/card/category-card.component";
 import {ProductCardComponent} from "./product/card/product-card.component";
 import {RouterModule} from "@angular/router";
 import {PageNotFoundComponent} from './core/page-not-found/page-not-found.component';
+import {LoginComponent} from "./core/login/login.component";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -18,20 +20,22 @@ import {PageNotFoundComponent} from './core/page-not-found/page-not-found.compon
     HeaderComponent,
     FooterComponent,
     HomeComponent,
+    LoginComponent,
     CategoryCardComponent,
     ProductCardComponent,
     PageNotFoundComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    CarouselModule,
-    RouterModule.forRoot([
-      {path: '', component: HomeComponent},
-      {path: '**', component: PageNotFoundComponent}
-    ])
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        CarouselModule,
+        RouterModule.forRoot([
+            {path: '', component: HomeComponent},
+            {path: '**', component: PageNotFoundComponent}
+        ]),
+        ReactiveFormsModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

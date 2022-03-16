@@ -1,0 +1,51 @@
+.menu-button {
+  line-height: 20px;
+}
+
+.modal.fade + .modal-backdrop {
+  opacity: 0;
+  display: none;
+}
+
+.modal.show + .modal-backdrop {
+  display: block;
+  opacity: 0.5;
+}
+
+.btn-close {
+  width: 0.25em;
+  height: 0.25em;
+  margin-right: 5px;
+}
+
+#login-modal.modal > .modal-dialog {
+  max-width: 400px;
+}
+
+
+.title {
+  position: relative;
+  text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+
+}
+
+.title:before, .title:after {
+  content: "";
+  height: 1px;
+  position: absolute;
+  width: 20%;
+  top: 50%;
+}
+
+.title:before {
+  background: linear-gradient(to left, var(--col-light-slate-gray) 0%, var(--col-white) 100%);
+  left: 0;
+}
+
+.title:after {
+  background: linear-gradient(to right, var(--col-light-slate-gray) 0%, var(--col-white) 100%);
+  right: 0;
+}
+
