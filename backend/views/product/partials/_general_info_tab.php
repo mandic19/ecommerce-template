@@ -55,9 +55,7 @@ use yii\widgets\ActiveForm;
                 ]); ?>
             </div>
             <div class="col-12">
-                <?= $form->field($model, 'description')->widget(TinyMce::class, [
-                    'options' => ['rows' => 6]
-                ]); ?>
+                <?= $form->field($model, 'description')->widget(TinyMce::class, []); ?>
             </div>
         </div>
     </div>

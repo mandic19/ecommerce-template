@@ -32,7 +32,9 @@ use yii\widgets\ActiveForm;
         </div>
         <div class="col-md-12">
             <?= $form->field($model, 'description')->widget(TinyMce::class, [
-                'options' => ['rows' => 6]
+                'clientOptions' => [
+                    'height' => '250'
+                ]
             ]) ?>
         </div>
         <div class="col-md-12">
