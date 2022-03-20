@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cfde451d429f90ae99f83750f58bad34",
+    "content-hash": "75fcaa3f5d7ffe38ae51585d0506c297",
     "packages": [
         {
             "name": "2amigos/yii2-resource-manager-component",
@@ -858,16 +858,16 @@
         },
         {
             "name": "hosannahighertech/yii2-oauth2-server",
-            "version": "dev-master",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hosannahighertech/yii2-oauth2-server.git",
-                "reference": "d27feb765893a636b6ede1896cc4e8cba9ff13cc"
+                "reference": "504ecd6bc0bf2db002060db8d3d20ccd8d522283"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hosannahighertech/yii2-oauth2-server/zipball/d27feb765893a636b6ede1896cc4e8cba9ff13cc",
-                "reference": "d27feb765893a636b6ede1896cc4e8cba9ff13cc",
+                "url": "https://api.github.com/repos/hosannahighertech/yii2-oauth2-server/zipball/504ecd6bc0bf2db002060db8d3d20ccd8d522283",
+                "reference": "504ecd6bc0bf2db002060db8d3d20ccd8d522283",
                 "shasum": ""
             },
             "require": {
@@ -908,7 +908,7 @@
                 "source": "https://github.com/hosannahighertech/yii2-oauth2-server"
             },
             "abandoned": "thephpleague/oauth2-server",
-            "time": "2019-03-05T18:15:15+00:00"
+            "time": "2018-06-15T07:57:02+00:00"
         },
         {
             "name": "imagine/imagine",
@@ -4087,16 +4087,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "2.1.0",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "089edd38f5b8abba6cb01567c2a8aaa47cec4c72"
+                "reference": "6565c7e0db3231e92dd5ca3bed448b30fbc89eb1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/089edd38f5b8abba6cb01567c2a8aaa47cec4c72",
-                "reference": "089edd38f5b8abba6cb01567c2a8aaa47cec4c72",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/6565c7e0db3231e92dd5ca3bed448b30fbc89eb1",
+                "reference": "6565c7e0db3231e92dd5ca3bed448b30fbc89eb1",
                 "shasum": ""
             },
             "require": {
@@ -4120,7 +4120,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1-dev"
+                    "dev-master": "2.2-dev"
                 }
             },
             "autoload": {
@@ -4182,7 +4182,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/2.1.0"
+                "source": "https://github.com/guzzle/psr7/tree/2.2.0"
             },
             "funding": [
                 {
@@ -4198,7 +4198,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-10-06T17:43:30+00:00"
+            "time": "2022-03-20T13:51:08+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -7118,7 +7118,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "hosannahighertech/yii2-oauth2-server": 20,
         "yiisoft/yii2-imagine": 20,
         "wbraganca/yii2-dynamicform": 20
     },

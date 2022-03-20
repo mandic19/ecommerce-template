@@ -34,9 +34,10 @@ CREATE TABLE IF NOT EXISTS `user` (
     `updated_at` INT NULL,
     `updated_by` INT NULL,
     `is_deleted` TINYINT NULL DEFAULT 0,
-    PRIMARY KEY (`id`)
-    )
-    ENGINE = InnoDB;
+    PRIMARY KEY (`id`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8
+    COLLATE = utf8_unicode_ci;
 
 
 -- -----------------------------------------------------
@@ -108,7 +109,6 @@ CREATE TABLE IF NOT EXISTS `user` (
     ENGINE = InnoDB
     DEFAULT CHARACTER SET = utf8
     COLLATE = utf8_unicode_ci;
-
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
