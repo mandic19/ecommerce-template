@@ -12,6 +12,8 @@ use yii\helpers\Url;
 use yii\web\View;
 use yii\widgets\Menu;
 
+$webUser = Yii::$app->user->identity;
+
 AppAsset::register($this);
 
 ?>
@@ -46,7 +48,7 @@ AppAsset::register($this);
             </div>
             <div class="info">
                 <span class="text-agate-gray">Welcome,</span>
-                <span>John Doe</span>
+                <span><?= $webUser->getFullName() ?></span>
             </div>
         </div>
         <!-- User profile info -->

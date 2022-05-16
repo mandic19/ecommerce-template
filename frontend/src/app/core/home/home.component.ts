@@ -1,22 +1,27 @@
-import {Component, Input, OnDestroy, OnInit} from "@angular/core";
-import {ICategory} from "../../category/category";
+import {Component, OnDestroy, OnInit} from "@angular/core";
 import {OwlOptions} from "ngx-owl-carousel-o";
+import {CategoryService} from "../../category/services/category.service";
 import {ProductService} from "../../product/services/product.service";
 import {Subscription} from "rxjs";
+import {ICategory} from "../../category/category";
 import {IProduct} from "../../product/product";
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html'
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
 })
 
 export class HomeComponent implements OnInit, OnDestroy {
-  @Input() popularCategories: ICategory[] = [];
-  sub!: Subscription;
+  categorySub!: Subscription;
+  popularCategories: ICategory[] = [];
+
+  productSub!: Subscription;
   popularProducts: IProduct[] = [];
 
-  constructor(private productService: ProductService) {
-  }
+  constructor(
+    private categoryService: CategoryService,
+    private productService: ProductService
+  ) {}
 
   getOwlCarouselOptions(): OwlOptions {
     return {
@@ -42,14 +47,20 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.sub = this.productService.getProducts({'per-page': 5}).subscribe({
+    this.categorySub = this.categoryService.getCategories({'per-page': 5}).subscribe({
+      next: categories => this.popularCategories = categories,
+      error: err => this.handleError(err)
+    })
+
+    this.productSub = this.productService.getProducts({'per-page': 5}).subscribe({
       next: products => this.popularProducts = products,
       error: err => this.handleError(err)
     })
   }
 
   ngOnDestroy(): void {
-    this.sub.unsubscribe();
+    this.categorySub.unsubscribe();
+    this.productSub.unsubscribe();
   }
 
   handleError(err): void {

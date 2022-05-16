@@ -2,10 +2,6 @@ nav {
   z-index: 10;
 }
 
-nav .btn {
-  line-height: 20px;
-}
-
 nav .navbar-brand {
   font-weight: 600;
 }
@@ -23,7 +19,7 @@ nav .navbar-brand > i {
 .carousel > svg.carousel-wave {
   position: absolute;
   bottom: -2px;
-  z-index: 20;
+  z-index: 10;
 }
 
 .carousel > svg.carousel-wave > path {

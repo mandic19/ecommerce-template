@@ -12,17 +12,13 @@ import {ICategory} from "./category/category";
 export class AppComponent implements OnInit, OnDestroy {
   title: string = "Ecommerce Template"
   categories: ICategory[] = [];
-  popularCategories: ICategory[] = [];
   sub!: Subscription;
 
   constructor(private categoryService: CategoryService) {}
 
   ngOnInit(): void {
     this.sub = this.categoryService.getCategories().subscribe({
-      next: categories => {
-        this.categories = categories;
-        this.popularCategories = categories.slice(0, 5);
-      },
+      next: categories => this.categories = categories,
       error: err => this.handleError(err)
     })
   }
