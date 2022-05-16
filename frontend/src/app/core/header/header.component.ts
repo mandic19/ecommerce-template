@@ -1,23 +1,30 @@
-import {Component, Input, OnChanges} from "@angular/core";
-import {ICategory} from "../../category/category";
+import {Component, Input, OnInit} from '@angular/core';
+import {ICategory} from '../../category/category';
+import {Subscription} from "rxjs";
+import {CartService} from "../../cart/services/cart.service";
+import {ICart} from "../../cart/cart";
 
 @Component({
-  selector: 'app-header',
+  selector: 'ecm-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
 
-export class HeaderComponent implements OnChanges {
+export class HeaderComponent implements OnInit{
   @Input() categories: ICategory[] = [];
+  cartTotal: number = 0;
 
-  ngOnChanges(): void {
-    this.categories = this.buildCategoryTree(this.categories);
+  private cartSub: Subscription;
+
+  constructor(private cartService: CartService) {
+    this.cartSub = this.cartService.getUpdate().subscribe(cart => this.setCartTotal(cart));
   }
 
-  buildCategoryTree(categories: ICategory[], id = null): ICategory[] {
-    let categoryTree = categories.filter(category => category.parent_category_id === id);
-    categoryTree.map(category => category.sub_categories = this.buildCategoryTree(categories, category.id));
+  ngOnInit(): void {
+    this.setCartTotal(this.cartService.getCart());
+  }
 
-    return categoryTree;
+  setCartTotal(cart: ICart): void {
+    this.cartTotal = cart.total;
   }
 }

@@ -1,0 +1,19 @@
+<ecm-header [categories]="categories"></ecm-header>
+<section class="container">
+  <div class="row">
+    <div class="col-lg-7">
+      <div class="card mt-4">
+        <div class="card-body text-center p-2">
+          <h5 class="m-0">Radno vrijeme dostave je od 8-22:45h</h5>
+        </div>
+      </div>
+      <div *ngFor="let category of categories">
+        <ecm-category-card [category]="category"></ecm-category-card>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <ecm-cart></ecm-cart>
+    </div>
+  </div>
+</section>
+<ecm-footer></ecm-footer>

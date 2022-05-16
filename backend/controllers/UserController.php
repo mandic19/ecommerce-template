@@ -9,12 +9,14 @@ use common\components\actions\ToggleAction;
 use common\components\actions\UpdateAction;
 use common\components\actions\ViewAction;
 use common\components\controllers\BaseController;
+use common\helpers\RbacHelper;
 use common\models\forms\ChangePasswordForm;
 use common\models\forms\RegistrationForm;
 use common\models\search\OrderSearch;
 use common\models\User;
 use common\models\search\UserSearch;
 use Yii;
+use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\filters\VerbFilter;
 
@@ -31,18 +33,32 @@ class UserController extends BaseController
      */
     public function behaviors()
     {
-        return ArrayHelper::merge(
-            parent::behaviors(),
+        return
             [
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'allow' => false,
+                            'actions' => ['toggle-status'],
+                            'roles' => [RbacHelper::ROLE_ADMIN],
+                            'matchCallback' => function ($rule, $action) {
+                                return Yii::$app->user->id == Yii::$app->request->get('id');
+                            },
+                        ],
+                        [
+                            'allow' => true,
+                            'roles' => [RbacHelper::ROLE_ADMIN],
+                        ]
+                    ],
+                ],
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
                         'delete' => ['POST'],
-                        'toggle-status' => ['POST'],
                     ],
                 ],
-            ]
-        );
+            ];
     }
 
     public function actions()
@@ -102,7 +118,7 @@ class UserController extends BaseController
                 'modelClass' => $this->modelClass,
                 'attribute' => 'status',
                 'onValue' => User::STATUS_ACTIVE,
-                'offValue' => User::STATUS_INACTIVE
+                'offValue' => User::STATUS_INACTIVE,
             ],
             'delete' => [
                 'class' => DeleteAction::class,

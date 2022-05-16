@@ -1,42 +1,9 @@
-nav {
-  z-index: 10;
+.navbar-brand {
+  margin-right: 50px;
 }
 
-nav .navbar-brand {
+.nav-item {
+  text-transform: uppercase;
+  font-size: 14px;
   font-weight: 600;
 }
-
-nav .navbar-brand > i {
-  border: 2px solid white;
-  border-radius: 50%;
-  padding: 5px 6px;
-}
-
-.carousel > .carousel-inner > .carousel-item {
-  max-height: 440px;
-}
-
-.carousel > svg.carousel-wave {
-  position: absolute;
-  bottom: -2px;
-  z-index: 10;
-}
-
-.carousel > svg.carousel-wave > path {
-  fill: var(--col-primary)
-}
-
-.dropdown-toggle-submenu:hover > .dropdown-menu {
-  display: block;
-  top:0;
-  left: 100%;
-}
-
-.dropdown-item {
-  min-width: 200px;
-}
-
-.dropdown-item:active {
-  background-color: var(--col-primary);
-}
-

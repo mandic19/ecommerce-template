@@ -5,7 +5,9 @@ namespace common\models;
 use common\components\orm\ActiveRecord;
 use common\helpers\BaseHelper;
 use Yii;
+use yii\behaviors\SluggableBehavior;
 use yii\db\ActiveQuery;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "product_category".
@@ -14,8 +16,10 @@ use yii\db\ActiveQuery;
  * @property int|null $parent_category_id
  * @property int|null $cover_image_id
  * @property string|null $name
+ * @property string|null $slug
  * @property string|null $description
  * @property int|null $order
+ * @property int|null $is_active
  * @property int|null $created_at
  * @property int|null $created_by
  * @property int|null $updated_at
@@ -25,9 +29,13 @@ use yii\db\ActiveQuery;
  * @property Image $coverImage
  * @property ProductCategory $parentCategory
  * @property ProductCategory[] $subCategories
+ * @property Product[] $products
  */
 class ProductCategory extends ActiveRecord
 {
+    const STATUS_ACTIVE = 1;
+    const STATUS_INACTIVE = 0;
+
     public $coverImageIds;
 
     /**
@@ -47,10 +55,12 @@ class ProductCategory extends ActiveRecord
             [['name'], 'required'],
             [['parent_category_id', 'cover_image_id', 'order', 'created_at', 'created_by', 'updated_at', 'updated_by', 'is_deleted'], 'integer'],
             [['description'], 'string'],
-            [['name'], 'string', 'max' => 255],
+            [['name', 'slug'], 'string', 'max' => 255],
             [['parent_category_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductCategory::className(), 'targetAttribute' => ['parent_category_id' => 'id']],
             [['cover_image_id'], 'exist', 'skipOnError' => true, 'targetClass' => Image::className(), 'targetAttribute' => ['cover_image_id' => 'id']],
-            [['coverImageIds'], 'safe']
+            [['coverImageIds'], 'safe'],
+            [['is_active'], 'default', 'value' => static::STATUS_ACTIVE],
+            ['is_active', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE]],
         ];
     }
 
@@ -64,8 +74,10 @@ class ProductCategory extends ActiveRecord
             'parent_category_id' => Yii::t('app', 'Parent Category'),
             'cover_image_id' => Yii::t('app', 'Cover Image Id'),
             'name' => Yii::t('app', 'Name'),
+            'slug' => Yii::t('app', 'Slug'),
             'description' => Yii::t('app', 'Description'),
             'order' => Yii::t('app', 'Order'),
+            'is_active' => Yii::t('app', 'Is Active'),
             'created_at' => Yii::t('app', 'Created At'),
             'created_by' => Yii::t('app', 'Created By'),
             'updated_at' => Yii::t('app', 'Updated At'),
@@ -75,9 +87,20 @@ class ProductCategory extends ActiveRecord
         ];
     }
 
+    public function behaviors()
+    {
+        return ArrayHelper::merge(parent::behaviors(), [
+            [
+                'class' => SluggableBehavior::class,
+                'attribute' => 'name',
+                'slugAttribute' => 'slug',
+            ],
+        ]);
+    }
+
     public function beforeValidate()
     {
-        if(!empty($this->coverImageIds)) {
+        if (!empty($this->coverImageIds)) {
             $coverImageIds = BaseHelper::extractIdsFromDropzoneValue($this->coverImageIds, 1);
             $this->cover_image_id = $coverImageIds[0];
         }
@@ -86,15 +109,16 @@ class ProductCategory extends ActiveRecord
 
     public function fields()
     {
-        $fields = parent::fields();
-
-        unset($fields['created_at']);
-        unset($fields['created_by']);
-        unset($fields['updated_at']);
-        unset($fields['updated_by']);
-        unset($fields['is_deleted']);
-
-        return $fields;
+        return [
+            'id',
+            'name',
+            'slug',
+            'products' => function () {
+                return $this->getProducts()->andOnCondition([
+                    'is_active' => Product::STATUS_ACTIVE
+                ])->orderBy(['order' => SORT_ASC])->all();
+            }
+        ];
     }
 
     /**
@@ -125,5 +149,15 @@ class ProductCategory extends ActiveRecord
     public function getSubCategories()
     {
         return $this->hasMany(ProductCategory::className(), ['parent_category_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Products]].
+     *
+     * @return ActiveQuery
+     */
+    public function getProducts()
+    {
+        return $this->hasMany(Product::className(), ['category_id' => 'id']);
     }
 }

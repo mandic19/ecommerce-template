@@ -63,13 +63,15 @@ use yii\helpers\Url;
             'attribute' => 'status',
             'format' => 'raw',
             'value' => function (User $model) use ($pjaxId) {
+                $isDisabled = Yii::$app->user->id == $model->id;
                 $input = Html::activeInput('checkbox', $model, "[{$model->id}]status", [
-                    'checked' => $model->status === User::STATUS_ACTIVE
+                    'checked' => $model->status === User::STATUS_ACTIVE,
+                    'disabled' => $isDisabled
                 ]);
                 $label = Html::label('', Html::getInputId($model, "[{$model->id}]status"));
 
                 $content =
-                    "<div class='toggle-switch-wrap'>
+                    "<div class='toggle-switch-wrap' " . ($isDisabled ? 'disabled' : '') . ">
                             <span class='toggle-switch toggle-switch-reverse'>
                                 {$input}
                                 {$label}
@@ -77,20 +79,20 @@ use yii\helpers\Url;
                         </div>";
 
                 $action = $model->status === User::STATUS_ACTIVE ?
-                    Yii::t('app', 'activate') :
-                    Yii::t('app', 'deactivate');
+                    Yii::t('app', 'deactivate') :
+                    Yii::t('app', 'activate');
 
-                return Html::tag('div', $content, [
-                    'class' => 'btn-control-confirm',
-                    'data-msg' => Yii::t('app', "Are you sure you want to {:action} user: {:user}?", [
-                        ':action' => $action,
-                        ':user' => $model->getFullName()
-                    ]),
-                    'data-url' => Url::to(['user/toggle-status', 'id' => $model->id]),
-                    'data-json-response' => 1,
-                    'data-loader' => 0,
-                    'data-pjax-id' => $pjaxId
-                ]);
+                return !$isDisabled ? Html::tag('div', $content, [
+                        'class' => 'btn-control-confirm',
+                        'data-msg' => Yii::t('app', "Are you sure you want to {:action} user: {:user}?", [
+                            ':action' => $action,
+                            ':user' => $model->getFullName()
+                        ]),
+                        'data-url' => Url::to(['user/toggle-status', 'id' => $model->id]),
+                        'data-json-response' => 1,
+                        'data-loader' => 0,
+                        'data-pjax-id' => $pjaxId
+                    ]) : Html::tag('div', $content);
             }],
         [
             'class' => 'yii\grid\ActionColumn',

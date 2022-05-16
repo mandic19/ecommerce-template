@@ -12,6 +12,7 @@ use common\models\ProductCategory;
 class ProductCategorySearch extends ProductCategory
 {
     public $q;
+
     /**
      * {@inheritdoc}
      */
@@ -39,6 +40,9 @@ class ProductCategorySearch extends ProductCategory
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder' => ['order' => SORT_ASC]
+            ],
         ]);
 
         $this->load($params, '');

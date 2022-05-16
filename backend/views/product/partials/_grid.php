@@ -50,12 +50,12 @@ use yii\helpers\Url;
         [
             'label' => Yii::t('app', 'Category'),
             'attribute' => 'category',
-            'value' => function(Product $model) {
+            'value' => function (Product $model) {
                 return !empty($model->category) ? $model->category->name : null;
             }
         ],
         'sku',
-        'quantity',
+//        'quantity',
         'price',
         [
             'label' => Yii::t('app', 'Active'),
@@ -76,8 +76,8 @@ use yii\helpers\Url;
                         </div>";
 
                 $action = $model->is_active === Product::STATUS_ACTIVE ?
-                    Yii::t('app', 'activate') :
-                    Yii::t('app', 'deactivate');
+                    Yii::t('app', 'deactivate') :
+                    Yii::t('app', 'activate');
 
                 return Html::tag('div', $content, [
                     'class' => 'btn-control-confirm',
@@ -90,7 +90,8 @@ use yii\helpers\Url;
                     'data-loader' => 0,
                     'data-pjax-id' => $pjaxId
                 ]);
-            }],
+            }
+        ],
         [
             'class' => 'yii\grid\ActionColumn',
             'template' => '<div class="d-flex justify-content-end">{update}{delete}</div>',

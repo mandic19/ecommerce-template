@@ -1,24 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.min.css";
 @import "~font-awesome/css/font-awesome.min.css";
-@import '~ngx-owl-carousel-o/lib/styles/scss/owl.carousel';
-@import '~ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
 
 :root {
   --col-lemon-yellow: #fffcc6;
   --col-violet: #9884fc;
   --col-violet-dimmed: #6554b9;
-  --col-primary: #2a3f54;
+  --col-primary: #446CB3;
   --col-primary-light: #4a6f95;
   --col-secondary: #ededed;
   --col-secondary-dimmed: #e5e5e5;
-  --col-success-light: #1abb9c;
+  --col-success-light: #A2DED0;
   --col-success: #26b99a;
   --col-success-dimmed: #1a8c75;
   --col-danger: #ff2851;
   --col-danger-dimmed: #be1f3d;
   --col-white: #fff;
   --col-picton-blue: #4b8fc9;
+  --col-skin-tone: #ddd2c6;
   --col-light-blue: #eff0f1;
   --col-gray-neutral: #f7f7f7;
   --col-light-slate-gray: #73879c;
@@ -34,22 +33,12 @@
   --lh-xl: 24px;
 }
 
-.btn.btn-just-icon {
-  border-radius: 50%;
-  height: 34px;
-  width: 34px;
-  min-width: 34px;
-  padding: 5px;
-  font-size: 16px;
-  line-height: 21px;
+html {
+  scroll-behavior: smooth;
 }
 
-.text-yellow {
-  color: var(--col-lemon-yellow);
-}
-
-.text-violet {
-  color: var(--col-violet);
+body {
+  background: var(--col-skin-tone) url("assets/images/vector-background.png") repeat;
 }
 
 .btn-primary {
@@ -75,18 +64,40 @@
   color: var(--col-primary-light);
 }
 
-.form-control {
-  display: block;
-  width: 100%;
-  height: calc(1.5em + 0.75rem + 2px);
-  padding: 0.375rem 0.75rem;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #495057;
-  background-color: #fff;
-  background-clip: padding-box;
-  border: 1px solid #ced4da;
-  border-radius: 0.25rem;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+.btn.btn-success {
+  background: var(--col-success) !important;
+}
+
+.btn-success {
+  background: var(--col-success);
+  border: unset !important;
+  box-shadow: unset!important;
+}
+
+.btn-success:active,
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:focus-within,
+.btn-success[disabled] {
+  background: var(--col-success-dimmed) !important;
+}
+
+.btn-secondary {
+  background: var(--col-secondary);
+  border: 1px solid var(--col-secondary);
+  color: var(--col-primary) !important;
+}
+
+.btn-secondary:active,
+.btn-secondary:hover,
+.btn-secondary:focus,
+.btn-secondary:focus-within {
+  background: var(--col-secondary-dimmed) !important;
+  border: 1px solid var(--col-secondary-dimmed) !important;
+}
+
+.card {
+  min-width: 100%;
+  border: unset;
+  border-radius: 3px;
 }

@@ -1,6 +1,6 @@
 .product-card {
   border: 1px solid lightgrey;
-  border-radius: 5px;
+  border-radius: unset;
   overflow: hidden;
   max-width: 250px;
   font-size: 14px;
@@ -11,4 +11,10 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+
+.pv-dropdown {
+  font-weight: 500;
+  padding: 2px 36px 3px 12px;
 }

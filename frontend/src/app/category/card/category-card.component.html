@@ -1,14 +1,11 @@
-<div class="category-card m-auto">
-  <img
-    [src]="getImageUrl(category.cover_image_id)"
-    [alt]="category.name"
-    loading="lazy"
-    class="w-auto"
-  >
-  <div class="category-card-footer text-start m-3">
-    <h6>{{category.name}}</h6>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+<div id="{{category.slug}}" class="category-card card mt-4">
+  <div class="card-header">
+    <h5 class="m-0">{{category.name}}</h5>
+  </div>
+  <div class="card-body">
+    <div *ngFor="let product of category.products">
+      <ecm-product-card [product]="product"></ecm-product-card>
+    </div>
   </div>
 </div>
 

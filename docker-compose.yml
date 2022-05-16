@@ -6,21 +6,21 @@ services:
 
   mariadb:
     image: mariadb:10.3.3
-    container_name: ecommerce_template-mariadb
+    container_name: gril-zuti-mariadb
     working_dir: /application
     volumes:
       - .:/application
     environment:
       - MYSQL_ROOT_PASSWORD=password1996
-      - MYSQL_DATABASE=ecommerce_template_local
-      - MYSQL_USER=ecommerce_template_local
+      - MYSQL_DATABASE=gril_zuti_local
+      - MYSQL_USER=gril_zuti_local
       - MYSQL_PASSWORD=password1996
     ports:
       - "3306:3306"
 
   webserver:
     image: nginx:alpine
-    container_name: ecommerce_template-webserver
+    container_name: gril-zuti-webserver
     working_dir: /application
     volumes:
       - .:/application
@@ -30,7 +30,7 @@ services:
 
   php-fpm:
     build: phpdocker/php-fpm
-    container_name: ecommerce_template-php-fpm
+    container_name: gril-zuti-php-fpm
     working_dir: /application
     volumes:
       - .:/application

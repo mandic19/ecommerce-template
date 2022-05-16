@@ -1,16 +1,16 @@
-import {Component, OnDestroy, OnInit} from '@angular/core'
-import {Subscription} from "rxjs";
-import {CategoryService} from "./category/services/category.service";
-import {ICategory} from "./category/category";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Subscription} from 'rxjs';
+import {CategoryService} from './category/services/category.service';
+import {ICategory} from './category/category';
 
 @Component({
-  selector: 'app-root',
+  selector: 'ecm-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 
 export class AppComponent implements OnInit, OnDestroy {
-  title: string = "Ecommerce Template"
+  title = 'Ecommerce Template';
   categories: ICategory[] = [];
   sub!: Subscription;
 
@@ -20,7 +20,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.sub = this.categoryService.getCategories().subscribe({
       next: categories => this.categories = categories,
       error: err => this.handleError(err)
-    })
+    });
   }
 
   ngOnDestroy(): void {

@@ -4,12 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://api.ecommerce_template.local/v1',
-  ouath2: {
-    grantType: 'password',
-    clientId: 'customer',
-    clientSecret: '$2y$13$1idZWPL6jRz88zAJt0rDJOBsnVAGbfyFl3U7h0c.lZ/MqGkaoNAPy'
-  }
+  apiUrl: 'http://api.gril-zuti.local/v1',
+  minOrderTotal: 4
 };
 
 /*

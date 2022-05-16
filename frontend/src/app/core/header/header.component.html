@@ -1,120 +1,22 @@
-<!-- Tape navbar container -->
-<nav class="tape-navbar navbar navbar-dark bg-dark">
-  <span class="text-center text-yellow w-100">
-    Free shipping on orders over $50
-  </span>
-</nav>
-<!-- /Tape navbar container -->
-
-<!-- Carousel container -->
-<div id="headerCarousel" class="header-carousel carousel slide" data-bs-ride="carousel">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="assets/images/slider.jpg" class="d-block w-100" alt="...">
-    </div>
-  </div>
-  <button
-    class="carousel-control-prev"
-    type="button"
-    data-bs-target="#headerCarousel"
-    data-bs-slide="prev"
-  >
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button
-    class="carousel-control-next"
-    type="button"
-    data-bs-target="#headerCarousel"
-    data-bs-slide="next"
-  >
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 180 1440 80" class="carousel-wave">
-    <path
-      d="M 0 185 L 46 193 C 109 209 240 235 360 250.7 C 480 267 600 245
-        720 229.3 C 840 213 960 203 1080 213.3 C 1281 228 1354 223 1403 205
-        L 1441 187 L 1440 320 L 1380 320 C 1320 320 1200 320 1080 320 C 960
-        320 840 320 720 320 C 600 320 480 320 360 320 C 240 320 120 320 60 320 L 0 320 Z"
-    >
-    </path>
-  </svg>
-</div>
-<!-- /Carousel container -->
-
 <!-- Navbar container -->
 <nav class="main-navbar navbar navbar-expand-lg navbar-dark bg-deep-blue sticky-top">
-  <div class="container-fluid">
+  <div class="container">
     <a class="navbar-brand" href="#">
-      <i class="fa fa-paw"></i>
-      <span class="ms-2">Gentellela Alela!</span>
+      <span class="ms-2">Gril Žuti</span>
     </a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            id="navbarDropdown"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            Store
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li *ngIf="categories.length < 1" class="text-center"><i class="fa fa-spinner fa-spin"></i></li>
-            <ng-template #recursiveList let-categories>
-            <li *ngFor="let category of categories" class="dropdown-toggle-submenu">
-              <a class="dropdown-item" href="#">
-                <div class="d-flex align-items-center">
-                  <span>{{category.name}}</span>
-                  <i class="fa fa-caret-right ms-auto" *ngIf="category.sub_categories.length > 0"></i>
-                </div>
-              </a>
-              <ul *ngIf="category.sub_categories.length > 0" class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: category.sub_categories}"></ng-container>
-              </ul>
-            </li>
-            </ng-template>
-            <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: categories }"></ng-container>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="#">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="#">Blog</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="#">Contact</a>
-        </li>
-      </ul>
-      <div>
-        <span class="btn btn-light btn-just-icon me-2" title="Wishlist">
-          <i class="fa fa-heart"></i>
-        </span>
-        <span class="btn btn-light btn-just-icon me-2" title="Go to cart">
-          <i class="fa fa-shopping-bag"></i>
-        </span>
-        <app-login></app-login>
-      </div>
-    </div>
+    <ul class="navbar-nav d-none d-lg-flex flex-row me-auto">
+      <li *ngFor="let category of categories" class="nav-item me-2 me-xs-0">
+        <a class="nav-link" [href]="'#'+category.slug">{{category.name}}</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav d-flex d-lg-none">
+      <li class="nav-item">
+        <a class="nav-link" href="#cart">
+          <i class="fa fa-shopping-cart me-1"></i>
+          Korpa {{cartTotal | currency}}
+        </a>
+      </li>
+    </ul>
   </div>
 </nav>
 <!-- /Navbar container -->

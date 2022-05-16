@@ -43,7 +43,43 @@ use yii\helpers\Url;
 
                 return "{$img} {$model->name}";
             },
-            'contentOptions' => ['class' => 'text-nowrap']
+            'contentOptions' => ['class' => 'text-nowrap', 'style' => 'width:90%;']
+        ],
+        [
+            'label' => Yii::t('app', 'Active'),
+            'attribute' => 'active',
+            'format' => 'raw',
+            'contentOptions' => ['style' => 'width:10%;'],
+            'value' => function (ProductCategory $model) use ($pjaxId) {
+                $input = Html::activeInput('checkbox', $model, "[{$model->id}]is_active", [
+                    'checked' => $model->is_active === ProductCategory::STATUS_ACTIVE
+                ]);
+                $label = Html::label('', Html::getInputId($model, "[{$model->id}]is_active"));
+
+                $content =
+                    "<div class='toggle-switch-wrap'>
+                            <span class='toggle-switch toggle-switch-reverse'>
+                                {$input}
+                                {$label}
+                            </span>
+                        </div>";
+
+                $action = $model->is_active === ProductCategory::STATUS_ACTIVE ?
+                    Yii::t('app', 'deactivate') :
+                    Yii::t('app', 'activate');
+
+                return Html::tag('div', $content, [
+                    'class' => 'btn-control-confirm',
+                    'data-msg' => Yii::t('app', "Are you sure you want to {:action} category: {:category}?", [
+                        ':action' => $action,
+                        ':category' => $model->name
+                    ]),
+                    'data-url' => Url::to(['product-category/toggle-status', 'id' => $model->id]),
+                    'data-json-response' => 1,
+                    'data-loader' => 0,
+                    'data-pjax-id' => $pjaxId
+                ]);
+            }
         ],
         [
             'class' => 'yii\grid\ActionColumn',

@@ -410,6 +410,12 @@ section.empty-layout .search {
     white-space: nowrap;
 }
 
+.toggle-switch-wrap[disabled],
+.toggle-switch-wrap.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
 .toggle-switch {
     position: relative;
     display: inline-block;
