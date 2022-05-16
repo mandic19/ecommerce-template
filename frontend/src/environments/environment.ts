@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://api.gril-zuti.local/v1',
+  apiUrl: 'http://api.ecommerce_template.local/v1',
   minOrderTotal: 4
 };
 

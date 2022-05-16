@@ -21,7 +21,7 @@ $params = array_merge(
 $routes = require __DIR__ . '/routes.php';
 
 return [
-    'id' => 'gril-zuti-api',
+    'id' => 'ecommerce_template-api',
     'name' => 'Ecommerce Template',
     'version' => "1.0.0",
     'basePath' => dirname(__DIR__),

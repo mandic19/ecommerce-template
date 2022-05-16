@@ -4,7 +4,7 @@ return [
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=mariadb;dbname=gril_zuti_dev',
+            'dsn' => 'mysql:host=mariadb;dbname=ecommerce_template_dev',
             'username' => 'root',
             'password' => 'password1996',
             'charset' => 'utf8',
