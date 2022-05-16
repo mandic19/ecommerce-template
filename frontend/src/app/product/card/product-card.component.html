@@ -7,7 +7,7 @@
       </div>
       <div class="m-auto me-1 mt-2 mt-lg-auto d-flex flex-nowrap align-items-center">
         <h6 *ngIf="product.variants.length < 1" class="my-auto">
-          {{product.price | currency }}
+          {{product.price | currency}}
         </h6>
         <select #productVariantSelect
                 *ngIf="product.variants.length"
@@ -22,7 +22,7 @@
         <button class="btn btn-sm btn-success text-uppercase ms-2"
                 (click)="addToCart()"
         >
-          Dodaj
+          {{'base.add' | translate}}
         </button>
       </div>
     </div>

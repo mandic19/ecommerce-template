@@ -1,6 +1,9 @@
 <div id="cart" class="card mt-4 cart-card">
   <div class="card-header bg-deep-blue text-white text-center">
-    <h4 class="my-1"><i class="fa fa-shopping-cart me-2"></i>Vaša narudžba</h4>
+    <h4 class="my-1">
+      <i class="fa fa-shopping-cart me-2"></i>
+      {{'base.cart' | translate}}
+    </h4>
   </div>
   <div class="card-body">
     <div *ngIf="!checkoutActive">
@@ -24,20 +27,21 @@
       </div>
     </div>
     <div *ngIf="items.length > 0" class="cart-total">
-      Ukupno: {{total | currency}}
+      {{'base.total' | translate}}: {{total | currency}}
     </div>
     <div *ngIf="items.length < 1 && !checkoutActive" class="cart-empty">
-      Vaša korpa je prazna !
+      {{'cart.empty' | translate}}
     </div>
     <div *ngIf="total >= minOrderTotal && !checkoutActive" class="cart-checkout">
-      <button class="btn btn-primary px-5" (click)="toggleCheckout()">Naruči</button>
+      <button class="btn btn-primary px-5" (click)="toggleCheckout()">{{'cart.checkout' | translate}}</button>
     </div>
     <div *ngIf="checkoutActive" class="px-3 py-2">
       <form (ngSubmit)="submit()" [formGroup]="checkoutForm">
         <div class="row">
           <div class="col-12 mb-3">
             <button class="btn btn-sm btn-secondary" (click)="toggleCheckout()">
-              <i class="fa fa-chevron-left me-2"></i>Nazad
+              <i class="fa fa-chevron-left me-2"></i>
+              {{'base.back' | translate}}
             </button>
           </div>
           <div class="col-12 mb-3 form-group">
@@ -45,13 +49,13 @@
                    type="text"
                    maxlength="100"
                    class="form-control"
-                   placeholder="Ime i prezime"
+                   placeholder="{{'cart.field.fullName' | translate}}"
                    formControlName="name"
                    [ngClass]="{'is-invalid': isInvalidField('name')}"
             >
             <span class="invalid-feedback">
               <span *ngIf="checkoutForm.get('name').errors?.required">
-                Unesite ime !
+                {{'cart.error.requiredFullName' | translate}}
               </span>
             </span>
           </div>
@@ -60,13 +64,13 @@
                    type="text"
                    maxlength="255"
                    class="form-control"
-                   placeholder="Adresa"
+                   placeholder="{{'cart.field.address' | translate}}"
                    formControlName="address"
                    [ngClass]="{'is-invalid': isInvalidField('address')}"
             >
             <span class="invalid-feedback">
               <span *ngIf="checkoutForm.get('address').errors?.required">
-                Unesite adresu !
+                {{'cart.error.requiredAddress' | translate}}
               </span>
             </span>
           </div>
@@ -75,16 +79,16 @@
                    type="email"
                    maxlength="100"
                    class="form-control"
-                   placeholder="Email"
+                   placeholder="{{'cart.field.email' | translate}}"
                    formControlName="email"
                    [ngClass]="{'is-invalid': isInvalidField('email')}"
             >
             <span class="invalid-feedback">
               <span *ngIf="checkoutForm.get('email').errors?.required">
-                Unesite email !
+                {{'cart.error.requiredEmail' | translate}}
               </span>
               <span *ngIf="checkoutForm.get('email').errors?.email">
-                Pogrešan email format !
+                {{'cart.error.badEmailFormat' | translate}}
               </span>
             </span>
           </div>
@@ -93,13 +97,13 @@
                    type="text"
                    maxlength="50"
                    class="form-control"
-                   placeholder="Telefon"
+                   placeholder="{{'cart.field.phone' | translate}}"
                    formControlName="phone"
                    [ngClass]="{'is-invalid': isInvalidField('phone')}"
             >
             <span class="invalid-feedback">
               <span *ngIf="checkoutForm.get('phone').errors?.required">
-                Unesite adresu !
+                {{'cart.error.requiredPhone' | translate}}
               </span>
             </span>
           </div>
@@ -108,7 +112,7 @@
                       class="form-control"
                       rows="3"
                       maxlength="255"
-                      placeholder="Dodatne informacije (opcionalno)"
+                      placeholder="{{'cart.field.notes' | translate}}"
                       formControlName="notes"
                       [ngClass]="{'is-invalid': isInvalidField('notes')}"
             ></textarea>
@@ -119,13 +123,13 @@
                   class="btn btn-primary px-5"
                   [disabled]="!checkoutForm.valid"
           >
-            Pošalji
+            {{'cart.place_order' | translate}}
           </button>
         </div>
       </form>
     </div>
   </div>
   <div class="card-footer text-center">
-    <small>Minimalna narudžba za dostavu je 4 KM</small>
+    <small>{{'cart.footerMessage' | translate: {"param": "4KM"} }}</small>
   </div>
 </div>

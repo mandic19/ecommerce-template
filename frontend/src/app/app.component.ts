@@ -2,6 +2,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {CategoryService} from './category/services/category.service';
 import {ICategory} from './category/category';
+import {TranslateService} from "@ngx-translate/core";
+
 
 @Component({
   selector: 'ecm-root',
@@ -14,7 +16,10 @@ export class AppComponent implements OnInit, OnDestroy {
   categories: ICategory[] = [];
   sub!: Subscription;
 
-  constructor(private categoryService: CategoryService) {}
+  constructor(private categoryService: CategoryService, private translate: TranslateService) {
+    translate.setDefaultLang('en');
+    translate.use('en');
+  }
 
   ngOnInit(): void {
     this.sub = this.categoryService.getCategories().subscribe({

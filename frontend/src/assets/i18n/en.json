@@ -1,0 +1,29 @@
+{
+  "base": {
+    "cart": "Cart",
+    "back": "Back",
+    "add": "Add",
+    "total": "Total",
+    "workingHours": "Delivery hours are from {{param}} !"
+  },
+  "cart": {
+    "checkout": "Checkout",
+    "place_order": "Place Order",
+    "field": {
+      "fullName": "Full name",
+      "address": "Address",
+      "email": "Email",
+      "phone": "Phone number",
+      "notes": "Notes"
+    },
+    "error": {
+      "requiredFullName": "Full name is required !",
+      "requiredAddress": "Address is required !",
+      "requiredEmail": "Email is required !",
+      "requiredPhone": "Phone is required !",
+      "badEmailFormat": "Bad Email format !"
+    },
+    "empty": "Cart is empty !",
+    "footerMessage": "Minimum order for delivery is {{param}} !"
+  }
+}

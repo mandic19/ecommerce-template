@@ -1,0 +1,29 @@
+{
+  "base": {
+    "cart": "Vaša narudžba",
+    "back": "Nazad",
+    "add": "Dodaj",
+    "total": "Ukupno",
+    "workingHours": "Radno vrijeme dostave je {{param}} !"
+  },
+  "cart": {
+    "checkout": "Naruči",
+    "place_order": "Pošalji",
+    "field": {
+      "fullName": "Ime i prezime",
+      "address": "Adresa",
+      "email": "Email",
+      "phone": "Broj telefona",
+      "notes": "Dodatne informacije (opcionalno)..."
+    },
+    "error": {
+      "requiredFullName": "Unesi ime !",
+      "requiredAddress": "Unesi adresu !",
+      "requiredEmail": "Unesi email !",
+      "requiredPhone": "Unesi broj telefona !",
+      "badEmailFormat": "Pogrešan email format !"
+    },
+    "empty": "Korpa je prazna !",
+    "footerMessage": "Minimalna naružba za dostavu je {{param}} !"
+  }
+}
