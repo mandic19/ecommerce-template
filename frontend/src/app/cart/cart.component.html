@@ -29,104 +29,22 @@
     <div *ngIf="items.length > 0" class="cart-total">
       {{'base.total' | translate}}: {{total | currency}}
     </div>
-    <div *ngIf="items.length < 1 && !checkoutActive" class="cart-empty">
-      {{'cart.empty' | translate}}
-    </div>
-    <div *ngIf="total >= minOrderTotal && !checkoutActive" class="cart-checkout">
-      <button class="btn btn-primary px-5" (click)="toggleCheckout()">{{'cart.checkout' | translate}}</button>
-    </div>
-    <div *ngIf="checkoutActive" class="px-3 py-2">
-      <form (ngSubmit)="submit()" [formGroup]="checkoutForm">
-        <div class="row">
-          <div class="col-12 mb-3">
-            <button class="btn btn-sm btn-secondary" (click)="toggleCheckout()">
-              <i class="fa fa-chevron-left me-2"></i>
-              {{'base.back' | translate}}
-            </button>
-          </div>
-          <div class="col-12 mb-3 form-group">
-            <input id="name"
-                   type="text"
-                   maxlength="100"
-                   class="form-control"
-                   placeholder="{{'cart.field.fullName' | translate}}"
-                   formControlName="name"
-                   [ngClass]="{'is-invalid': isInvalidField('name')}"
-            >
-            <span class="invalid-feedback">
-              <span *ngIf="checkoutForm.get('name').errors?.required">
-                {{'cart.error.requiredFullName' | translate}}
-              </span>
-            </span>
-          </div>
-          <div class="col-12 mb-3">
-            <input id="address"
-                   type="text"
-                   maxlength="255"
-                   class="form-control"
-                   placeholder="{{'cart.field.address' | translate}}"
-                   formControlName="address"
-                   [ngClass]="{'is-invalid': isInvalidField('address')}"
-            >
-            <span class="invalid-feedback">
-              <span *ngIf="checkoutForm.get('address').errors?.required">
-                {{'cart.error.requiredAddress' | translate}}
-              </span>
-            </span>
-          </div>
-          <div class="col-12 mb-3">
-            <input id="email"
-                   type="email"
-                   maxlength="100"
-                   class="form-control"
-                   placeholder="{{'cart.field.email' | translate}}"
-                   formControlName="email"
-                   [ngClass]="{'is-invalid': isInvalidField('email')}"
-            >
-            <span class="invalid-feedback">
-              <span *ngIf="checkoutForm.get('email').errors?.required">
-                {{'cart.error.requiredEmail' | translate}}
-              </span>
-              <span *ngIf="checkoutForm.get('email').errors?.email">
-                {{'cart.error.badEmailFormat' | translate}}
-              </span>
-            </span>
-          </div>
-          <div class="col-12 mb-3">
-            <input id="phone"
-                   type="text"
-                   maxlength="50"
-                   class="form-control"
-                   placeholder="{{'cart.field.phone' | translate}}"
-                   formControlName="phone"
-                   [ngClass]="{'is-invalid': isInvalidField('phone')}"
-            >
-            <span class="invalid-feedback">
-              <span *ngIf="checkoutForm.get('phone').errors?.required">
-                {{'cart.error.requiredPhone' | translate}}
-              </span>
-            </span>
-          </div>
-          <div class="col-12">
-            <textarea id="notes"
-                      class="form-control"
-                      rows="3"
-                      maxlength="255"
-                      placeholder="{{'cart.field.notes' | translate}}"
-                      formControlName="notes"
-                      [ngClass]="{'is-invalid': isInvalidField('notes')}"
-            ></textarea>
-          </div>
-        </div>
-        <div class="mt-2 text-center">
-          <button type="submit"
-                  class="btn btn-primary px-5"
-                  [disabled]="!checkoutForm.valid"
-          >
-            {{'cart.place_order' | translate}}
-          </button>
-        </div>
-      </form>
+    <ng-container *ngIf="!checkoutActive">
+      <div *ngIf="items.length < 1" class="cart-empty">
+          {{'cart.empty' | translate}}
+      </div>
+      <div *ngIf="total >= minOrderTotal && !checkoutActive" class="cart-checkout">
+        <button class="btn btn-primary px-5" (click)="toggleCheckout()">
+          {{'cart.checkout' | translate}}
+        </button>
+      </div>
+    </ng-container>
+    <div *ngIf="checkoutActive">
+      <ecm-checkout (backClicked)='toggleCheckout()'
+                    (checkoutCompleted)="onOrderCompleted()"
+                    [items]="items"
+      >
+      </ecm-checkout>
     </div>
   </div>
   <div class="card-footer text-center">

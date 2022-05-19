@@ -53,9 +53,11 @@ use yii\helpers\Url;
             'format' => 'raw',
             'visible' => $customerColumnVisible ?? true,
             'value' => function (Order $model) {
-                return $this->render(Url::to(['shared/partials/_avatar']), [
+                $user = $model->user;
+
+                return !empty($user) ? $this->render(Url::to(['shared/partials/_avatar']), [
                     'model' => $model->user
-                ]);
+                ]) : null;
             }
         ],
         [
@@ -68,6 +70,24 @@ use yii\helpers\Url;
 
                 $cityCountryZipRow = !empty($cityCountryZipRow) ? Html::tag('div', $cityCountryZipRow) : '';
                 return "{$addressRow}{$cityCountryZipRow}";
+            }
+        ],
+        [
+            'label' => Yii::t('app', 'Subtotal'),
+            'attribute' => 'subtotal',
+            'format' => 'raw',
+            'value' => function (Order $model) {
+                $formattedPrice = PriceHelper::format($model->subtotal);
+                return Html::tag('strong', $formattedPrice);
+            }
+        ],
+        [
+            'label' => Yii::t('app', 'Total Tax'),
+            'attribute' => 'total_tax',
+            'format' => 'raw',
+            'value' => function (Order $model) {
+                $formattedPrice = PriceHelper::format($model->total_tax);
+                return Html::tag('strong', $formattedPrice);
             }
         ],
         [

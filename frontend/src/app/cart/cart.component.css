@@ -10,6 +10,7 @@
 
 .cart-empty {
   padding: 60px 0;
+  font-size: 1.25rem;
 }
 
 .cart-total, .cart-empty {

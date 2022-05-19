@@ -1,60 +1,88 @@
 <?php
 
+use common\helpers\PriceHelper;
+use common\helpers\TimeHelper;
+use common\models\Order;
+use common\widgets\ListView;
+use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
-use yii\widgets\DetailView;
+use yii\helpers\Url;
+use yii\web\View;
+use yii\widgets\Pjax;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Order */
 
-$this->title = $model->id;
+/* @var $this View */
+/* @var $model Order */
+/* @var ActiveDataProvider $orderItemsDataProvider */
+
+$this->title = "Order #{$model->code}";
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Orders'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
+
+$pjaxId = 'order-items-pjax';
+
 ?>
-<div class="order-view">
+<div class="row">
+    <div class="col-xl-7 mb-4">
+        <div class="card">
+            <div class="card-header d-flex align-items-center">
+                <h5 class="m-0">
+                    <i class="fa fa-receipt mr-1"></i>
+                    <?= Yii::t('app', 'Order') ?>
+                    <strong>#<?= $model->code ?></strong>
+                </h5>
+                <?php if ($model->created_at) : ?>
+                    <div class="ml-auto">
+                        <?= TimeHelper::formatAsDateTime($model->created_at) ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+            <div class="card-body">
+                <?php Pjax::begin(['id' => $pjaxId]); ?>
+                <?= ListView::widget([
+                    'dataProvider' => $orderItemsDataProvider,
+                    'itemView' => 'partials/_order_item_card',
+                    'pjaxId' => $pjaxId
+                ]) ?>
+                <?php Pjax::end() ?>
+                <hr>
+                <div class="row">
+                    <div class="col-lg-8"></div>
+                    <div class="col-lg-4">
+                        <div class="d-flex align-items-center">
+                            <span class="mr-auto"><?= Yii::t('app', 'Subtotal') ?></span>
+                            <span><?= PriceHelper::format($model->subtotal) ?></span>
+                        </div>
+                        <hr>
+                        <div class="d-flex align-items-center">
+                            <span class="mr-auto"><?= Yii::t('app', 'Total Tax') ?></span>
+                            <span><?= PriceHelper::format($model->total_tax) ?></span>
+                        </div>
+                        <hr>
+                        <div class="d-flex align-items-center font-weight-bold">
+                            <span class="mr-auto"><?= Yii::t('app', 'Total') ?></span>
+                            <span><?= PriceHelper::format($model->total) ?></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-5">
+        <div class="card">
+            <div class="card-header d-flex align-items-center">
+                <h5 class="m-0">
+                    <i class="fa fa-truck mr-1"></i>
+                    <?= Yii::t('app', 'Delivery details') ?>
+                </h5>
+                <?= Html::a('<i class="fa fa-wrench"></i>', Url::to(['order/update', 'id' => $model->id]), [
+                    'class' => 'btn btn-sm btn-round btn-white btn-just-icon ml-auto',
+                    'title' => Yii::t('app', 'Update')
+                ]); ?>
+            </div>
+            <div class="card-body">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'code',
-            'subtotal',
-            'total_tax',
-            'total_discount',
-            'shipping_cost',
-            'total',
-            'currency',
-            'status',
-            'delivery_first_name',
-            'delivery_last_name',
-            'delivery_address',
-            'delivery_city',
-            'delivery_zip',
-            'delivery_country',
-            'delivery_phone',
-            'delivery_notes',
-            'customer_ip_address',
-            'customer_user_agent',
-            'request:ntext',
-            'created_at',
-            'created_by',
-            'updated_at',
-            'updated_by',
-            'is_deleted',
-        ],
-    ]) ?>
-
+            </div>
+        </div>
+    </div>
 </div>

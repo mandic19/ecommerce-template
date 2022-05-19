@@ -41,6 +41,8 @@ use yii\db\ActiveQuery;
  */
 class Order extends ActiveRecord
 {
+    const ORDER_NUMBER_PREFIX = 'GRZ-NO-';
+
     const STATUS_PENDING = 1;
     const STATUS_PROCESSING = 2;
     const STATUS_COMPLETED = 3;
@@ -108,6 +110,27 @@ class Order extends ActiveRecord
             'updated_by' => Yii::t('app', 'Updated By'),
             'is_deleted' => Yii::t('app', 'Is Deleted'),
         ];
+    }
+
+    public function fields()
+    {
+        $fields = parent::fields();
+
+        $fields['order_items'] = function () {
+            return $this->orderItems;
+        };
+
+        unset($fields['user_id']);
+        unset($fields['customer_ip_address']);
+        unset($fields['customer_user_agent']);
+        unset($fields['request']);
+        unset($fields['created_at']);
+        unset($fields['created_by']);
+        unset($fields['updated_at']);
+        unset($fields['updated_by']);
+        unset($fields['is_deleted']);
+
+        return $fields;
     }
 
     public function getTotalOrderItems() {

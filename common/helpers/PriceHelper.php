@@ -6,10 +6,16 @@
 
 namespace common\helpers;
 
+use Yii;
+
 class PriceHelper
 {
-    public static function format($price, $currencySign = '$', $decimals = 2) {
+    public static function format($price, $currencySign = 'KM', $decimals = 2) {
         $value = number_format($price, $decimals);
-        return "{$currencySign}{$value}";
+        return "{$value} {$currencySign}";
+    }
+
+    public static function extractTax($price) {
+        return ($price / 100) * Yii::$app->params['tax'];
     }
 }

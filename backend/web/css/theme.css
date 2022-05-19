@@ -172,7 +172,7 @@ section.left-sidebar > .user-profile {
 }
 
 section.left-sidebar > .user-profile > .avatar {
-    margin-right: 2.5rem;
+    margin-right: 1.5rem;
 }
 
 section.left-sidebar > .user-profile > .avatar > img {
@@ -1027,3 +1027,11 @@ section.empty-layout .top_search .form-control {
 }
 
 /************ MODAL END ************/
+
+.card {
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.3);
+}
+
+.card-header {
+    min-height: 52px;
+}

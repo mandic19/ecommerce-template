@@ -5,7 +5,9 @@
 export const environment = {
   production: false,
   apiUrl: 'http://api.ecommerce_template.local/v1',
-  minOrderTotal: 4
+  minOrderTotal: 4,
+  defaultLang: 'en',
+  lang: 'sr'
 };
 
 /*

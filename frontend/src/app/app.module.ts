@@ -17,6 +17,7 @@ import {CurrencyPipe} from './shared/pipes/currency/currency.pipe';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {CheckoutComponent} from "./cart/checkout/checkout.component";
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
     CategoryCardComponent,
     ProductCardComponent,
     CartComponent,
+    CheckoutComponent,
     PageNotFoundComponent,
     CurrencyPipe
   ],

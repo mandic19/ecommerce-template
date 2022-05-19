@@ -11,6 +11,7 @@ use yii\helpers\Url;
  * @var View $this
  * @var User $model
  */
+
 ?>
 
 <div class="d-flex align-items-center">
@@ -22,10 +23,11 @@ use yii\helpers\Url;
     </div>
     <div>
         <div class="name">
-            <?= Html::a($model->getFullName(), Url::to(['user/view', 'id' => $model->id]), [
+            <?= !$model->isNewRecord ? Html::a($model->getFullName(), Url::to(['user/view', 'id' => $model->id]), [
                 'data-pjax' => 0,
                 'class' => 'mr-2'
-            ]) ?>
+            ]) : $model->getFullName()
+            ?>
         </div>
         <div class="date">
             <small><?= TimeHelper::formatAsDateTime($model->created_at); ?></small>

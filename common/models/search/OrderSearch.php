@@ -83,6 +83,9 @@ class OrderSearch extends Order
 
     protected function getSort() {
         return [
+            'defaultOrder' => [
+                "order" => SORT_DESC
+            ],
             'attributes' => [
                 'order' => [
                     'asc' => ["order.created_at" => SORT_ASC],

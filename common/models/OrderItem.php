@@ -25,6 +25,10 @@ use yii\db\ActiveQuery;
  * @property Order $order
  * @property Product $product
  * @property ProductVariant $productVariant
+ *
+ * @property Product $productWithDeleted
+ * @property ProductVariant $productVariantWithDeleted
+ *
  */
 class OrderItem extends ActiveRecord
 {
@@ -43,11 +47,12 @@ class OrderItem extends ActiveRecord
     {
         return [
             [['order_id', 'product_id'], 'required'],
-            [['order_id', 'product_id', 'product_variant_id', 'quantity', 'created_at', 'created_by', 'updated_at', 'updated_by', 'is_deleted'], 'integer'],
+            [['order_id', 'product_id', 'product_variant_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'is_deleted'], 'integer'],
             [['price', 'total'], 'number'],
             [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Order::className(), 'targetAttribute' => ['order_id' => 'id']],
             [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['product_id' => 'id']],
             [['product_variant_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductVariant::className(), 'targetAttribute' => ['product_variant_id' => 'id']],
+            [['quantity'], 'integer', 'min' => 1, 'max' => 100000]
         ];
     }
 
@@ -70,6 +75,41 @@ class OrderItem extends ActiveRecord
             'updated_by' => Yii::t('app', 'Updated By'),
             'is_deleted' => Yii::t('app', 'Is Deleted'),
         ];
+    }
+
+    public function fields()
+    {
+        $fields = parent::fields();
+
+        unset($fields['created_at']);
+        unset($fields['created_by']);
+        unset($fields['updated_at']);
+        unset($fields['updated_by']);
+        unset($fields['is_deleted']);
+
+        return $fields;
+    }
+
+    public function getProductWithDeleted()
+    {
+        if (empty($this->product_id)) {
+            return null;
+        }
+
+        return Product::findWithDeleted()->where([
+            'id' => $this->product_id
+        ])->one();
+    }
+
+    public function getProductVariantWithDeleted()
+    {
+        if (empty($this->product_variant_id)) {
+            return null;
+        }
+
+        return ProductVariant::findWithDeleted()->where([
+            'id' => $this->product_variant_id
+        ])->one();
     }
 
     /**

@@ -6,13 +6,11 @@
 
 namespace api\versions\v1\controllers;
 
-use api\components\actions\SearchAction;
 use api\components\web\BaseApiController;
 use common\models\ProductCategory;
 use common\models\search\ProductCategorySearch;
 use yii\helpers\ArrayHelper;
-use yii\rest\IndexAction;
-use yii\rest\ViewAction;
+
 
 class CategoryController extends BaseApiController
 {
@@ -29,21 +27,5 @@ class CategoryController extends BaseApiController
                 'allow' => true
             ]
         ]);
-    }
-
-    public function actions()
-    {
-        return [
-            'index' => [
-                'class' => SearchAction::class,
-                'modelClass' => $this->searchModelClass,
-                'checkAccess' => [$this, 'checkAccess'],
-            ],
-            'view' => [
-                'class' => ViewAction::class,
-                'modelClass' => $this->modelClass,
-                'checkAccess' => [$this, 'checkAccess'],
-            ],
-        ];
     }
 }

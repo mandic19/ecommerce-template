@@ -3,6 +3,7 @@ import {Subscription} from 'rxjs';
 import {CategoryService} from './category/services/category.service';
 import {ICategory} from './category/category';
 import {TranslateService} from "@ngx-translate/core";
+import {environment} from "../environments/environment";
 
 
 @Component({
@@ -17,8 +18,8 @@ export class AppComponent implements OnInit, OnDestroy {
   sub!: Subscription;
 
   constructor(private categoryService: CategoryService, private translate: TranslateService) {
-    translate.setDefaultLang('en');
-    translate.use('en');
+    translate.setDefaultLang(environment.defaultLang);
+    translate.use(environment.lang);
   }
 
   ngOnInit(): void {

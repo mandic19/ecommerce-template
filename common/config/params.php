@@ -18,4 +18,6 @@ return [
         's3.expire.time' => '+20 minutes',
         'image.thumb.expire' => '+20 minutes'
     ],
+    'currency' => 'BAM',
+    'tax' => 17
 ];

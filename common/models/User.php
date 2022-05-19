@@ -141,7 +141,7 @@ class User extends ActiveRecord implements IdentityInterface
      * @return array|\yii\db\ActiveRecord|null
      *
      */
-    protected function findByUsernameOrEmail($key, $onlyActive = false)
+    public static function findByUsernameOrEmail($key, $onlyActive = false)
     {
         $query = static::find()->where(['OR', ['username' => $key], ['email' => $key]]);
 

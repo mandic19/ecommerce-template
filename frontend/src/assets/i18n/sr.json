@@ -4,6 +4,7 @@
     "back": "Nazad",
     "add": "Dodaj",
     "total": "Ukupno",
+    "thanks": "Hvala",
     "workingHours": "Radno vrijeme dostave je {{param}} !"
   },
   "cart": {
@@ -24,6 +25,7 @@
       "badEmailFormat": "Pogrešan email format !"
     },
     "empty": "Korpa je prazna !",
+    "orderOnTheWay": "Vaša narudžba će uskoro stići...",
     "footerMessage": "Minimalna naružba za dostavu je {{param}} !"
   }
 }

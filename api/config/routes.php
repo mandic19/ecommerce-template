@@ -67,5 +67,14 @@ return [
             'OPTIONS <action>' => 'options',
             '' => 'options',
         ],
+    ],
+    [
+        'class' => 'yii\rest\UrlRule',
+        'controller' => 'v1/order',
+        'patterns' => [
+            'POST' => 'create',
+            'OPTIONS <action>' => 'options',
+            '' => 'options',
+        ],
     ]
 ];

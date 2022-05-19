@@ -1,0 +1,6 @@
+.order-completed {
+  padding: 60px 0;
+  font-size: 1.25rem;
+  text-align: center;
+  background: var(--col-secondary);
+}

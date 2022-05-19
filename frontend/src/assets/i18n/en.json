@@ -4,6 +4,7 @@
     "back": "Back",
     "add": "Add",
     "total": "Total",
+    "thanks": "Thanks",
     "workingHours": "Delivery hours are from {{param}} !"
   },
   "cart": {
@@ -24,6 +25,7 @@
       "badEmailFormat": "Bad Email format !"
     },
     "empty": "Cart is empty !",
+    "orderOnTheWay": "Your order is on the way !",
     "footerMessage": "Minimum order for delivery is {{param}} !"
   }
 }
