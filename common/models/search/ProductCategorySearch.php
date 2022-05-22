@@ -55,6 +55,7 @@ class ProductCategorySearch extends ProductCategory
         $query->andFilterWhere([
             'id' => $this->id,
             'parent_category_id' => $this->parent_category_id,
+            'is_active' => $this->is_active
         ]);
 
         if (!empty($this->q)) {

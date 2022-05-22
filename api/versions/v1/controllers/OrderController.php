@@ -16,7 +16,7 @@ use yii\rest\OptionsAction;
 
 class OrderController extends BaseApiController
 {
-    public $modelClass = Order::class;
+    public $modelClass = OrderForm::class;
     public $searchModelClass = OrderSearch::class;
 
     public $guestActions = ['create', 'options'];
@@ -29,20 +29,5 @@ class OrderController extends BaseApiController
                 'allow' => true
             ]
         ]);
-    }
-
-    public function actions()
-    {
-        return [
-            'create' => [
-                'class' => CreateAction::class,
-                'modelClass' => OrderForm::class,
-                'checkAccess' => [$this, 'checkAccess'],
-                'scenario' => $this->createScenario,
-            ],
-            'options' => [
-                'class' => OptionsAction::class
-            ]
-        ];
     }
 }

@@ -6,43 +6,12 @@
 
 namespace api\versions\v1\controllers;
 
-use api\components\actions\SearchAction;
 use api\components\web\BaseApiController;
 use common\models\Product;
 use common\models\search\ProductSearch;
-use yii\helpers\ArrayHelper;
-use yii\rest\ViewAction;
 
 class ProductController extends BaseApiController
 {
     public $modelClass = Product::class;
     public $searchModelClass = ProductSearch::class;
-
-    public $guestActions = ['index', 'view', 'options'];
-
-    public function accessRules()
-    {
-        return ArrayHelper::merge(parent::accessRules(), [
-            [
-                'actions' => ['index', 'view', 'options'],
-                'allow' => true
-            ]
-        ]);
-    }
-
-    public function actions()
-    {
-        return [
-            'index' => [
-                'class' => SearchAction::class,
-                'modelClass' => $this->searchModelClass,
-                'checkAccess' => [$this, 'checkAccess'],
-            ],
-            'view' => [
-                'class' => ViewAction::class,
-                'modelClass' => $this->modelClass,
-                'checkAccess' => [$this, 'checkAccess'],
-            ],
-        ];
-    }
 }
