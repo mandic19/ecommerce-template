@@ -3,15 +3,18 @@
 namespace common\models\search;
 
 use common\helpers\SearchHelper;
+use common\helpers\TimeHelper;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\Order;
+use yii\db\ActiveQuery;
 
 /**
  * OrderSearch represents the model behind the search form of `common\models\Order`.
  */
 class OrderSearch extends Order
 {
+    public $showTodayOrders = false;
     public $q;
 
     /**
@@ -59,6 +62,14 @@ class OrderSearch extends Order
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
+        }
+
+        if($this->showTodayOrders) {
+            $todayDate = new \DateTime('today');
+
+            $query->andFilterWhere([
+                '>=', 'order.created_at', $todayDate->getTimestamp()
+            ]);
         }
 
         $query->andFilterWhere([
@@ -109,7 +120,9 @@ class OrderSearch extends Order
                         'delivery_zip' => SORT_DESC
                     ],
                 ],
-                'total'
+                'subtotal',
+                'total_tax',
+                'total',
             ],
         ];
     }

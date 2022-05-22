@@ -23,7 +23,7 @@ class RbacHelper
      */
     public static function getRoleLabel($roleName)
     {
-        if (!$roleLabel = ArrayHelper::getValue(static::ROLES, $roleName, 'User')) {
+        if (!$roleLabel = ArrayHelper::getValue(static::ROLES, $roleName, 'Customer')) {
             return Inflector::humanize($roleName);
         }
         return $roleLabel;

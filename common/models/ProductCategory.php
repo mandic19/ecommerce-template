@@ -36,6 +36,8 @@ class ProductCategory extends ActiveRecord
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
 
+    const INDEX_GRID_ID = 'product-category-grid';
+
     public $coverImageIds;
 
     /**

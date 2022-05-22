@@ -24,7 +24,7 @@ use yii\helpers\Url;
 <?= GridView::widget([
     'id' => $gridId,
     'dataProvider' => $dataProvider,
-    'title' => Yii::t('app', 'Orders'),
+    'title' => Yii::t('app', 'Today\'s Orders'),
     'columns' => [
         ['class' => 'yii\grid\SerialColumn'],
         [

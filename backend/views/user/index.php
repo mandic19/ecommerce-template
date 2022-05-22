@@ -1,6 +1,6 @@
 <?php
 
-use yii\widgets\Pjax;
+use common\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\search\UserSearch */
@@ -16,7 +16,11 @@ $pjaxLoaderTarget = "#{$gridId} tbody";
 ?>
 
 <div class="user-index">
-    <?php Pjax::begin(['id' => $pjaxId, 'timeout' => 5000, 'options' => ['data-pjax-loader-target' => $pjaxLoaderTarget]]); ?>
+    <?php Pjax::begin([
+        'id' => $pjaxId,
+        'gridId' => $gridId,
+        'options' => ['data-pjax-loader-target' => $pjaxLoaderTarget]
+    ]); ?>
     <?= $this->render('partials/_grid', [
         'dataProvider' => $dataProvider,
         'pjaxId' => $pjaxId,

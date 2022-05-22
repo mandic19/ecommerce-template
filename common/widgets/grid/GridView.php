@@ -9,8 +9,6 @@ use yii\helpers\Url;
 
 class GridView extends \yii\grid\GridView
 {
-    public $pjaxId;
-
     public $tableOptions = ['class' => 'table table-striped table-primary table-body-relative mb-2'];
     public $enableSearch = true;
     public $enableAdd = false;
@@ -45,22 +43,6 @@ class GridView extends \yii\grid\GridView
 
     public function run()
     {
-        if ($this->pjaxId) {
-            $view = $this->getView();
-            $view->registerJs("
-                $(document).unbind('modal-submitted').bind('modal-submitted', function(e, xhr, btn, frm, data) {
-                    if (xhr.success && $('#{$this->pjaxId}').length > 0) { 
-                        $.pjax.reload({
-                            container:'#{$this->pjaxId}',
-                            push: false, 
-                            replace: false, 
-                            timeout: 10000,
-                        });
-                    }
-                })
-            ");
-        }
-
         $this->layout = Yii::t('app', $this->layout, [
             'collapsable' => $this->collapseToggle,
             'search' => $this->enableSearch ? $this->render('_search', ['title' => $this->title]) : '',

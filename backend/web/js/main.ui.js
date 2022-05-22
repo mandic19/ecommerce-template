@@ -95,7 +95,7 @@ main.ui = (function ($) {
 
         controlPjaxAction: function () {
             var self = $(this), data = {},
-                gridId = self.data('grid'),
+                pjaxId = self.data('pjax-id'),
                 confirmMsg = self.data('confirm-msg') || false,
                 confirmType = self.data('confirm-type') || '',
                 type = self.data('type') || 'get',
@@ -127,14 +127,14 @@ main.ui = (function ($) {
                     data: data,
                     dataType: 'json',
                     success: function (data) {
-                        if (data.success && $('#' + gridId).length) {
-                            $.pjax.reload({container: '#' + gridId, timeout: 5000});
+                        if (data.success && $('#' + pjaxId).length) {
+                            $.pjax.reload({container: '#' + pjaxId, timeout: 5000});
                         }
 
                         main.ui.notify(data.message, data.success ? 'success' : 'error');
                         main.ui.buttonLoading(self, false);
 
-                        $(document).trigger('pjax-action-submitted', [data, self, gridId]);
+                        $(document).trigger('pjax-action-submitted', [data, self, pjaxId]);
                     },
                     error: function (XHR) {
                         main.ui.notify(XHR.responseText, 'error');
@@ -312,11 +312,11 @@ main.ui = (function ($) {
                         options.url = url.origin + url.pathname + '?' + main.ui.removeDuplicateUrlParams(url.search);
                     }
 
-                    $('[data-pjax-container]:not([data-pjax-loader="0"]), [data-pjax-loader]:not([data-pjax-loader="0"])').each(function () {
-                        let self = $(this);
+                    $(event.target).each(function () {
+                        let self = $(event.target);
                         let target = $(self.data('pjax-loader-target'));
 
-                        if(target.length < 1){
+                        if(!target|| target.length < 1){
                             target = self;
                         }
 

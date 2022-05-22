@@ -6,6 +6,8 @@
  */
 
 use backend\assets\AppAsset;
+use common\helpers\BaseHelper;
+use yii\bootstrap4\Breadcrumbs;
 use yii\bootstrap4\Modal;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -13,6 +15,8 @@ use yii\web\View;
 use yii\widgets\Menu;
 
 $webUser = Yii::$app->user->identity;
+$breadcrumbParams = $this->params['breadcrumbs'] ?? [];
+$hasHomeLink = $this->params['breadcrumbsHomeLink'] ?? true;
 
 AppAsset::register($this);
 
@@ -79,6 +83,7 @@ AppAsset::register($this);
         <nav class="navbar navbar-expand-lg navbar-light mb-4">
             <span class="btn btn-secondary btn-toggle-sidebar">
             </span>
+            <?= BaseHelper::renderBreadcrumbs($breadcrumbParams, $hasHomeLink); ?>
             <ul class="list-unstyled my-auto ml-auto">
                 <li class="nav-item dropdown">
                     <span class="nav-link dropdown-toggle nav-avatar px-2 py-0"

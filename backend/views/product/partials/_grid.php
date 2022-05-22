@@ -17,7 +17,6 @@ use yii\helpers\Url;
 
 <?= GridView::widget([
     'id' => $gridId,
-    'pjaxId' => $pjaxId,
     'dataProvider' => $dataProvider,
     'enableAdd' => true,
     'addButtonOption' => [
@@ -119,7 +118,7 @@ use yii\helpers\Url;
                     return Html::tag('span', '<i class="fa fa-trash"></i>', [
                         'data-href' => $url,
                         'data-confirm-msg' => $msg,
-                        'data-grid' => $pjaxId,
+                        'data-pjax-id' => $pjaxId,
                         'data-type' => 'post',
                         'class' => 'btn btn-sm btn-round btn-white btn-just-icon btn-control-pjax-action',
                         'title' => Yii::t('app', 'Delete')

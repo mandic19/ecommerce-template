@@ -3,8 +3,11 @@
 namespace common\models;
 
 use common\components\orm\ActiveRecord;
+use common\helpers\BaseHelper;
+use common\helpers\CountryHelper;
 use Yii;
 use yii\db\ActiveQuery;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "order".
@@ -49,6 +52,9 @@ class Order extends ActiveRecord
     const STATUS_FAILED = 4;
     const STATUS_CANCELLED = 5;
     const STATUS_REFUNDED = 6;
+
+    const SCENARIO_UPDATE_STATUS = 'update-status';
+    const SCENARIO_ORDER_UPDATE = 'order-update';
 
     /**
      * {@inheritdoc}
@@ -112,6 +118,16 @@ class Order extends ActiveRecord
         ];
     }
 
+    public function scenarios()
+    {
+        return ArrayHelper::merge(parent::scenarios(), [
+            self::SCENARIO_UPDATE_STATUS => ['status'],
+            self::SCENARIO_ORDER_UPDATE => [
+                'delivery_first_name', 'delivery_last_name', 'delivery_address', 'delivery_city', 'delivery_zip', 'delivery_country', 'delivery_phone', 'delivery_notes'
+            ]
+        ]);
+    }
+
     public function fields()
     {
         $fields = parent::fields();
@@ -131,6 +147,24 @@ class Order extends ActiveRecord
         unset($fields['is_deleted']);
 
         return $fields;
+    }
+
+    public function getFormattedDeliveryAddress() {
+        $items = [
+            $this->delivery_address,
+            $this->delivery_city,
+            $this->delivery_zip,
+        ];
+
+        if($this->delivery_country) {
+            $items[] = CountryHelper::getNameByCode($this->delivery_country);
+        }
+
+        return BaseHelper::formatToCharSeparatedString($items, '<br>');
+    }
+
+    public function getCustomerFullName() {
+        return BaseHelper::formatToCharSeparatedString([$this->delivery_first_name, $this->delivery_last_name], ' ');
     }
 
     public function getTotalOrderItems() {

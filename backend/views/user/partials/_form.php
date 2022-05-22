@@ -3,18 +3,24 @@
 use common\helpers\BaseHelper;
 use common\helpers\CountryHelper;
 use common\helpers\RbacHelper;
+use common\models\User;
 use kartik\select2\Select2;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\ActiveForm;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\User */
-/* @var $form yii\widgets\ActiveForm */
+/* @var $this View */
+/* @var $model User */
+/* @var $form ActiveForm */
 
 ?>
 
 <div class="user-form">
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'options' => [
+            'data-grid-id' => User::INDEX_GRID_ID,
+        ]
+    ]); ?>
     <div class="row">
         <div class="col-md-6 col-sm-12">
             <?= $form->field($model, 'first_name')->textInput(['maxlength' => true]) ?>

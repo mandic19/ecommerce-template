@@ -1,7 +1,7 @@
 <?php
 
 use yii\data\ActiveDataProvider;
-use yii\widgets\Pjax;
+use common\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\User */

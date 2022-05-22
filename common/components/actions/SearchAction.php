@@ -9,6 +9,7 @@ class SearchAction extends Action
 {
     public $modelClass = null;
     public $searchModel = null;
+    public $limitSearch = null;
     public $view = 'index';
 
     public function init()
@@ -36,6 +37,10 @@ class SearchAction extends Action
         }
 
         $searchModel = new $searchClass();
+
+        if (is_callable($this->limitSearch)) {
+            call_user_func_array($this->limitSearch, [&$searchModel]);
+        }
 
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 

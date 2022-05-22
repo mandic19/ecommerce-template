@@ -46,6 +46,8 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
 
+    const INDEX_GRID_ID = 'user-index-grid';
+
     private $_role;
 
     /**
@@ -74,7 +76,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['email', 'first_name', 'last_name', 'username'], 'required'],
+            [['email', 'username'], 'required'],
             [['first_name', 'last_name', 'username', 'role', 'address', 'city', 'country', 'zip', 'phone'], 'string'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE]],

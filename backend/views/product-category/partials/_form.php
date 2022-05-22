@@ -2,6 +2,7 @@
 
 use common\helpers\BaseHelper;
 use common\helpers\ProductCategoryHelper;
+use common\models\ProductCategory;
 use common\widgets\dropzone\Dropzone;
 use common\widgets\TinyMce;
 use kartik\select2\Select2;
@@ -11,10 +12,15 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model common\models\ProductCategory */
 /* @var $form yii\widgets\ActiveForm */
+
 ?>
 
 <div class="product-category-form">
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'options' => [
+            'data-grid-id' => ProductCategory::INDEX_GRID_ID,
+        ]
+    ]); ?>
     <div class="row">
         <div class="col-md-6 col-sm-12">
             <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>

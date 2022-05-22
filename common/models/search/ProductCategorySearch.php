@@ -40,9 +40,7 @@ class ProductCategorySearch extends ProductCategory
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' => [
-                'defaultOrder' => ['order' => SORT_ASC]
-            ],
+            'sort' => $this->getSort()
         ]);
 
         $this->load($params, '');
@@ -69,5 +67,26 @@ class ProductCategorySearch extends ProductCategory
         }
 
         return $dataProvider;
+    }
+
+    protected function getSort()
+    {
+        return [
+            'defaultOrder' => ['order' => SORT_ASC],
+            'attributes' => [
+                'name' => [
+                    'asc' => ['name' => SORT_ASC],
+                    'desc' => ['name' => SORT_DESC],
+                ],
+                'active' => [
+                    'asc' => ['is_active' => SORT_ASC],
+                    'desc' => ['is_active' => SORT_DESC],
+                ],
+                'order' => [
+                    'asc' => ['order' => SORT_ASC],
+                    'desc' => ['order' => SORT_DESC],
+                ],
+            ],
+        ];
     }
 }

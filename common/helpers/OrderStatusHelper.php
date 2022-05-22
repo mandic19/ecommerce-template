@@ -8,6 +8,7 @@ namespace common\helpers;
 
 use common\models\Order;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
 class OrderStatusHelper
@@ -23,7 +24,7 @@ class OrderStatusHelper
         ];
     }
 
-    public static function getStatusBadge($status) {
+    public static function getStatusBadge($status, $options = []) {
         $color = self::getColorById($status);
         $icon = self::getIconForId($status);
         $label = self::getLabelById($status);
@@ -32,12 +33,16 @@ class OrderStatusHelper
             'class' => "{$icon} fa-lg text-white"
         ]);
 
-        return Html::tag('span', $iconElement, [
-            'class' => "badge badge-circle badge-{$color} d-block-inline",
+        $options = ArrayHelper::merge([
+            'class' => "badge badge-circle d-block-inline",
             'data-toggle' => 'tooltip',
-            'data-placement' => 'top',
-            'title' => $label
-        ]);
+            'data-placement' => 'top'
+        ], $options);
+
+        $options['class'] .= " badge-{$color}";
+        $options['title'] = $label;
+
+        return Html::tag('span', $iconElement, $options);
     }
 
     public static function getLabelById($status)
