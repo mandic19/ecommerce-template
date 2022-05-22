@@ -67,7 +67,7 @@ class RegistrationForm extends User
     public function beforeValidate()
     {
         $this->username = empty($this->username) ? $this->email : $this->username;
-        $this->status = static::STATUS_ACTIVE;
+        $this->status = $this->status ?: static::STATUS_ACTIVE;
 
         return parent::beforeValidate();
     }

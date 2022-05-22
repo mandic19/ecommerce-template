@@ -126,4 +126,25 @@ class OrderSearch extends Order
             ],
         ];
     }
+
+    public function getPendingOrdersCount(ActiveQuery $query) {
+        $q = clone($query);
+        return $q->andWhere(['order.status' => self::STATUS_PENDING])->count();
+    }
+
+    public function getProcessingOrdersCount(ActiveQuery $query) {
+        $q = clone($query);
+        return $q->andWhere(['order.status' => self::STATUS_PROCESSING])->count();
+    }
+
+    public function getCompletedOrdersCount(ActiveQuery $query) {
+        $q = clone($query);
+        return $q->andWhere(['order.status' => self::STATUS_COMPLETED])->count();
+    }
+
+    public function getOrdersTotalSum(ActiveQuery $query) {
+        $q = clone($query);
+
+        return $q->sum('total');
+    }
 }

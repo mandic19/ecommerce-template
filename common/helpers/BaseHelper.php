@@ -84,7 +84,7 @@ class BaseHelper
     public static function renderBreadcrumbs($links, $hasHomeLink) {
         return Breadcrumbs::widget([
             'links' => $links,
-            'options' => ['class' => 'py-0 my-auto'],
+            'options' => ['class' => 'py-0 my-auto d-none d-md-flex'],
             'homeLink' => $hasHomeLink ? [
                 'label' => Yii::t('app', 'Home'),
                 'url' => Yii::$app->homeUrl,

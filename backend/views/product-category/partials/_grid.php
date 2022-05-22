@@ -88,6 +88,7 @@ use yii\helpers\Url;
 
                     return Html::tag('span', '<i class="fa fa-wrench"></i>', [
                         'data-href' => $url,
+                        'data-size' => 'modal-lg',
                         'class' => 'btn btn-sm btn-round btn-white btn-just-icon btn-loading btn-modal-control mr-2',
                         'title' => Yii::t('app', 'Update')
                     ]);

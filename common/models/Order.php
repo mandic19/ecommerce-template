@@ -150,21 +150,21 @@ class Order extends ActiveRecord
     }
 
     public function getFormattedDeliveryAddress() {
-        $items = [
-            $this->delivery_address,
-            $this->delivery_city,
-            $this->delivery_zip,
-        ];
+        $cityInfoArray = [$this->delivery_zip, $this->delivery_city];
+        $cityInfo = BaseHelper::formatToCharSeparatedString($cityInfoArray, ' ');
+
+        $items = [$this->delivery_address, $cityInfo,];
 
         if($this->delivery_country) {
             $items[] = CountryHelper::getNameByCode($this->delivery_country);
         }
 
-        return BaseHelper::formatToCharSeparatedString($items, '<br>');
+        return BaseHelper::formatToCharSeparatedString($items, ',<br>');
     }
 
     public function getCustomerFullName() {
-        return BaseHelper::formatToCharSeparatedString([$this->delivery_first_name, $this->delivery_last_name], ' ');
+        $nameArray = [$this->delivery_first_name, $this->delivery_last_name];
+        return BaseHelper::formatToCharSeparatedString($nameArray, ' ');
     }
 
     public function getTotalOrderItems() {

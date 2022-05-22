@@ -54,7 +54,8 @@ class GridView extends \yii\grid\GridView
     protected function renderAdd()
     {
         $this->addButtonOption = ArrayHelper::merge([
-            'class' => 'btn btn-success btn-modal-control btn-loading'
+            'class' => 'btn btn-success btn-modal-control btn-loading',
+            'data-size' => 'modal-lg'
         ], $this->addButtonOption);
 
         $link = ArrayHelper::remove($this->addButtonOption, 'link', false);

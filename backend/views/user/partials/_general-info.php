@@ -31,6 +31,7 @@ use yii\helpers\Url;
             </div>
             <?= Html::tag('span', '<i class="fa fa-wrench"></i>', [
                 'data-href' => Url::to(['user/update', 'id' => $model->id]),
+                'data-size' => 'modal-lg',
                 'class' => 'btn btn-white btn-just-icon btn-loading btn-modal-control align-self-start ml-auto',
                 'title' => Yii::t('app', 'Update')
             ]); ?>

@@ -1039,6 +1039,7 @@ section.empty-layout .top_search .form-control {
 
 /************ MODAL END ************/
 
+/************ CARD START ************/
 .card {
     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.3);
 }
@@ -1046,3 +1047,40 @@ section.empty-layout .top_search .form-control {
 .card-header {
     min-height: 52px;
 }
+/************ CARD END ************/
+
+/************ WIDGET CARD START ************/
+
+.widget-card {
+    border: unset;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.widget-card .icon-container {
+    min-width: 78px;
+    display: flex;
+    color: var(--col-white);
+}
+
+.widget-card .icon-container > i {
+    margin: auto;
+    font-size: 32px;
+}
+
+.widget-card .icon-container.icon-success {
+    background-color: var(--col-success);
+}
+
+.widget-card .icon-container.icon-violet {
+    background-color: var(--col-violet);
+}
+
+.widget-card .icon-container.icon-picton {
+    background-color: var(--col-picton-blue);
+}
+
+.widget-card .icon-container.icon-primary {
+    background-color: var(--col-dark-grey);
+}
+/************ WIDGET CARD END ************/

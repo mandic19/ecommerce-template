@@ -135,8 +135,9 @@ $orderItemsListId = 'order-items-list-view';
                     <?= Yii::t('app', 'Delivery details') ?>
                 </h5>
                 <?= Html::a('<i class="fa fa-wrench"></i>', Url::to(['order/update', 'id' => $model->id]), [
+                    'data-size' => 'modal-lg',
                     'class' => 'btn btn-sm btn-round btn-white btn-just-icon ml-auto btn-modal-control',
-                    'title' => Yii::t('app', 'Update')
+                    'title' => Yii::t('app', 'Update'),
                 ]); ?>
             </div>
             <div class="card-body">

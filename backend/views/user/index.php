@@ -1,5 +1,6 @@
 <?php
 
+use common\models\User;
 use common\widgets\Pjax;
 
 /* @var $this yii\web\View */
@@ -9,7 +10,7 @@ use common\widgets\Pjax;
 $this->title = Yii::t('app', 'Users');
 $this->params['breadcrumbs'][] = $this->title;
 
-$gridId = 'user-grid';
+$gridId = User::INDEX_GRID_ID;
 $pjaxId = 'user-index-pjax';
 $pjaxLoaderTarget = "#{$gridId} tbody";
 

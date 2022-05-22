@@ -100,6 +100,7 @@ AppAsset::register($this);
                          aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item d-flex justify-content-between align-items-center py-2 btn-modal-control btn-loading btn-loading-right"
                            data-href="<?= Url::to(['user/edit-profile']) ?>"
+                           data-size="modal-lg"
                         >
                             <?= Yii::t('app', 'Edit Profile') ?>
                             <i class="fas fa-pencil-alt"></i>
