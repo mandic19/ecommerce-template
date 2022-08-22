@@ -6,4 +6,3 @@ export interface ICategory {
   name: string;
   products: IProduct[];
 }
-
