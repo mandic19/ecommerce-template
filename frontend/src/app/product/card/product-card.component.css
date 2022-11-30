@@ -6,6 +6,11 @@
   font-size: 14px;
 }
 
+.description {
+  font-weight: 400;
+  color: #585858;
+}
+
 .product-card > .product-card-footer {
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -13,8 +18,20 @@
   overflow: hidden;
 }
 
-
 .pv-dropdown {
   font-weight: 500;
   padding: 2px 36px 3px 12px;
+}
+
+.cover-image {
+  width: 85px;
+  height: 85px;
+  border-radius: 5px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.cover-image:hover, .cover-image:focus {
+  border-color: var(--col-primary);
 }

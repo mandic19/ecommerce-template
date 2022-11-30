@@ -96,6 +96,16 @@ body {
   border: 1px solid var(--col-secondary-dimmed) !important;
 }
 
+.btn.btn-just-icon {
+  border-radius: 50px !important;
+  height: 32px;
+  width: 32px;
+  min-width: 32px;
+  padding: 4px;
+  line-height: 0;
+  border: 1px solid transparent;
+}
+
 .card {
   min-width: 100%;
   border: unset;

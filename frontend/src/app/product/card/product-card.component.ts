@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ImageService} from '../../shared/image/image.service';
 import {IProduct} from '../product';
 import {CartService} from "../../cart/services/cart.service";
@@ -12,6 +12,7 @@ import {IProductVariant} from "../product-variant/product-variant";
 })
 export class ProductCardComponent implements OnInit {
   @Input() product: IProduct;
+  @Output() productThumbClicked: EventEmitter<any> = new EventEmitter<object>();
   private selectedProductVariant: IProductVariant;
 
   constructor(private imageService: ImageService, private cartService: CartService) {
@@ -45,6 +46,14 @@ export class ProductCardComponent implements OnInit {
   }
 
   getImageUrl(imageId: number): string {
-    return this.imageService.createUrl(imageId, 'w250_h300_fs1');
+    return this.imageService.createUrl(imageId, 'w85_h85_fs1');
+  }
+
+  onProductThumbClick(): void {
+    const imageIds: number[] = [this.product.cover_image_id, ...this.product.additional_image_ids].filter(n => n);
+
+    if(imageIds.length > 0) {
+      this.productThumbClicked.emit(imageIds);
+    }
   }
 }

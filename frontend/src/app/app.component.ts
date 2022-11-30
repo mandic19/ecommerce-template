@@ -5,7 +5,6 @@ import {ICategory} from './category/category';
 import {TranslateService} from "@ngx-translate/core";
 import {environment} from "../environments/environment";
 
-
 @Component({
   selector: 'ecm-root',
   templateUrl: './app.component.html',
@@ -13,7 +12,7 @@ import {environment} from "../environments/environment";
 })
 
 export class AppComponent implements OnInit, OnDestroy {
-  title = 'Ecommerce Template';
+  title = environment.appName;
   categories: ICategory[] = [];
   sub!: Subscription;
 

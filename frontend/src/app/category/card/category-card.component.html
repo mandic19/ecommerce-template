@@ -4,7 +4,11 @@
   </div>
   <div class="card-body">
     <div *ngFor="let product of category.products">
-      <ecm-product-card [product]="product"></ecm-product-card>
+      <ecm-product-card
+        [product]="product"
+        (productThumbClicked)="onProductThumbClick($event)"
+      >
+      </ecm-product-card>
     </div>
   </div>
 </div>

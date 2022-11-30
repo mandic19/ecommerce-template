@@ -1,6 +1,5 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ICategory} from '../category';
-import {ImageService} from '../../shared/image/image.service';
 
 @Component({
   selector: 'ecm-category-card',
@@ -10,11 +9,9 @@ import {ImageService} from '../../shared/image/image.service';
 
 export class CategoryCardComponent {
   @Input() category: ICategory;
+  @Output() productThumbClicked: EventEmitter<any> = new EventEmitter<string>();
 
-  constructor(private imageService: ImageService) {
-  }
-
-  getImageUrl(imageId: number): string {
-    return this.imageService.createUrl(imageId, 'w250_h300_fs1');
+  onProductThumbClick(imageIds: number[]): void {
+    this.productThumbClicked.emit(imageIds);
   }
 }

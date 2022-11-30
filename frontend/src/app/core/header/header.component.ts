@@ -3,6 +3,7 @@ import {ICategory} from '../../category/category';
 import {Subscription} from "rxjs";
 import {CartService} from "../../cart/services/cart.service";
 import {ICart} from "../../cart/cart";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'ecm-header',
@@ -13,6 +14,7 @@ import {ICart} from "../../cart/cart";
 export class HeaderComponent implements OnInit{
   @Input() categories: ICategory[] = [];
   cartTotal: number = 0;
+  appName: string = environment.appName;
 
   private cartSub: Subscription;
 

@@ -8,12 +8,21 @@
         </div>
       </div>
       <div *ngFor="let category of categories">
-        <ecm-category-card [category]="category"></ecm-category-card>
+        <ecm-category-card
+          [category]="category"
+          (productThumbClicked)="openImageViewer($event)"
+        ></ecm-category-card>
       </div>
     </div>
     <div class="col-lg-5">
       <ecm-cart></ecm-cart>
     </div>
   </div>
+  <ecm-image-viewer
+    *ngIf="showImageViewer"
+    [imageIds]="imageViewerImageIds"
+    (closeClicked)="closeImageViewer()"
+  >
+  </ecm-image-viewer>
 </section>
 <ecm-footer></ecm-footer>

@@ -6,6 +6,7 @@ import {FooterComponent} from './core/footer/footer.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CategoryCardComponent} from './category/card/category-card.component';
 import {ProductCardComponent} from './product/card/product-card.component';
+import {ImageViewerComponent} from "./shared/image/viewer/image-viewer.component.spec";
 import {RouterModule} from '@angular/router';
 import {PageNotFoundComponent} from './core/page-not-found/page-not-found.component';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -28,6 +29,7 @@ import {CheckoutComponent} from "./cart/checkout/checkout.component";
     ShopComponent,
     CategoryCardComponent,
     ProductCardComponent,
+    ImageViewerComponent,
     CartComponent,
     CheckoutComponent,
     PageNotFoundComponent,

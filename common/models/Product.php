@@ -96,12 +96,18 @@ class Product extends ActiveRecord
         return [
             'id',
             'category_id',
+            'cover_image_id',
             'name',
             'sku',
             'price',
             'short_description',
             'variants' => function() {
                 return $this->productVariants;
+            },
+            'additional_image_ids' => function() {
+                return array_map(function (ProductImage $productImage) {
+                    return $productImage->image_id;
+                }, $this->productImages);
             }
         ];
     }
