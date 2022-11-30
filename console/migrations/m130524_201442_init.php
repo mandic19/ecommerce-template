@@ -14,6 +14,8 @@ class m130524_201442_init extends Migration
         $success = Yii::$app->db->createCommand($query)->execute();
 
         $this->insert('user', [
+            'first_name' => 'Super',
+            'last_name' => 'Admin',
             'username' => 'admin',
             'password_hash' => '$2y$13$xJD9uc/tFnoZbxLEcLt0muPrO/ASqmO9kTghRPOIZAbGp7VcnltaS', //password1996
             'email' => 'marko.mandic.engr@gmail.com',

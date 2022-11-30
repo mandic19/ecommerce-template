@@ -29,12 +29,18 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'last_name')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-6 col-sm-12">
-            <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'username')->textInput([
+                'maxlength' => true,
+                'disabled' => !$model->isNewRecord
+            ]) ?>
         </div>
         <div class="col-md-6 col-sm-12">
             <?= $form->field($model, 'role')->widget(Select2::class, [
                 'data' => RbacHelper::ROLES,
-                'options' => ['value' => !$model->isNewRecord ? $model->getRole() : null]
+                'options' => [
+                    'value' => !$model->isNewRecord ? $model->getRole() : null,
+                    'disabled' => !$model->isNewRecord
+                ]
             ]) ?>
         </div>
         <div class="col-md-6 col-sm-12">

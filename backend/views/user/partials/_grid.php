@@ -71,11 +71,11 @@ use yii\helpers\Url;
 
                 $content =
                     "<div class='toggle-switch-wrap' " . ($isDisabled ? 'disabled' : '') . ">
-                            <span class='toggle-switch toggle-switch-reverse'>
-                                {$input}
-                                {$label}
-                            </span>
-                        </div>";
+                        <span class='toggle-switch toggle-switch-reverse'>
+                            {$input}
+                            {$label}
+                        </span>
+                    </div>";
 
                 $action = $model->status === User::STATUS_ACTIVE ?
                     Yii::t('app', 'deactivate') :
@@ -107,12 +107,13 @@ use yii\helpers\Url;
                     return Html::tag('span', '<i class="fa fa-wrench"></i>', [
                         'data-href' => $url,
                         'data-size' => 'modal-lg',
-                        'class' => 'btn btn-sm btn-round btn-white btn-just-icon btn-loading btn-modal-control mr-2',
+                        'class' => 'btn btn-sm btn-round btn-white btn-just-icon btn-loading btn-modal-control',
                         'title' => Yii::t('app', 'Update')
                     ]);
                 },
                 'delete' => function ($url, User $model) use ($pjaxId) {
-                    if (!Yii::$app->user->can(RbacHelper::ROLE_SUPER_ADMIN)) {
+                    $isDisabled = Yii::$app->user->id == $model->id;
+                    if ($isDisabled || !Yii::$app->user->can(RbacHelper::ROLE_SUPER_ADMIN)) {
                         return null;
                     }
 
@@ -123,7 +124,7 @@ use yii\helpers\Url;
                         'data-confirm-msg' => $msg,
                         'data-pjax-id' => $pjaxId,
                         'data-type' => 'post',
-                        'class' => 'btn btn-sm btn-round btn-white btn-just-icon btn-control-pjax-action',
+                        'class' => 'btn btn-sm btn-round btn-white btn-just-icon btn-control-pjax-action ml-2',
                         'title' => Yii::t('app', 'Delete')
                     ]);
                 },

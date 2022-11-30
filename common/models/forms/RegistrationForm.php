@@ -48,7 +48,7 @@ class RegistrationForm extends User
                 'message' => Yii::t('app', 'New Password must contain at least 1 special character.')
             ],
             [['password'], 'compare', 'compareAttribute' => 'password_repeat', 'operator' => '==', 'enableClientValidation' => false],
-            [['role'], 'required', 'on' => [static::SCENARIO_ADMIN_REGISTRATION, static::SCENARIO_ADMIN_UPDATE]],
+            [['role'], 'required', 'on' => [static::SCENARIO_ADMIN_REGISTRATION]],
             [['role'], 'string']
         ]);
     }
@@ -59,7 +59,7 @@ class RegistrationForm extends User
 
         return ArrayHelper::merge(parent::scenarios(), [
             static::SCENARIO_ADMIN_REGISTRATION => $allAttributes,
-            static::SCENARIO_ADMIN_UPDATE => $allAttributes,
+            static::SCENARIO_ADMIN_UPDATE => array_diff($allAttributes, ['role', 'username']),
             static::SCENARIO_CUSTOMER_REGISTRATION => array_diff($allAttributes, ['role'])
         ]);
     }

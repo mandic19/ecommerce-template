@@ -40,15 +40,19 @@ class UserController extends BaseController
                     'rules' => [
                         [
                             'allow' => false,
-                            'actions' => ['toggle-status'],
-                            'roles' => [RbacHelper::ROLE_ADMIN],
+                            'actions' => ['toggle-status', 'delete'],
                             'matchCallback' => function ($rule, $action) {
                                 return Yii::$app->user->id == Yii::$app->request->get('id');
                             },
                         ],
                         [
                             'allow' => true,
-                            'roles' => [RbacHelper::ROLE_ADMIN],
+                            'actions' => ['edit-profile', 'change-password'],
+                            'roles' => ['@']
+                        ],
+                        [
+                            'allow' => true,
+                            'roles' => [RbacHelper::ROLE_SUPER_ADMIN],
                         ]
                     ],
                 ],
@@ -76,7 +80,7 @@ class UserController extends BaseController
             'view' => [
                 'class' => ViewAction::class,
                 'modelClass' => $this->modelClass,
-                'params' => function($action, User $model) {
+                'params' => function ($action, User $model) {
                     $orderSearchModel = new OrderSearch(['user_id' => $model->id]);
 
                     $orderDataProvider = $orderSearchModel->search(\Yii::$app->request->queryParams);
