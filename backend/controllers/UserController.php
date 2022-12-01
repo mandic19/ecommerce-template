@@ -52,6 +52,11 @@ class UserController extends BaseController
                         ],
                         [
                             'allow' => true,
+                            'actions' => ['view'],
+                            'roles' => [RbacHelper::ROLE_ADMIN],
+                        ],
+                        [
+                            'allow' => true,
                             'roles' => [RbacHelper::ROLE_SUPER_ADMIN],
                         ]
                     ],

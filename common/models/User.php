@@ -24,6 +24,7 @@ use yii\web\IdentityInterface;
  * @property string $email
  * @property string $auth_key
  * @property integer $status
+ * @property integer $is_staff
  * @property string $first_name
  * @property string $last_name
  * @property string $address

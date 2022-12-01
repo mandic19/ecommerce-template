@@ -25,7 +25,7 @@ class m211121_153847_create_table_product_variant extends Migration
             'updated_at' => $this->integer(),
             'updated_by' => $this->integer(),
             'is_deleted' => $this->tinyInteger()->defaultValue(0)
-        ]);
+        ], 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB');
 
         $this->addForeignKey('fk_product_variant_product', 'product_variant', 'product_id', 'product', 'id');
     }

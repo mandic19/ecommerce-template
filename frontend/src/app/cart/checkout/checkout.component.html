@@ -14,13 +14,14 @@
         </button>
       </div>
       <div class="col-12 mb-3 form-group">
-        <input id="name"
-               type="text"
-               maxlength="100"
-               class="form-control"
-               placeholder="{{'cart.field.fullName' | translate}}"
-               formControlName="name"
-               [ngClass]="{'is-invalid': isInvalidField('name')}"
+        <input
+          id="name"
+          type="text"
+          maxlength="100"
+          class="form-control"
+          placeholder="{{'cart.field.fullName' | translate}}"
+          formControlName="name"
+          [ngClass]="{'is-invalid': isInvalidField('name')}"
         >
         <span class="invalid-feedback">
         <span *ngIf="checkoutForm.get('name').errors?.required">
@@ -29,13 +30,14 @@
       </span>
       </div>
       <div class="col-12 mb-3">
-        <input id="address"
-               type="text"
-               maxlength="255"
-               class="form-control"
-               placeholder="{{'cart.field.address' | translate}}"
-               formControlName="address"
-               [ngClass]="{'is-invalid': isInvalidField('address')}"
+        <input
+          id="address"
+          type="text"
+          maxlength="255"
+          class="form-control"
+          placeholder="{{'cart.field.address' | translate}}"
+          formControlName="address"
+          [ngClass]="{'is-invalid': isInvalidField('address')}"
         >
         <span class="invalid-feedback">
         <span *ngIf="checkoutForm.get('address').errors?.required">
@@ -44,13 +46,14 @@
       </span>
       </div>
       <div class="col-12 mb-3">
-        <input id="email"
-               type="email"
-               maxlength="100"
-               class="form-control"
-               placeholder="{{'cart.field.email' | translate}}"
-               formControlName="email"
-               [ngClass]="{'is-invalid': isInvalidField('email')}"
+        <input
+          id="email"
+          type="email"
+          maxlength="100"
+          class="form-control"
+          placeholder="{{'cart.field.email' | translate}}"
+          formControlName="email"
+          [ngClass]="{'is-invalid': isInvalidField('email')}"
         >
         <span class="invalid-feedback">
         <span *ngIf="checkoutForm.get('email').errors?.required">
@@ -62,13 +65,14 @@
       </span>
       </div>
       <div class="col-12 mb-3">
-        <input id="phone"
-               type="text"
-               maxlength="50"
-               class="form-control"
-               placeholder="{{'cart.field.phone' | translate}}"
-               formControlName="phone"
-               [ngClass]="{'is-invalid': isInvalidField('phone')}"
+        <input
+          id="phone"
+          type="text"
+          maxlength="50"
+          class="form-control"
+          placeholder="{{'cart.field.phone' | translate}}"
+          formControlName="phone"
+          [ngClass]="{'is-invalid': isInvalidField('phone')}"
         >
         <span class="invalid-feedback">
         <span *ngIf="checkoutForm.get('phone').errors?.required">
@@ -77,13 +81,14 @@
       </span>
       </div>
       <div class="col-12">
-      <textarea id="notes"
-                class="form-control"
-                rows="3"
-                maxlength="255"
-                placeholder="{{'cart.field.notes' | translate}}"
-                formControlName="notes"
-                [ngClass]="{'is-invalid': isInvalidField('notes')}"
+      <textarea
+        id="notes"
+        class="form-control"
+        rows="3"
+        maxlength="255"
+        placeholder="{{'cart.field.notes' | translate}}"
+        formControlName="notes"
+        [ngClass]="{'is-invalid': isInvalidField('notes')}"
       ></textarea>
       </div>
     </div>

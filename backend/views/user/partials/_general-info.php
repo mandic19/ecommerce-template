@@ -29,12 +29,14 @@ use yii\helpers\Url;
                 <strong class="_font-xl"><?= $model->getFullName(); ?></strong><br>
                 <span class="_font-md"><?= TimeHelper::formatAsDateTime($model->created_at); ?></span>
             </div>
+            <?php if(Yii::$app->user->can(RbacHelper::ROLE_SUPER_ADMIN)) : ?>
             <?= Html::tag('span', '<i class="fa fa-wrench"></i>', [
                 'data-href' => Url::to(['user/update', 'id' => $model->id]),
                 'data-size' => 'modal-lg',
                 'class' => 'btn btn-white btn-just-icon btn-loading btn-modal-control align-self-start ml-auto',
                 'title' => Yii::t('app', 'Update')
             ]); ?>
+            <?php endif; ?>
         </div>
     </div>
     <div class="card-body">

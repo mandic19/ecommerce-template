@@ -1,27 +1,31 @@
 <div class="product-card card">
-  <div class="card-body py-2">
+  <div class="card-body py-1 py-sm-2 px-2 py-sm-3">
     <div class="d-flex flex-wrap">
-      <div *ngIf="product.cover_image_id" class="cover-image me-3" (click)="onProductThumbClick()">
+      <div
+        class="cover-image my-auto"
+        *ngIf="product.cover_image_id"
+        (click)="onProductThumbClick()"
+      >
         <img src="{{getImageUrl(product.cover_image_id)}}" alt="Cover Image">
       </div>
-      <div class="d-flex flex-column">
+      <div class="d-flex flex-column product-card-content mx-3">
         <h5 class="m-0">{{product.name}}</h5>
         <span class="description">{{product.short_description}}</span>
         <select #productVariantSelect
                 *ngIf="product.variants.length"
                 (change)='selectVariant(productVariantSelect.value)'
-                class="form-select pv-dropdown mt-auto"
+                class="form-select pv-dropdown mt-2 mt-sm-auto"
         >
           <option *ngFor="let productVariant of product.variants" value="{{productVariant.id}}">
             {{productVariant.name}}
             {{productVariant.price | currency}}
           </option>
         </select>
-        <h6 *ngIf="product.variants.length < 1" class="mt-auto">
+        <h6 *ngIf="product.variants.length < 1" class="mt-auto pt-2 mb-0">
           {{product.price | currency}}
         </h6>
       </div>
-      <div class="m-auto me-1">
+      <div class="my-auto ms-auto pt-2">
         <button class="btn btn-sm btn-success text-uppercase ms-2 d-none d-md-block"
                 (click)="addToCart()"
         >

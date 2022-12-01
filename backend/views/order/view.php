@@ -49,7 +49,7 @@ $orderItemsListId = 'order-items-list-view';
             <div class="card-body p-0">
                 <?php Pjax::begin([
                     'id' => $orderCardPjaxId,
-                    'gridId' => $orderItemsListId
+                    'gridId' => $orderItemsListId,
                 ]); ?>
                 <div class="cb-padding pb-0">
                     <?= ListView::widget([

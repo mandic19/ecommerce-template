@@ -46,7 +46,7 @@ html {
 body {
     position: relative;
     font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
-    font-size: 13px !important;
+    font-size: 14px !important;
     color: var(--col-light-slate-gray) !important;
     background-color: var(--col-gray-neutral) !important;
 }

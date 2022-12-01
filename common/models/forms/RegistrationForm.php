@@ -3,6 +3,7 @@
 namespace common\models\forms;
 
 use common\models\User;
+use phpDocumentor\Reflection\Types\Static_;
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -49,7 +50,8 @@ class RegistrationForm extends User
             ],
             [['password'], 'compare', 'compareAttribute' => 'password_repeat', 'operator' => '==', 'enableClientValidation' => false],
             [['role'], 'required', 'on' => [static::SCENARIO_ADMIN_REGISTRATION]],
-            [['role'], 'string']
+            [['role'], 'string'],
+            ['is_staff', 'default', 'value' => 1, 'on' => [static::SCENARIO_ADMIN_REGISTRATION]],
         ]);
     }
 

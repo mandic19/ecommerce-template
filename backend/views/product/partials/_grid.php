@@ -1,6 +1,7 @@
 <?php
 
 use common\components\image\ImageSpecification;
+use common\helpers\PriceHelper;
 use common\helpers\RbacHelper;
 use common\models\Product;
 use common\widgets\grid\GridView;
@@ -53,9 +54,14 @@ use yii\helpers\Url;
                 return !empty($model->category) ? $model->category->name : null;
             }
         ],
-        'sku',
+//        'sku',
 //        'quantity',
-        'price',
+        [
+            'attribute' => 'price',
+            'value' => function (Product $model) {
+                return PriceHelper::format($model->price);
+            }
+        ],
         [
             'label' => Yii::t('app', 'Active'),
             'attribute' => 'active',
@@ -78,7 +84,7 @@ use yii\helpers\Url;
                     Yii::t('app', 'deactivate') :
                     Yii::t('app', 'activate');
 
-                return Html::tag('div', $content, [
+                return Html::tag('span', $content, [
                     'class' => 'btn-control-confirm',
                     'data-msg' => Yii::t('app', "Are you sure you want to {:action} product: {:product}?", [
                         ':action' => $action,

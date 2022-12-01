@@ -21,5 +21,5 @@ class ListView extends \yii\widgets\ListView
         'linkOptions' => ['class' => 'page-link'],
     ];
 
-    public $layout = "<div class='mb-3'>{items}</div><div class='d-flex align-items-center justify-content-between'>{summary}{pager}</div>";
+    public $layout = "<div class='mb-3 overflow-auto'>{items}</div><div class='d-flex align-items-center justify-content-between'>{summary}{pager}</div>";
 }

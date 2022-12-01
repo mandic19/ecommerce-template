@@ -76,10 +76,10 @@ class Order extends ActiveRecord
             [['code', 'delivery_phone'], 'string', 'max' => 45],
             [['currency'], 'string', 'max' => 3],
             [['delivery_first_name', 'delivery_last_name', 'delivery_address', 'delivery_city', 'delivery_zip', 'delivery_country', 'delivery_notes', 'customer_ip_address', 'customer_user_agent'], 'string', 'max' => 255],
-            [['status'],  'in', 'range' => [
+            [['status'], 'in', 'range' => [
                 self::STATUS_PENDING, self::STATUS_PROCESSING, self::STATUS_COMPLETED, self::STATUS_CANCELLED, self::STATUS_FAILED, self::STATUS_REFUNDED
             ]],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['user_id'], 'exist', 'targetRelation' => 'user'],
         ];
     }
 
@@ -149,25 +149,28 @@ class Order extends ActiveRecord
         return $fields;
     }
 
-    public function getFormattedDeliveryAddress() {
+    public function getFormattedDeliveryAddress()
+    {
         $cityInfoArray = [$this->delivery_zip, $this->delivery_city];
         $cityInfo = BaseHelper::formatToCharSeparatedString($cityInfoArray, ' ');
 
         $items = [$this->delivery_address, $cityInfo,];
 
-        if($this->delivery_country) {
+        if ($this->delivery_country) {
             $items[] = CountryHelper::getNameByCode($this->delivery_country);
         }
 
         return BaseHelper::formatToCharSeparatedString($items, ',<br>');
     }
 
-    public function getCustomerFullName() {
+    public function getCustomerFullName()
+    {
         $nameArray = [$this->delivery_first_name, $this->delivery_last_name];
         return BaseHelper::formatToCharSeparatedString($nameArray, ' ');
     }
 
-    public function getTotalOrderItems() {
+    public function getTotalOrderItems()
+    {
         return $this->getOrderItems()->count();
     }
 
@@ -188,6 +191,6 @@ class Order extends ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::className(), ['id' => 'user_id'])->onCondition([]);
     }
 }

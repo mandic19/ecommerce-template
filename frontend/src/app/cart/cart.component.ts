@@ -5,7 +5,6 @@ import {Subscription} from "rxjs";
 import {environment} from "../../environments/environment";
 import {ICart} from "./cart";
 import {FormBuilder} from "@angular/forms";
-import {IOrder} from "../order/order";
 
 @Component({
   selector: 'ecm-cart',
@@ -49,5 +48,34 @@ export class CartComponent implements OnInit, OnDestroy {
   onOrderCompleted(): void {
     this.cartService.setCart([]);
     this.checkoutActive = true;
+  }
+
+  showToggleCheckout(): boolean {
+    return (
+      !this.isCheckoutActive() &&
+      this.isMinOrderTotalFulfilled() &&
+      this.isBusinessHour()
+    );
+  }
+
+  isCheckoutActive(): boolean {
+    return this.checkoutActive;
+  }
+
+  isMinOrderTotalFulfilled(): boolean {
+    return this.total >= this.minOrderTotal
+  }
+
+  isBusinessHour(): boolean {
+    const now = new Date();
+    const day = now.getDay();
+    const hours = now.getHours();
+    const {from, to} = environment.businessHours;
+
+    return (
+      environment.businessDays.includes(day) &&
+      hours >= from &&
+      hours < to
+    );
   }
 }

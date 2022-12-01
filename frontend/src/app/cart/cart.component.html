@@ -29,25 +29,33 @@
     <div *ngIf="items.length > 0" class="cart-total">
       {{'base.total' | translate}}: {{total | currency}}
     </div>
-    <ng-container *ngIf="!checkoutActive">
+    <ng-container *ngIf="!isCheckoutActive()">
       <div *ngIf="items.length < 1" class="cart-empty">
-          {{'cart.empty' | translate}}
+        {{'cart.empty' | translate}}
       </div>
-      <div *ngIf="total >= minOrderTotal && !checkoutActive" class="cart-checkout">
+      <div *ngIf="showToggleCheckout()" class="cart-checkout">
         <button class="btn btn-primary px-5" (click)="toggleCheckout()">
           {{'cart.checkout' | translate}}
         </button>
       </div>
     </ng-container>
-    <div *ngIf="checkoutActive">
-      <ecm-checkout (backClicked)='toggleCheckout()'
-                    (checkoutCompleted)="onOrderCompleted()"
-                    [items]="items"
+    <div *ngIf="isCheckoutActive()">
+      <ecm-checkout
+        (backClicked)='toggleCheckout()'
+        (checkoutCompleted)="onOrderCompleted()"
+        [items]="items"
       >
       </ecm-checkout>
     </div>
   </div>
+  <div *ngIf="!isBusinessHour()" class="card-footer text-center">
+    <small>
+      {{'cart.closed' | translate}}
+    </small>
+  </div>
   <div class="card-footer text-center">
-    <small>{{'cart.footerMessage' | translate: {"param": "4KM"} }}</small>
+    <small>
+      {{'cart.minOrderTotalMsg' | translate: {"param": minOrderTotal + "KM"} }}
+    </small>
   </div>
 </div>

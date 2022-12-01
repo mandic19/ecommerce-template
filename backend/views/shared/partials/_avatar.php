@@ -23,7 +23,7 @@ use yii\helpers\Url;
     </div>
     <div>
         <div class="name">
-            <?= !$model->isNewRecord ? Html::a($model->getFullName(), Url::to(['user/view', 'id' => $model->id]), [
+            <?= !$model->isNewRecord && !$model->isSoftDeleted() ? Html::a($model->getFullName(), Url::to(['user/view', 'id' => $model->id]), [
                 'data-pjax' => 0,
                 'class' => 'mr-2'
             ]) : $model->getFullName()

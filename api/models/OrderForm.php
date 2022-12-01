@@ -19,7 +19,6 @@ class OrderForm extends Order
 
     public $name;
     public $address;
-    public $email;
     public $phone;
     public $notes;
     public $order_items;
@@ -30,8 +29,8 @@ class OrderForm extends Order
     public function rules()
     {
         return [
-            [['name', 'address', 'email', 'phone', 'notes', 'order_items'], 'safe'],
-            [['address', 'email', 'phone', 'notes'], 'filter', 'filter' => 'trim'],
+            [['name', 'address', 'phone', 'notes', 'order_items'], 'safe'],
+            [['address', 'phone', 'notes'], 'filter', 'filter' => 'trim'],
         ];
     }
 
@@ -150,7 +149,7 @@ class OrderForm extends Order
         $tax = PriceHelper::extractTax($total);
         $subtotal = $total - $tax;
 
-        $this->_user = Yii::$app->user->identity ?: User::findByUsernameOrEmail($this->email);
+        $this->_user = Yii::$app->user->identity;
 
         $nameArray = explode(' ', preg_replace('/\s+/', ' ', trim($this->name)));
         $deliveryFirstName = array_shift($nameArray);
@@ -188,9 +187,11 @@ class OrderForm extends Order
 
     private function createGuestUser()
     {
+        $guestEmail = Yii::$app->security->generateRandomString(12) . '@guest.com';
+
         $model = new User([
-            'username' => $this->email,
-            'email' => $this->email,
+            'username' => $guestEmail,
+            'email' => $guestEmail,
             'status' => User::STATUS_INACTIVE,
             'first_name' => $this->delivery_first_name ?: ' ',
             'last_name' => $this->delivery_last_name ?: ' ',

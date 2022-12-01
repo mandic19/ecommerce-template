@@ -89,10 +89,9 @@
     background: #eee;
     border: 1px solid #ccc;
     border-radius: 3px;
-    height: 50px;
     margin-right: 20px;
     object-fit: cover;
-    width: 50px;
+    width: 80px;
 }
 
 .line-order-item .name {
@@ -101,10 +100,16 @@
 
 .line-order-item .total {
     min-width: 100px;
+    padding-left: 8px;
+}
+
+.line-order-item .quantity {
+    padding-left: 16px;
 }
 
 .line-order-item .quantity, .line-order-item .total {
     text-align: right;
+    white-space: nowrap;
 }
 
 .cb-padding {

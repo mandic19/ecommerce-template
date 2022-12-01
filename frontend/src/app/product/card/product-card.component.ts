@@ -46,7 +46,7 @@ export class ProductCardComponent implements OnInit {
   }
 
   getImageUrl(imageId: number): string {
-    return this.imageService.createUrl(imageId, 'w85_h85_fs1');
+    return this.imageService.createUrl(imageId, 'w120_h120_fs1');
   }
 
   onProductThumbClick(): void {

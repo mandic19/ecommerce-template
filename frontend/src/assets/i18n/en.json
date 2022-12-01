@@ -26,6 +26,7 @@
     },
     "empty": "Cart is empty !",
     "orderOnTheWay": "Your order is on the way !",
-    "footerMessage": "Minimum order for delivery is {{param}} !"
+    "minOrderTotalMsg": "Minimum order for delivery is {{param}} !",
+    "closed": "Closed !!!"
   }
 }

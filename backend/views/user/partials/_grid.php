@@ -81,7 +81,7 @@ use yii\helpers\Url;
                     Yii::t('app', 'deactivate') :
                     Yii::t('app', 'activate');
 
-                return !$isDisabled ? Html::tag('div', $content, [
+                return !$isDisabled ? Html::tag('span', $content, [
                         'class' => 'btn-control-confirm',
                         'data-msg' => Yii::t('app', "Are you sure you want to {:action} user: {:user}?", [
                             ':action' => $action,
