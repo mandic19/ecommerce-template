@@ -26,7 +26,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.checkoutForm = this.fb.group({
       name: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
       address: ['', Validators.required],
       phone: ['', Validators.required],
       notes: ''

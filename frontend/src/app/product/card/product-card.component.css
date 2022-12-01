@@ -6,9 +6,15 @@
   font-size: 14px;
 }
 
+.product-card .content {
+  min-height: 85px;
+  line-height: 26px;
+}
+
 .description {
   font-weight: 400;
   color: #585858;
+  line-height: 21px;
 }
 
 .product-card > .product-card-footer {
@@ -42,5 +48,10 @@
 }
 
 .product-card-content {
-  max-width: calc(85% - 64px)
+  max-width: calc(82% - 64px)
+}
+
+select.form-select {
+  width: fit-content;
+  min-width: 200px;
 }

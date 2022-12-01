@@ -47,25 +47,6 @@
       </div>
       <div class="col-12 mb-3">
         <input
-          id="email"
-          type="email"
-          maxlength="100"
-          class="form-control"
-          placeholder="{{'cart.field.email' | translate}}"
-          formControlName="email"
-          [ngClass]="{'is-invalid': isInvalidField('email')}"
-        >
-        <span class="invalid-feedback">
-        <span *ngIf="checkoutForm.get('email').errors?.required">
-          {{'cart.error.requiredEmail' | translate}}
-        </span>
-        <span *ngIf="checkoutForm.get('email').errors?.email">
-          {{'cart.error.badEmailFormat' | translate}}
-        </span>
-      </span>
-      </div>
-      <div class="col-12 mb-3">
-        <input
           id="phone"
           type="text"
           maxlength="50"
