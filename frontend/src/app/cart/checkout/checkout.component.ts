@@ -17,8 +17,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   @Output() backClicked: EventEmitter<string> = new EventEmitter<string>();
   @Output() checkoutCompleted: EventEmitter<string> = new EventEmitter<string>();
   errors: object;
-
   isSubmitted: boolean = false;
+  isSubmitting: boolean = false;
   order: IOrder;
 
   constructor(private fb: FormBuilder, private orderService: OrderService) {
@@ -43,6 +43,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {
     this.isSubmitted = true;
+    this.isSubmitting = true;
 
     if(this.checkoutForm.invalid) {
       return;
@@ -64,7 +65,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         this.order = {...response.data};
         this.checkoutCompleted.emit();
       },
-      error: err => this.handleError(err)
+      error: err => this.handleError(err),
+      complete: () => this.isSubmitting = false
     });
   }
 

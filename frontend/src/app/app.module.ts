@@ -14,6 +14,7 @@ import {ShopComponent} from './shop/shop.component';
 import {CartComponent} from './cart/cart.component';
 import {CurrencyPipe} from './shared/pipes/currency/currency.pipe';
 import {KeyValuePipe} from "./shared/pipes/object/key.value.pipe";
+import { NgxMaskModule, IConfig } from 'ngx-mask'
 
 // import ngx-translate and the http loader
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
@@ -42,6 +43,9 @@ import {CheckoutComponent} from "./cart/checkout/checkout.component";
     HttpClientModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    NgxMaskModule.forRoot({
+      validation: false
+    }),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

@@ -53,6 +53,7 @@
           class="form-control"
           placeholder="{{'cart.field.phone' | translate}}"
           formControlName="phone"
+          mask="000/000-000||000/000-0000"
           [ngClass]="{'is-invalid': isInvalidField('phone')}"
         >
         <span class="invalid-feedback">
@@ -79,7 +80,11 @@
           {{error}}
         </span>
       </div>
-      <button type="submit" class="btn btn-primary px-5">
+      <button
+        type="submit"
+        class="btn btn-primary px-5"
+        [disabled]="isSubmitting"
+      >
         {{'cart.place_order' | translate}}
       </button>
     </div>
