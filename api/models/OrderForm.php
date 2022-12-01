@@ -24,9 +24,6 @@ class OrderForm extends Order
     public $notes;
     public $order_items;
 
-    const DELIVERY_CITY = 'Pale';
-    const DELIVERY_COUNTRY = 'BA';
-
     public function rules()
     {
         return [
@@ -195,8 +192,8 @@ class OrderForm extends Order
             'delivery_last_name' => $deliveryLastName,
             'delivery_phone' => $this->phone,
             'delivery_address' => $this->address,
-            'delivery_city' => self::DELIVERY_CITY,
-            'delivery_country' => self::DELIVERY_COUNTRY,
+            'delivery_city' =>  Yii::$app->params['deliveryCity'],
+            'delivery_country' =>  Yii::$app->params['deliveryCountry'],
             'delivery_notes' => $this->notes,
             'request' => Json::encode($request->getBodyParams()),
             'customer_ip_address' => $request->getUserIP(),
@@ -231,8 +228,8 @@ class OrderForm extends Order
             'first_name' => $this->delivery_first_name ?: ' ',
             'last_name' => $this->delivery_last_name ?: ' ',
             'address' => $this->address,
-            'country' => self::DELIVERY_COUNTRY,
-            'city' => self::DELIVERY_CITY,
+            'country' => Yii::$app->params['deliveryCountry'],
+            'city' => Yii::$app->params['deliveryCity'],
             'phone' => $this->phone
         ]);
 

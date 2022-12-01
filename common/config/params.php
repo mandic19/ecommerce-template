@@ -1,9 +1,15 @@
 <?php
 return [
-    'adminEmail' => 'admin@example.com',
-    'supportEmail' => 'support@example.com',
-    'senderEmail' => 'noreply@example.com',
-    'senderName' => 'Example.com mailer',
+    'deliveryCity' => 'Istočno Sarajevo',
+    'deliveryCountry' => 'BA',
+    'currency' => 'BAM',
+    'tax' => 17,
+    'minOrderTotalAmount' => 4,
+    'businessDays' => [0, 1, 2, 3, 4, 5, 6],
+    'businessHours' => [
+        'from' => 8,
+        'to' => 22
+    ],
     'user.passwordResetTokenExpire' => 3600,
     'user.passwordMinLength' => 8,
     'pattern' => [
@@ -18,12 +24,9 @@ return [
         's3.expire.time' => '+20 minutes',
         'image.thumb.expire' => '+20 minutes'
     ],
-    'currency' => 'BAM',
-    'tax' => 17,
-    'minOrderTotalAmount' => 4,
-    'businessDays' => [0, 1, 2, 3, 4, 5, 6],
-    'businessHours' => [
-        'from' => 8,
-        'to' => 22
-    ]
+
+    'adminEmail' => 'admin@example.com',
+    'supportEmail' => 'support@example.com',
+    'senderEmail' => 'noreply@example.com',
+    'senderName' => 'Example.com mailer',
 ];
