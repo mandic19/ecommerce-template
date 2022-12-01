@@ -16,6 +16,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   @Input() items: ICartItem[];
   @Output() backClicked: EventEmitter<string> = new EventEmitter<string>();
   @Output() checkoutCompleted: EventEmitter<string> = new EventEmitter<string>();
+  errors: object;
 
   isSubmitted: boolean = false;
   order: IOrder;
@@ -68,7 +69,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   handleError(err): void {
-    console.log(err.m);
+    if(err?.error?.errors instanceof Object)
+    this.errors = err?.error?.errors;
   }
 
   isInvalidField(fieldName: string): boolean {

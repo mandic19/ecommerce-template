@@ -17,6 +17,12 @@ class TimeHelper
 
     const DEFAULT_SERVER_TIMEZONE = 'Europe/Sarajevo';
 
+    public static function now() {
+        $date = new DateTime('now');
+        $date->setTimezone(new DateTimeZone(static::DEFAULT_SERVER_TIMEZONE));
+
+        return $date;
+    }
 
     /**
      * @param $timestamp int in milliseconds

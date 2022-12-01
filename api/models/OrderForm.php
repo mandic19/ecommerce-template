@@ -3,6 +3,7 @@
 namespace api\models;
 
 use common\helpers\PriceHelper;
+use common\helpers\TimeHelper;
 use common\models\Order;
 use common\models\OrderItem;
 use common\models\Product;
@@ -38,15 +39,22 @@ class OrderForm extends Order
     {
         $transaction = Yii::$app->db->beginTransaction();
 
+        if(!$this->isBusinessHour()) {
+            $this->addError('order', Yii::t('app', 'Shop is currently closed !'));
+            return false;
+        }
+
         if (!$this->validateOrderItems()) {
             return false;
         }
 
-        if (!$this->populateOrderItems()) {
+        if (!$this->prepareOrderItems()) {
             return false;
         }
 
-        $this->populateOrder();
+        if (!$this->prepareOrder()) {
+            return false;
+        }
 
         if (!$this->user_id) {
             if (!$this->createGuestUser()) {
@@ -67,6 +75,19 @@ class OrderForm extends Order
 
         $transaction->commit();
         return true;
+    }
+
+    private function isBusinessHour() {
+        $now = TimeHelper::now();
+
+        $weekDay = $now->format('w');
+        $hours = $now->format('G');
+
+        return (
+            in_array($weekDay, Yii::$app->params['businessDays']) &&
+            $hours >= Yii::$app->params['businessHours']['from'] &&
+            $hours <  Yii::$app->params['businessHours']['to']
+        );
     }
 
     private function validateOrderItems()
@@ -94,17 +115,18 @@ class OrderForm extends Order
         return true;
     }
 
-    private function populateOrderItems()
+    private function prepareOrderItems()
     {
         foreach ($this->order_items as $item) {
-            if (!$this->populateOrderItem($item)) {
+            if (!$this->prepareOrderItem($item)) {
                 return false;
             }
         }
         return true;
     }
 
-    private function populateOrderItem($item){
+    private function prepareOrderItem($item)
+    {
         $price = 0;
         $quantity = $item['quantity'];
         $productId = null;
@@ -141,11 +163,22 @@ class OrderForm extends Order
         return true;
     }
 
-    private function populateOrder()
+    private function prepareOrder()
     {
         $request = Yii::$app->getRequest();
 
         $total = $this->calculateTotal();
+
+        if ($total < Yii::$app->params['minOrderTotalAmount']) {
+            $this->addError(
+                'order',
+                Yii::t('app', 'Minimum order for delivery is {price} !', [
+                    'price' => PriceHelper::format(Yii::$app->params['minOrderTotalAmount'])
+                ])
+            );
+            return false;
+        }
+
         $tax = PriceHelper::extractTax($total);
         $subtotal = $total - $tax;
 
@@ -174,6 +207,8 @@ class OrderForm extends Order
             'total_tax' => $tax,
             'subtotal' => $subtotal,
         ], false);
+
+        return true;
     }
 
     private function calculateTotal()

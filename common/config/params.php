@@ -19,5 +19,11 @@ return [
         'image.thumb.expire' => '+20 minutes'
     ],
     'currency' => 'BAM',
-    'tax' => 17
+    'tax' => 17,
+    'minOrderTotalAmount' => 4,
+    'businessDays' => [0, 1, 2, 3, 4, 5, 6],
+    'businessHours' => [
+        'from' => 8,
+        'to' => 22
+    ]
 ];

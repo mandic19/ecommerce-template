@@ -13,6 +13,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {ShopComponent} from './shop/shop.component';
 import {CartComponent} from './cart/cart.component';
 import {CurrencyPipe} from './shared/pipes/currency/currency.pipe';
+import {KeyValuePipe} from "./shared/pipes/object/key.value.pipe";
 
 // import ngx-translate and the http loader
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
@@ -33,7 +34,8 @@ import {CheckoutComponent} from "./cart/checkout/checkout.component";
     CartComponent,
     CheckoutComponent,
     PageNotFoundComponent,
-    CurrencyPipe
+    CurrencyPipe,
+    KeyValuePipe
   ],
   imports: [
     BrowserModule,
