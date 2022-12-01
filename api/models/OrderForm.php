@@ -187,7 +187,7 @@ class OrderForm extends Order
 
         $this->setAttributes([
             'user_id' => ArrayHelper::getValue($this->_user, 'id'),
-            'code' => self::ORDER_NUMBER_PREFIX . $this->getNextId(),
+            'code' => Yii::$app->params['orderNoPrefix'] . $this->getNextId(),
             'delivery_first_name' => $deliveryFirstName,
             'delivery_last_name' => $deliveryLastName,
             'delivery_phone' => $this->phone,

@@ -17,6 +17,7 @@ return [
         'digit' => '/[0-9]/',
         'specialChar' => '/[^A-Za-z0-9\s]/'
     ],
+    'orderNoPrefix' => 'ORD-',
     'resourceManager' => [
         's3.path.prefix' => 'local',
         's3.file.prefix' => '',

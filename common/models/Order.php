@@ -44,8 +44,6 @@ use yii\helpers\ArrayHelper;
  */
 class Order extends ActiveRecord
 {
-    const ORDER_NUMBER_PREFIX = 'GRZ-NO-';
-
     const STATUS_PENDING = 1;
     const STATUS_PROCESSING = 2;
     const STATUS_COMPLETED = 3;
