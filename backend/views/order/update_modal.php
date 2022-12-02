@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $model common\models\Order */
 
 $this->title = Yii::t('app', 'Update Order: {name}', [
-    'name' => $model->code,
+    'name' => "#{$model->code}",
 ]);
 
 ?>

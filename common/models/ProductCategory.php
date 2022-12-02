@@ -74,7 +74,7 @@ class ProductCategory extends ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'parent_category_id' => Yii::t('app', 'Parent Category'),
-            'cover_image_id' => Yii::t('app', 'Cover Image Id'),
+            'cover_image_id' => Yii::t('app', 'Cover Image ID'),
             'name' => Yii::t('app', 'Name'),
             'slug' => Yii::t('app', 'Slug'),
             'description' => Yii::t('app', 'Description'),

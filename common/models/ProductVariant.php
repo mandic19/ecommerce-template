@@ -58,7 +58,7 @@ class ProductVariant extends ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'product_id' => Yii::t('app', 'Product ID'),
             'name' => Yii::t('app', 'Name'),
-            'sku' => Yii::t('app', 'Sku'),
+            'sku' => Yii::t('app', 'SKU'),
             'quantity' => Yii::t('app', 'Quantity'),
             'price' => Yii::t('app', 'Price'),
             'order' => Yii::t('app', 'Order'),

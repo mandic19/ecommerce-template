@@ -69,7 +69,7 @@ class BaseHelper
                 <li>8 ". Yii::t('app', 'characters') ."</li>
                 <li>1 ". Yii::t('app', 'letter') ."</li>
                 <li>1 ". Yii::t('app', 'number') ."</li>
-                <li>1 ". Yii::t('app', 'special characters') ."</li>
+                <li>1 ". Yii::t('app', 'special character') ."</li>
             </ul>";
 
         return Html::tag('i', '', [

@@ -86,6 +86,36 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => Yii::t('app', 'ID'),
+            'email' => Yii::t('app', 'Email'),
+            'username' => Yii::t('app', 'Username'),
+            'password_hash' => Yii::t('app', 'Password Hash'),
+            'password_reset_token' => Yii::t('app', 'Password Reset Token'),
+            'verification_token' => Yii::t('app', 'Verification Token'),
+            'auth_key' => Yii::t('app', 'Auth Key'),
+            'status' => Yii::t('app', 'Status'),
+            'is_staff' => Yii::t('app', 'Is Staff'),
+            'first_name' => Yii::t('app', 'First Name'),
+            'last_name' => Yii::t('app', 'Last Name'),
+            'address' => Yii::t('app', 'Address'),
+            'city' => Yii::t('app', 'City'),
+            'country' => Yii::t('app', 'Country'),
+            'zip' => Yii::t('app', 'Zip'),
+            'phone' => Yii::t('app', 'Phone'),
+            'created_at' => Yii::t('app', 'Created At'),
+            'created_by' => Yii::t('app', 'Created By'),
+            'updated_at' => Yii::t('app', 'Updated At'),
+            'updated_by' => Yii::t('app', 'Updated By'),
+            'is_deleted' => Yii::t('app', 'Is Deleted'),
+        ];
+    }
+
     public function checkUniqueness($attribute, $params)
     {
         /* @var $user User */

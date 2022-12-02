@@ -64,26 +64,6 @@ return [
         ],
     ],
     'components' => [
-        'i18n' => [
-            'translations' => [
-                'app*' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    'basePath' => '@common/messages',
-                    'sourceLanguage' => 'en',
-                    'fileMap' => [
-                        'app' => 'app.php',
-                    ],
-                ],
-                'modules/oauth2/*' => [
-                    'class' => \yii\i18n\PhpMessageSource::class,
-                    'basePath' => '@common/messages',
-                    'sourceLanguage' => 'en',
-                    'fileMap' => [
-                        'common' => 'common.php',
-                    ],
-                ]
-            ],
-        ],
         'user' => [
             'class' => \common\components\WebUser::class,
             'identityClass' => 'api\models\User',

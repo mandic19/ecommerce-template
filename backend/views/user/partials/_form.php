@@ -69,7 +69,7 @@ use yii\widgets\ActiveForm;
                 <?= $form->field($model, 'password')->passwordInput()->label($passwordLabel) ?>
             </div>
             <div class="col-md-6 col-sm-12">
-                <?= $form->field($model, 'password_repeat')->passwordInput() ?>
+                <?= $form->field($model, 'confirm_password')->passwordInput() ?>
             </div>
         <?php endif; ?>
     </div>

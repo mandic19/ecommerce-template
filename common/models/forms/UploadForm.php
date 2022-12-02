@@ -37,8 +37,8 @@ class UploadForm extends Model
                 $model->file = $file;
 
                 if (!$model->save()) {
-                    throw new Exception(Yii::t('app', 'Could not save file. Details:{:error}', [
-                        ':error' => implode('<br>', $model->getFirstErrors()),
+                    throw new Exception(Yii::t('app', 'Could not save file. Errors: {:errors}', [
+                        ':errors' => implode('<br>', $model->getFirstErrors()),
                     ]));
                 }
 

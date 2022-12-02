@@ -105,7 +105,7 @@ class Order extends ActiveRecord
             'delivery_country' => Yii::t('app', 'Delivery Country'),
             'delivery_phone' => Yii::t('app', 'Delivery Phone'),
             'delivery_notes' => Yii::t('app', 'Delivery Notes'),
-            'customer_ip_address' => Yii::t('app', 'Customer Ip Address'),
+            'customer_ip_address' => Yii::t('app', 'Customer IP Address'),
             'customer_user_agent' => Yii::t('app', 'Customer User Agent'),
             'request' => Yii::t('app', 'Request'),
             'created_at' => Yii::t('app', 'Created At'),

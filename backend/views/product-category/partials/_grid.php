@@ -9,6 +9,7 @@ use yii\helpers\Url;
 
 /* @var $gridId string */
 /* @var $dataProvider ActiveDataProvider */
+/* @var $pjaxId string */
 
 ?>
 

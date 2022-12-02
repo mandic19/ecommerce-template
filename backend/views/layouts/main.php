@@ -36,7 +36,7 @@ AppAsset::register($this);
 </head>
 <body class="<?= !empty($_COOKIE['sidebarCollapsed']) && $_COOKIE['sidebarCollapsed'] == 'true' ? 'sidebar-collapsed' : '' ?>">
 <?php $this->beginBody(); ?>
-<!-- left sidebar -->
+<!-- Left sidebar -->
 <section class="left-sidebar">
     <!-- Site Logo -->
     <div class="navbar nav_title">
@@ -52,13 +52,13 @@ AppAsset::register($this);
             <img src="/img/dummy_avatar.jpg" alt="...">
         </div>
         <div class="info">
-            <span class="text-agate-gray">Welcome,</span>
+            <span class="text-agate-gray"><?= Yii::t('app', 'Welcome') ?>,</span>
             <span><?= $webUser->getFullName() ?></span>
         </div>
     </div>
     <!-- User profile info -->
     <br/>
-    <!-- sidebar menu -->
+    <!-- Sidebar menu -->
     <div class="sidebar-menu">
         <?= Menu::widget(
             [
@@ -66,12 +66,24 @@ AppAsset::register($this);
                 'options' => ['class' => 'list-group'],
                 'itemOptions' => ['class' => 'list-group-item'],
                 'items' => [
-                    ["label" => "<i class='fa fa-home fa-lg'></i><span>Home</span>", "url" => ['site/index']],
-                    ["label" => "<i class='fa fa-shopping-cart fa-lg'></i><span>Orders</span>", "url" => ["/order/index"]],
-                    ["label" => "<i class='fa fa-list fa-lg'></i><span>Categories</span>", "url" => ["/product-category/index"]],
-                    ["label" => "<i class='fa fa-cubes fa-lg'></i><span>Products</span>", "url" => ["/product/index"]],
                     [
-                        "label" => "<i class='fa fa-users fa-lg'></i><span>Users</span>",
+                        "label" => "<i class='fa fa-home fa-lg'></i><span>" . Yii::t('app', 'Home') . "</span>",
+                        "url" => ['site/index']
+                    ],
+                    [
+                        "label" => "<i class='fa fa-shopping-cart fa-lg'></i><span>" . Yii::t('app', 'Orders') . "</span>",
+                        "url" => ["/order/index"]
+                    ],
+                    [
+                        "label" => "<i class='fa fa-list fa-lg'></i><span>" . Yii::t('app', 'Categories') . "</span>",
+                        "url" => ["/product-category/index"]
+                    ],
+                    [
+                        "label" => "<i class='fa fa-cubes fa-lg'></i><span>" . Yii::t('app', 'Products') . "</span>",
+                        "url" => ["/product/index"]
+                    ],
+                    [
+                        "label" => "<i class='fa fa-users fa-lg'></i><span>" . Yii::t('app', 'Users') . "</span>",
                         "url" => ["/user/index"],
                         "visible" => Yii::$app->user->can(RbacHelper::ROLE_SUPER_ADMIN)
                     ],
@@ -79,9 +91,9 @@ AppAsset::register($this);
             ]
         ); ?>
     </div>
-    <!-- /sidebar menu -->
+    <!-- /Sidebar menu -->
 </section>
-<!-- /left sidebar -->
+<!-- /Left sidebar -->
 <!-- content container -->
 <section class="content-container">
     <!-- navbar -->

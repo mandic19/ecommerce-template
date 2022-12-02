@@ -13,7 +13,6 @@ use yii\helpers\Url;
 /* @var $gridId string */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-
 ?>
 
 <?= GridView::widget([
@@ -120,7 +119,9 @@ use yii\helpers\Url;
                     }
 
                     $url = Url::to(['/product/delete', 'id' => $model->id]);
-                    $msg = Yii::t('app', 'Are you sure you want to delete product: ') . $model->name;
+                    $msg = Yii::t('app', 'Are you sure you want to delete product: {:name}', [
+                        ':name' => $model->name
+                    ]);
                     return Html::tag('span', '<i class="fa fa-trash"></i>', [
                         'data-href' => $url,
                         'data-confirm-msg' => $msg,

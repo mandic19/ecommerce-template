@@ -14,7 +14,10 @@ use yii\helpers\Url;
 $product = $model->getProductWithDeleted();
 $productVariant = $model->getProductVariantWithDeleted();
 
-$imageUrl = Url::to(['/image/view', 'id' => $product->cover_image_id, 'spec' => ImageSpecification::THUMB_MEDIUM_SQUARED]);
+$imageUrl = Url::to([
+    '/image/view', 'id' => $product->cover_image_id,
+    'spec' => ImageSpecification::THUMB_MEDIUM_SQUARED
+]);
 
 ?>
 <?php if (!empty($product)) : ?>

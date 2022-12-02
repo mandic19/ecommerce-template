@@ -25,8 +25,8 @@ $this->title = Yii::t('app', 'Login');
             'placeholder' => $model->getAttributeLabel('password')
         ])->label(false) ?>
         <div class="text-center">
-            <?= Html::submitButton('Log in', ['class' => 'btn btn-secondary mr-3']) ?>
-            <a href="#">Lost your password?</a>
+            <?= Html::submitButton(Yii::t('app', 'Log In'), ['class' => 'btn btn-secondary mr-3']) ?>
+            <a href="#"><?= Yii::t('app', 'Lost your password?') ?></a>
         </div>
         <hr>
         <h2><i class="fa fa-paw"></i> Gentelella Alela!</h2>

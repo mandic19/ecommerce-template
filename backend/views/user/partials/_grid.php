@@ -82,16 +82,16 @@ use yii\helpers\Url;
                     Yii::t('app', 'activate');
 
                 return !$isDisabled ? Html::tag('span', $content, [
-                        'class' => 'btn-control-confirm',
-                        'data-msg' => Yii::t('app', "Are you sure you want to {:action} user: {:user}?", [
-                            ':action' => $action,
-                            ':user' => $model->getFullName()
-                        ]),
-                        'data-url' => Url::to(['user/toggle-status', 'id' => $model->id]),
-                        'data-json-response' => 1,
-                        'data-loader' => 0,
-                        'data-pjax-id' => $pjaxId
-                    ]) : Html::tag('div', $content);
+                    'class' => 'btn-control-confirm',
+                    'data-msg' => Yii::t('app', "Are you sure you want to {:action} user: {:user}?", [
+                        ':action' => $action,
+                        ':user' => $model->getFullName()
+                    ]),
+                    'data-url' => Url::to(['user/toggle-status', 'id' => $model->id]),
+                    'data-json-response' => 1,
+                    'data-loader' => 0,
+                    'data-pjax-id' => $pjaxId
+                ]) : Html::tag('div', $content);
             }],
         [
             'class' => 'yii\grid\ActionColumn',
@@ -118,7 +118,9 @@ use yii\helpers\Url;
                     }
 
                     $url = Url::to(['/user/delete', 'id' => $model->id]);
-                    $msg = Yii::t('app', 'Are you sure you want to delete user: ') . $model->getFullName();
+                    $msg = Yii::t('app', 'Are you sure you want to delete user: {:name}', [
+                        ':name' => $model->getFullName()
+                    ]);
                     return Html::tag('span', '<i class="fa fa-trash"></i>', [
                         'data-href' => $url,
                         'data-confirm-msg' => $msg,

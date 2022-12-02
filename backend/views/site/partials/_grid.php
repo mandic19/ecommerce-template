@@ -60,7 +60,6 @@ use yii\helpers\Url;
             }
         ],
         [
-            'label' => Yii::t('app', 'Delivery Address'),
             'attribute' => 'delivery_address',
             'format' => 'raw',
             'value' => function (Order $model) {
@@ -72,7 +71,6 @@ use yii\helpers\Url;
             }
         ],
         [
-            'label' => Yii::t('app', 'Subtotal'),
             'attribute' => 'subtotal',
             'format' => 'raw',
             'value' => function (Order $model) {
@@ -81,7 +79,6 @@ use yii\helpers\Url;
             }
         ],
         [
-            'label' => Yii::t('app', 'Total Tax'),
             'attribute' => 'total_tax',
             'format' => 'raw',
             'value' => function (Order $model) {
@@ -90,7 +87,6 @@ use yii\helpers\Url;
             }
         ],
         [
-            'label' => Yii::t('app', 'Total'),
             'attribute' => 'total',
             'format' => 'raw',
             'value' => function (Order $model) {
