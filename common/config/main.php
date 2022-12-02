@@ -6,7 +6,7 @@ return [
     'sourceLanguage' => 'en-US',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
+        '@npm' => '@vendor/npm-asset',
     ],
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [
@@ -18,7 +18,9 @@ return [
                     'sourceLanguage' => 'en-US',
                     'fileMap' => [
                         'app' => 'app.php',
-                        'app/country' => 'error.php',
+                        'app/country' => 'country.php',
+                        'app/feminine' => 'app/feminine.php',
+                        'app/masculine' => 'app/masculine.php'
                     ],
                 ],
             ],

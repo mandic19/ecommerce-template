@@ -56,11 +56,14 @@ class UpdateAction extends ItemAction
         $model->setAttributes(\Yii::$app->getRequest()->get());
 
         $this->controller->getView()->title = "Update {$model->getPublicName()}";
+        $i18nCategory = $model->getI18nCategory(\Yii::$app->language);
 
         if ($model->load(\Yii::$app->getRequest()->post())) {
             if ($this->beforeSave() && $model->save() && $this->afterSave()) {
 
-                $message = Yii::t('app', '{:model} successfully updated!', [':model' => $model->getPublicName()]);
+                $message = $i18nCategory ?
+                    Yii::t($i18nCategory, '{:model} successfully updated!', [':model' => $model->getPublicName()]) :
+                    Yii::t('app', '{:model} successfully updated!', [':model' => $model->getPublicName()]);
 
                 if (Yii::$app->request->getIsAjax()) {
                     Yii::$app->response->format = Response::FORMAT_JSON;
@@ -98,7 +101,13 @@ class UpdateAction extends ItemAction
                 }
                 return call_user_func($afterUpdate, $model);
             } else {
-                $errorMessage = $model->getPublicName() . ' canno\'t be updated!<br>' . implode('<br>', $model->getFirstErrors());
+                $errorMessage = $i18nCategory ? Yii::t($i18nCategory, '{:model} canno\'t be updated!', [
+                    ':model' => $model->getPublicName()
+                ]) : Yii::t('app', '{:model} canno\'t be updated!', [
+                    ':model' => $model->getPublicName()
+                ]);
+
+                $errorMessage .= '<br>' . implode('<br>', $model->getFirstErrors());
 
                 if (Yii::$app->request->getIsAjax()) {
                     Yii::$app->response->format = Response::FORMAT_JSON;

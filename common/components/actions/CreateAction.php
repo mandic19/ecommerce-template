@@ -55,11 +55,16 @@ class CreateAction extends ItemAction
         $model->setScenario($this->scenario);
 
         $this->controller->getView()->title = "Create new {$model->getPublicName()}";
+        $i18nCategory = $model->getI18nCategory(\Yii::$app->language);
 
         if ($model->load(\Yii::$app->getRequest()->post())) {
             if ($this->beforeSave() && $model->save() && $this->afterSave()) {
 
-                $message = $this->responseMessage ?: Yii::t('app', '{:model} successfully created!', [':model' => $model->getPublicName()]);
+                $message = $this->responseMessage ?: (
+                $i18nCategory ?
+                    Yii::t($i18nCategory, '{:model} successfully created!', [':model' => $model->getPublicName()]) :
+                    Yii::t('app', '{:model} successfully created!', [':model' => $model->getPublicName()])
+                );
 
                 if (Yii::$app->request->getIsAjax()) {
                     Yii::$app->response->format = Response::FORMAT_JSON;
@@ -103,7 +108,13 @@ class CreateAction extends ItemAction
                 return call_user_func($afterSave, $model);
             }
 
-            $errorMessage = Yii::t('app', '{:model} could not be created!', [':model' => $model->getPublicName()]) . '<br>' . implode('<br>', $model->getFirstErrors());
+            $errorMessage = $i18nCategory ? Yii::t($i18nCategory, '{:model} could not be created!', [
+                ':model' => $model->getPublicName()
+            ]) : Yii::t('app', '{:model} could not be created!', [
+                ':model' => $model->getPublicName()
+            ]);
+
+            $errorMessage .= '<br>' . implode('<br>', $model->getFirstErrors());
 
             if (Yii::$app->request->getIsAjax()) {
                 Yii::$app->response->format = Response::FORMAT_JSON;

@@ -44,6 +44,10 @@ use yii\helpers\ArrayHelper;
  */
 class Order extends ActiveRecord
 {
+    protected static $_i18nCategories = [
+        'bs-BS' => 'app/feminine'
+    ];
+
     const STATUS_PENDING = 1;
     const STATUS_PROCESSING = 2;
     const STATUS_COMPLETED = 3;

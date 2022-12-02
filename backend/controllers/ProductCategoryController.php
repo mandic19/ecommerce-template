@@ -43,7 +43,7 @@ class ProductCategoryController extends BaseController
             'create' => [
                 'class' => CreateAction::class,
                 'modelClass' => $this->modelClass,
-                'scenario' => ActiveRecord::SCENARIO_CREATE
+                'scenario' => ActiveRecord::SCENARIO_CREATE,
             ],
             'update' => [
                 'class' => UpdateAction::class,
@@ -54,7 +54,7 @@ class ProductCategoryController extends BaseController
                 'class' => ToggleAction::class,
                 'modelClass' => $this->modelClass,
                 'onValue' => Product::STATUS_ACTIVE,
-                'offValue' => Product::STATUS_INACTIVE
+                'offValue' => Product::STATUS_INACTIVE,
             ],
             'delete' => [
                 'class' => DeleteAction::class,

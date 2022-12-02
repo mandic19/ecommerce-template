@@ -34,6 +34,10 @@ use yii\helpers\ArrayHelper;
  */
 class Product extends ActiveRecord
 {
+    protected static $_i18nCategories = [
+        'bs-BS' => 'app/masculine'
+    ];
+
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
 

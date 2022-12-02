@@ -26,7 +26,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     protected static $_scopeAttribute = '';
     protected static $_cascadeDeleteRelations = [];
+    protected static $_i18nCategories = [];
 
+    public static $_i18nCategory = 'app';
 
     const BLAMEABLE_BEHAVIOR_ID = 'blameable';
     const TIMESTAMP_BEHAVIOR_ID = 'timestamp';
@@ -300,7 +302,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     public function getPublicName()
     {
-        return Inflector::titleize($this->getBaseName());
+        return Yii::t("app", Inflector::titleize($this->getBaseName()));
     }
 
     public function getBaseName()
@@ -388,5 +390,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
             }
         }
         return true;
+    }
+
+    public function getI18nCategory($key = null) {
+        return static::$_i18nCategories[$key] ?? null;
     }
 }

@@ -33,6 +33,10 @@ use yii\helpers\ArrayHelper;
  */
 class ProductCategory extends ActiveRecord
 {
+    protected static $_i18nCategories = [
+        'bs-BS' => 'app/feminine'
+    ];
+
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
 
@@ -98,6 +102,11 @@ class ProductCategory extends ActiveRecord
                 'slugAttribute' => 'slug',
             ],
         ]);
+    }
+
+    public function getPublicName()
+    {
+        return Yii::t("app", 'Category');
     }
 
     public function beforeValidate()

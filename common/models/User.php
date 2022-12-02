@@ -44,6 +44,10 @@ use yii\web\IdentityInterface;
  */
 class User extends ActiveRecord implements IdentityInterface
 {
+    protected static $_i18nCategories = [
+        'bs-BS' => 'app/masculine'
+    ];
+
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
 

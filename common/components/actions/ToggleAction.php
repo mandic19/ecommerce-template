@@ -3,10 +3,10 @@
 namespace common\components\actions;
 
 use Yii;
-use yii\bootstrap\ActiveForm;
 use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 class ToggleAction extends ItemAction
 {
@@ -33,12 +33,12 @@ class ToggleAction extends ItemAction
     /**
      * @var string   Action label for active state in flash message
      */
-    public $onActionLabel = 'activated';
+    public $onActionLabel;
 
     /**
      * @var string   Action label for inactive state in flash message
      */
-    public $offActionLabel = 'deactivated';
+    public $offActionLabel;
 
     /**
      * @var string scenario for this action
@@ -57,17 +57,29 @@ class ToggleAction extends ItemAction
             $model = $this->findModel($id);
             $model->setScenario($this->scenario);
             Yii::$app->response->format = Response::FORMAT_JSON;
+            $i18nCategory = $model->getI18nCategory(\Yii::$app->language);
 
             if ($model->{$this->attribute} === $this->offValue) {
                 $model->{$this->attribute} = $this->onValue;
-                $actionLabel = $this->onActionLabel;
+                $actionLabel = $this->onActionLabel ?: (
+                $i18nCategory ?
+                    Yii::t($i18nCategory, 'activated') :
+                    Yii::t('app', 'activated')
+                );
             } else {
                 $model->{$this->attribute} = $this->offValue;
-                $actionLabel = $this->offActionLabel;
+                $actionLabel = $this->offActionLabel ?: (
+                $i18nCategory ?
+                    Yii::t($i18nCategory, 'deactivated') :
+                    Yii::t('app', 'deactivated')
+                );
             }
 
             if ($model->save(false, [$this->attribute])) {
-                $message = Yii::t('app', '{:model} successfully {:action}!', [
+                $message = $i18nCategory ? Yii::t($i18nCategory, '{:model} successfully {:action}!', [
+                    ':model' => $model->getPublicName(),
+                    ':action' => $actionLabel
+                ]) : Yii::t('app', '{:model} successfully {:action}!', [
                     ':model' => $model->getPublicName(),
                     ':action' => $actionLabel
                 ]);
@@ -78,10 +90,15 @@ class ToggleAction extends ItemAction
                 ];
             }
 
-            $errorMessage = Yii::t('app', '{:model} canno\'t be {:action}!', [
-                    ':model' => $model->getPublicName(),
-                    ':action' => $actionLabel
-                ]) . '<br>' . implode('<br>', $model->getFirstErrors());
+            $errorMessage = $i18nCategory ? Yii::t($i18nCategory, '{:model} canno\'t be {:action}!', [
+                ':model' => $model->getPublicName(),
+                ':action' => $actionLabel
+            ]) : Yii::t('app', '{:model} canno\'t be {:action}!', [
+                ':model' => $model->getPublicName(),
+                ':action' => $actionLabel
+            ]);
+
+            $errorMessage .= '<br>' . implode('<br>', $model->getFirstErrors());
 
             return [
                 'success' => false,
