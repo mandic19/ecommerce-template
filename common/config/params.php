@@ -8,7 +8,7 @@ return [
     'businessDays' => [0, 1, 2, 3, 4, 5, 6],
     'businessHours' => [
         'from' => 8,
-        'to' => 22
+        'to' => 13
     ],
     'user.passwordResetTokenExpire' => 3600,
     'user.passwordMinLength' => 8,

@@ -30,7 +30,7 @@ $this->title = Yii::t('app', 'Login');
         </div>
         <hr>
         <h2><i class="fa fa-paw"></i> Gentelella Alela!</h2>
-        <p>©2021 All Rights Reserved. Ecommerce Template!</p>
+        <p>©2022 All Rights Reserved. Ecommerce Template!</p>
         <?php ActiveForm::end(); ?>
     </div>
 </div>

@@ -7,7 +7,6 @@ $config = [
             'cookieValidationKey' => 'j17iWa3aS97u3T2LINN7ohTpnh8XjGzp',
         ],
     ],
-    'language' => 'en'
 ];
 
 

@@ -40,6 +40,7 @@ return [
         '.hgkeep',
         '/messages',
         '/vendor',
+        '/frontend',
     ],
 
     // 'php' output format is for saving messages to php files.

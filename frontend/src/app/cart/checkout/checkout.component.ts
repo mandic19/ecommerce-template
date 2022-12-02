@@ -66,7 +66,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         this.checkoutCompleted.emit();
       },
       error: err => this.handleError(err),
-      complete: () => this.isSubmitting = false
+    }).add(() => {
+      this.isSubmitting = false;
     });
   }
 
