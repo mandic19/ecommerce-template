@@ -22,7 +22,7 @@ $this->title = "Order #{$model->code}";
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Orders'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = "#{$model->code}";
 
-$user = User::findWithDeleted()->where($model->user_id)->one();
+$user = User::findWithDeleted()->where(['id' => $model->user_id])->one();
 
 $orderCardPjaxId = 'order-card-pjax';
 $statusCardPjaxId = 'status-card-pjax';
