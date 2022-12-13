@@ -42,6 +42,7 @@ $orderItemsListId = 'order-items-list-view';
                 </h5>
                 <?php if ($model->created_at) : ?>
                     <div class="ml-auto">
+                        <i class="fa fa-calendar-alt mr-1"></i>
                         <?= TimeHelper::formatAsDateTime($model->created_at) ?>
                     </div>
                 <?php endif; ?>
