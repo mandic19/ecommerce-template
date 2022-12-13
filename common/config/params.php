@@ -1,5 +1,8 @@
 <?php
 return [
+    'admin.email' => 'marko.mandic.etf@gmail.com',
+    'support.email' => 'noreply@example.com',
+    'contact.email' => 'info@example.com',
     'deliveryCity' => 'Istočno Sarajevo',
     'deliveryCountry' => 'BA',
     'currency' => 'BAM',
@@ -25,9 +28,4 @@ return [
         's3.expire.time' => '+20 minutes',
         'image.thumb.expire' => '+20 minutes'
     ],
-
-    'adminEmail' => 'admin@example.com',
-    'supportEmail' => 'support@example.com',
-    'senderEmail' => 'noreply@example.com',
-    'senderName' => 'Example.com mailer',
 ];
