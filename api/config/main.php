@@ -92,7 +92,7 @@ return [
                     $data = [];
                     if (!$response->isSuccessful) {
                         $data['success'] = false;
-                        $data['code'] = ArrayHelper::getValue($response->data, 'status', 200);
+                        $data['code'] = ArrayHelper::getValue($response, 'statusCode', $response);
                         $data['errors'] = [ArrayHelper::getValue($response->data, 'message')];
                     } else {
                         $data = $response->data;
