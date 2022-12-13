@@ -5,6 +5,7 @@ namespace common\models;
 use common\components\orm\ActiveRecord;
 use common\helpers\BaseHelper;
 use common\helpers\CountryHelper;
+use common\helpers\EmailHelper;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\helpers\ArrayHelper;
@@ -174,6 +175,18 @@ class Order extends ActiveRecord
     public function getTotalOrderItems()
     {
         return $this->getOrderItems()->count();
+    }
+
+    public function sendNewOrderEmail()
+    {
+        return EmailHelper::sendMessage(
+            ['html' => 'new-order'],
+            Yii::$app->params['admin.email'],
+            Yii::t("app", "You have a new order {code}", [
+                'code' => "#{$this->code}"
+            ]),
+            ['model' => $this]
+        );
     }
 
     /**

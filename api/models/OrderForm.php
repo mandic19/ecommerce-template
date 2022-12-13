@@ -36,7 +36,7 @@ class OrderForm extends Order
     {
         $transaction = Yii::$app->db->beginTransaction();
 
-        if(!$this->isBusinessHour()) {
+        if (!$this->isBusinessHour()) {
             $this->addError('order', Yii::t('app', 'Shop is currently closed !'));
             return false;
         }
@@ -70,11 +70,17 @@ class OrderForm extends Order
             return false;
         }
 
+        if (!$this->sendNewOrderEmail()) {
+            $transaction->rollBack();
+            return false;
+        }
+
         $transaction->commit();
         return true;
     }
 
-    private function isBusinessHour() {
+    private function isBusinessHour()
+    {
         $now = TimeHelper::now();
 
         $weekDay = $now->format('w');
@@ -83,7 +89,7 @@ class OrderForm extends Order
         return (
             in_array($weekDay, Yii::$app->params['businessDays']) &&
             $hours >= Yii::$app->params['businessHours']['from'] &&
-            $hours <  Yii::$app->params['businessHours']['to']
+            $hours < Yii::$app->params['businessHours']['to']
         );
     }
 
@@ -192,8 +198,8 @@ class OrderForm extends Order
             'delivery_last_name' => $deliveryLastName,
             'delivery_phone' => $this->phone,
             'delivery_address' => $this->address,
-            'delivery_city' =>  Yii::$app->params['deliveryCity'],
-            'delivery_country' =>  Yii::$app->params['deliveryCountry'],
+            'delivery_city' => Yii::$app->params['deliveryCity'],
+            'delivery_country' => Yii::$app->params['deliveryCountry'],
             'delivery_notes' => $this->notes,
             'request' => Json::encode($request->getBodyParams()),
             'customer_ip_address' => $request->getUserIP(),
