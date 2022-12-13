@@ -20,7 +20,7 @@ use yii\helpers\Html;
         <tr>
             <td valign="center"
                 class="title"
-                style="font-size: 27px; padding: 30px 20px 30px 20px; background-color: #111111; color: white;"
+                style="font-size: 27px; padding: 20px; background-color: #111111; color: white;"
             >
                 <?= Yii::t("app", "You have a new order {code}", [
                     'code' => "#{$model->code}"
