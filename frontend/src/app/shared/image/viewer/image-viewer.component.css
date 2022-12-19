@@ -28,21 +28,24 @@
 }
 
 .image-container > .btn-close {
+  color: var(--col-agate-gray);
   z-index: 2;
 }
 
 .image-container > .loader {
   width: 600px;
   height: 400px;
+  color: var(--col-agate-gray);
 }
 
 .nav-button-back,
 .nav-button-next {
   position: absolute;
-  color: #FFFFFF;
+  color: var(--col-agate-gray);
   width: 50%;
   height: 100%;
   z-index: 1;
+  opacity: 0.5;
 }
 
 .nav-button-back {
@@ -55,7 +58,7 @@
 
 .nav-button-back:hover,
 .nav-button-next:hover {
-  color: var(--col-primary);
+  color: white;
 }
 
 .nav-button-back:focus,
