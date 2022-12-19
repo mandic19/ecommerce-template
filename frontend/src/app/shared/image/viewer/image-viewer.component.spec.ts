@@ -10,8 +10,13 @@ export class ImageViewerComponent {
   @Input() imageIds: number[] = [];
   @Output() closeClicked = new EventEmitter<void>();
   currentIndex: number = 0;
+  showLoader: boolean = true;
 
   constructor(private imageService: ImageService) {
+  }
+
+  handleImageLoaded(): void {
+    this.showLoader = false;
   }
 
   handleNext(): void {

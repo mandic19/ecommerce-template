@@ -5,22 +5,25 @@
       (click)="handlePrev()"
       *ngIf="imageIds.length > 1"
     >
-      <i class="fa fa-lg fa-arrow-left"></i>
+      <i class="fa fa-lg fa-chevron-left d-none d-lg-inline-block"></i>
     </button>
     <div class="image-container">
       <span
-        class="btn btn-close btn-close-white ms-auto mb-2"
+        class="btn btn-close btn-close-white ms-auto mb-2 px-0"
         (click)="handleClose($event)"
       >
       </span>
-      <img src="{{getImageUrl()}}" alt="Image">
+      <div class="loader d-flex justify-content-center align-items-center" *ngIf="showLoader">
+        <i class="fa fa-spinner fa-spin fa-2x text-white"></i>
+      </div>
+      <img src="{{getImageUrl()}}" alt="Image" (load)="handleImageLoaded()">
     </div>
     <button
       class="btn btn-link nav-button-next"
       (click)="handleNext()"
       *ngIf="imageIds.length > 1"
     >
-      <i class="fa fa-lg fa-arrow-right"></i>
+      <i class="fa fa-lg fa-chevron-right d-none d-lg-inline-block"></i>
     </button>
   </div>
 </section>
