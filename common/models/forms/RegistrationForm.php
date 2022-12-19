@@ -3,6 +3,7 @@
 namespace common\models\forms;
 
 use common\models\User;
+use phpDocumentor\Reflection\Types\Static_;
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -11,7 +12,7 @@ use yii\helpers\ArrayHelper;
  * @package common\models\forms
  *
  * @property string $password
- * @property string $password_repeat
+ * @property string $confirm_password
  * @property string $role
  *
  */
@@ -22,7 +23,7 @@ class RegistrationForm extends User
     const SCENARIO_ADMIN_UPDATE = 'admin-update';
 
     public $password;
-    public $password_repeat;
+    public $confirm_password;
     public $role;
 
     public function getBaseName()
@@ -36,7 +37,7 @@ class RegistrationForm extends User
     public function rules()
     {
         return ArrayHelper::merge(parent::rules(), [
-            [['password', 'password_repeat'], 'required', 'on' => [static::SCENARIO_ADMIN_REGISTRATION, static::SCENARIO_CUSTOMER_REGISTRATION]],
+            [['password', 'confirm_password'], 'required', 'on' => [static::SCENARIO_ADMIN_REGISTRATION, static::SCENARIO_CUSTOMER_REGISTRATION]],
             [['password'], 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
             [['password'], 'match', 'pattern' => Yii::$app->params['pattern']['letter'],
                 'message' => Yii::t('app', 'New Password must contain at least 1 letter.')
@@ -47,9 +48,19 @@ class RegistrationForm extends User
             [['password'], 'match', 'pattern' => Yii::$app->params['pattern']['specialChar'],
                 'message' => Yii::t('app', 'New Password must contain at least 1 special character.')
             ],
-            [['password'], 'compare', 'compareAttribute' => 'password_repeat', 'operator' => '==', 'enableClientValidation' => false],
-            [['role'], 'required', 'on' => [static::SCENARIO_ADMIN_REGISTRATION, static::SCENARIO_ADMIN_UPDATE]],
-            [['role'], 'string']
+            [['password'], 'compare', 'compareAttribute' => 'confirm_password', 'operator' => '==', 'enableClientValidation' => false],
+            [['role'], 'required', 'on' => [static::SCENARIO_ADMIN_REGISTRATION]],
+            [['role'], 'string'],
+            ['is_staff', 'default', 'value' => 1, 'on' => [static::SCENARIO_ADMIN_REGISTRATION]],
+        ]);
+    }
+
+    public function attributeLabels()
+    {
+        return ArrayHelper::merge(parent::attributeLabels(), [
+            'role' => Yii::t('app', 'Role'),
+            'password' => Yii::t('app', 'Password'),
+            'confirm_password' => Yii::t('app', 'Confirm Password'),
         ]);
     }
 
@@ -59,7 +70,7 @@ class RegistrationForm extends User
 
         return ArrayHelper::merge(parent::scenarios(), [
             static::SCENARIO_ADMIN_REGISTRATION => $allAttributes,
-            static::SCENARIO_ADMIN_UPDATE => $allAttributes,
+            static::SCENARIO_ADMIN_UPDATE => array_diff($allAttributes, ['role', 'username']),
             static::SCENARIO_CUSTOMER_REGISTRATION => array_diff($allAttributes, ['role'])
         ]);
     }
@@ -67,7 +78,7 @@ class RegistrationForm extends User
     public function beforeValidate()
     {
         $this->username = empty($this->username) ? $this->email : $this->username;
-        $this->status = static::STATUS_ACTIVE;
+        $this->status = $this->status ?: static::STATUS_ACTIVE;
 
         return parent::beforeValidate();
     }
@@ -79,23 +90,23 @@ class RegistrationForm extends User
             return false;
         }
 
-        if(!empty($this->password)) {
+        if (!empty($this->password)) {
             $this->setPassword($this->password);
         }
 
-        if($this->isNewRecord) {
+        if ($this->isNewRecord) {
             $this->generateAuthKey();
         }
 
         $transaction = Yii::$app->db->beginTransaction();
 
-        if(!parent::save($runValidation, $attributeNames)) {
+        if (!parent::save($runValidation, $attributeNames)) {
             $transaction->rollBack();
             return false;
         }
 
-        if(!empty($this->role)) {
-            if(!$this->assignCustomRole($this->role)) {
+        if (!empty($this->role)) {
+            if (!$this->assignCustomRole($this->role)) {
                 $transaction->rollBack();
                 $this->addError('role', Yii::t('app', 'Failed while assigning role.'));
                 return false;

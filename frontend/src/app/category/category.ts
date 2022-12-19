@@ -1,9 +1,8 @@
+import {IProduct} from '../product/product';
+
 export interface ICategory {
-  id: number,
-  parent_category_id: number,
-  cover_image_id: number,
-  name: string,
-  description: string,
-  order: number,
-  sub_categories: ICategory[]
+  id: number;
+  slug: string;
+  name: string;
+  products: IProduct[];
 }

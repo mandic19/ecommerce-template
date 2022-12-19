@@ -12,6 +12,7 @@ use common\components\actions\ViewAction;
 use common\components\controllers\BaseController;
 use common\components\orm\ActiveRecord;
 use common\models\forms\RegistrationForm;
+use common\models\Product;
 use common\models\ProductCategory;
 use common\models\search\ProductCategorySearch;
 use common\models\User;
@@ -42,12 +43,18 @@ class ProductCategoryController extends BaseController
             'create' => [
                 'class' => CreateAction::class,
                 'modelClass' => $this->modelClass,
-                'scenario' => ActiveRecord::SCENARIO_CREATE
+                'scenario' => ActiveRecord::SCENARIO_CREATE,
             ],
             'update' => [
                 'class' => UpdateAction::class,
                 'modelClass' => $this->modelClass,
                 'scenario' => ActiveRecord::SCENARIO_UPDATE,
+            ],
+            'toggle-status' => [
+                'class' => ToggleAction::class,
+                'modelClass' => $this->modelClass,
+                'onValue' => Product::STATUS_ACTIVE,
+                'offValue' => Product::STATUS_INACTIVE,
             ],
             'delete' => [
                 'class' => DeleteAction::class,

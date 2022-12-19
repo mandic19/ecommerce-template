@@ -2,11 +2,15 @@
 
 namespace backend\controllers;
 
+use common\components\actions\SearchAction;
 use common\components\controllers\BaseController;
 use common\models\forms\LoginForm;
+use common\models\Order;
+use common\models\search\OrderSearch;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\Response;
 
 /**
@@ -41,6 +45,20 @@ class SiteController extends BaseController
                 ],
             ],
         ];
+    }
+
+    public function actions()
+    {
+        return ArrayHelper::merge(parent::actions(), [
+            'index' => [
+                'class' => SearchAction::class,
+                'modelClass' => Order::class,
+                'searchModel' => OrderSearch::class,
+                'limitSearch' => function(OrderSearch $model) {
+                    $model->showTodayOrders = true;
+                }
+            ],
+        ]);
     }
 
     /**

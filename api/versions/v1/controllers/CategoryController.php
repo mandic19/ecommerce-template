@@ -11,8 +11,6 @@ use api\components\web\BaseApiController;
 use common\models\ProductCategory;
 use common\models\search\ProductCategorySearch;
 use yii\helpers\ArrayHelper;
-use yii\rest\IndexAction;
-use yii\rest\ViewAction;
 
 class CategoryController extends BaseApiController
 {
@@ -33,17 +31,15 @@ class CategoryController extends BaseApiController
 
     public function actions()
     {
-        return [
+        return ArrayHelper::merge(parent::actions(), [
             'index' => [
                 'class' => SearchAction::class,
                 'modelClass' => $this->searchModelClass,
                 'checkAccess' => [$this, 'checkAccess'],
+                'scope' => function(ProductCategorySearch $searchModel) {
+                    $searchModel->is_active = ProductCategory::STATUS_ACTIVE;
+                }
             ],
-            'view' => [
-                'class' => ViewAction::class,
-                'modelClass' => $this->modelClass,
-                'checkAccess' => [$this, 'checkAccess'],
-            ],
-        ];
+        ]);
     }
 }

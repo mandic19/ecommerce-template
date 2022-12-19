@@ -46,7 +46,7 @@ html {
 body {
     position: relative;
     font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
-    font-size: 13px !important;
+    font-size: 14px !important;
     color: var(--col-light-slate-gray) !important;
     background-color: var(--col-gray-neutral) !important;
 }
@@ -172,7 +172,7 @@ section.left-sidebar > .user-profile {
 }
 
 section.left-sidebar > .user-profile > .avatar {
-    margin-right: 2.5rem;
+    margin-right: 1.5rem;
 }
 
 section.left-sidebar > .user-profile > .avatar > img {
@@ -408,6 +408,12 @@ section.empty-layout .search {
     display: inline-block;
     position: relative;
     white-space: nowrap;
+}
+
+.toggle-switch-wrap[disabled],
+.toggle-switch-wrap.disabled {
+    pointer-events: none;
+    opacity: 0.5;
 }
 
 .toggle-switch {
@@ -904,6 +910,10 @@ section.empty-layout .top_search .form-control {
     min-width: 14rem;
 }
 
+.dropdown-menu.mw-auto {
+    min-width: auto;
+}
+
 .open > .dropdown-menu {
     display: none !important;
 }
@@ -932,8 +942,6 @@ section.empty-layout .top_search .form-control {
 
 .badge.badge-circle {
     border-radius: 50%;
-    width: 38px;
-    height: 38px;
     min-width: 38px;
     min-height: 38px;
     display: flex;
@@ -944,6 +952,15 @@ section.empty-layout .top_search .form-control {
 
 .badge.badge-circle > i {
     font-size: 1.65em;
+}
+
+.badge.badge-circle.badge-sm {
+    min-width: 28px;
+    min-height: 28px;
+}
+
+.badge.badge-circle.badge-sm > i {
+    font-size: 1.25em;
 }
 
 .badge.badge-info {
@@ -1021,3 +1038,49 @@ section.empty-layout .top_search .form-control {
 }
 
 /************ MODAL END ************/
+
+/************ CARD START ************/
+.card {
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.3);
+}
+
+.card-header {
+    min-height: 52px;
+}
+/************ CARD END ************/
+
+/************ WIDGET CARD START ************/
+
+.widget-card {
+    border: unset;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.widget-card .icon-container {
+    min-width: 78px;
+    display: flex;
+    color: var(--col-white);
+}
+
+.widget-card .icon-container > i {
+    margin: auto;
+    font-size: 32px;
+}
+
+.widget-card .icon-container.icon-success {
+    background-color: var(--col-success);
+}
+
+.widget-card .icon-container.icon-violet {
+    background-color: var(--col-violet);
+}
+
+.widget-card .icon-container.icon-picton {
+    background-color: var(--col-picton-blue);
+}
+
+.widget-card .icon-container.icon-primary {
+    background-color: var(--col-dark-grey);
+}
+/************ WIDGET CARD END ************/

@@ -31,9 +31,6 @@ return [
             'application/json' => Response::FORMAT_JSON,
             'application/xml' => Response::FORMAT_XML,
         ],
-        'languages' => [
-            'en',
-        ],
     ]],
     'controllerNamespace' => 'api\controllers',
     'modules' => [
@@ -64,26 +61,6 @@ return [
         ],
     ],
     'components' => [
-        'i18n' => [
-            'translations' => [
-                'app*' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    'basePath' => '@common/messages',
-                    'sourceLanguage' => 'en',
-                    'fileMap' => [
-                        'app' => 'app.php',
-                    ],
-                ],
-                'modules/oauth2/*' => [
-                    'class' => \yii\i18n\PhpMessageSource::class,
-                    'basePath' => '@common/messages',
-                    'sourceLanguage' => 'en',
-                    'fileMap' => [
-                        'common' => 'common.php',
-                    ],
-                ]
-            ],
-        ],
         'user' => [
             'class' => \common\components\WebUser::class,
             'identityClass' => 'api\models\User',
@@ -115,7 +92,7 @@ return [
                     $data = [];
                     if (!$response->isSuccessful) {
                         $data['success'] = false;
-                        $data['code'] = ArrayHelper::getValue($response->data, 'status', 200);
+                        $data['code'] = ArrayHelper::getValue($response, 'statusCode', $response);
                         $data['errors'] = [ArrayHelper::getValue($response->data, 'message')];
                     } else {
                         $data = $response->data;

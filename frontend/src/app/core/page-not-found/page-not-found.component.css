@@ -1,3 +1,7 @@
+body {
+  background: var(--col-secondary);
+}
+
 .page-not-found {
   margin-top: 5%;
   margin-bottom: 10%;

@@ -41,7 +41,7 @@ class ProductVariant extends ActiveRecord
     {
         return [
             [['id'], 'integer'],
-            [['name', 'sku', 'quantity', 'price'], 'required'],
+            [['name', 'price'], 'required'],
             [['product_id', 'quantity', 'order', 'created_at', 'created_by', 'updated_at', 'updated_by', 'is_deleted'], 'integer'],
             [['price'], 'number'],
             [['name', 'sku'], 'string', 'max' => 255],
@@ -58,7 +58,7 @@ class ProductVariant extends ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'product_id' => Yii::t('app', 'Product ID'),
             'name' => Yii::t('app', 'Name'),
-            'sku' => Yii::t('app', 'Sku'),
+            'sku' => Yii::t('app', 'SKU'),
             'quantity' => Yii::t('app', 'Quantity'),
             'price' => Yii::t('app', 'Price'),
             'order' => Yii::t('app', 'Order'),
@@ -67,6 +67,16 @@ class ProductVariant extends ActiveRecord
             'updated_at' => Yii::t('app', 'Updated At'),
             'updated_by' => Yii::t('app', 'Updated By'),
             'is_deleted' => Yii::t('app', 'Is Deleted'),
+        ];
+    }
+
+    public function fields()
+    {
+        return [
+            'id',
+            'name',
+            'sku',
+            'price'
         ];
     }
 

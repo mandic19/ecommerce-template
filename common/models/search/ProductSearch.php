@@ -72,6 +72,7 @@ class ProductSearch extends Product
 
     protected function getSort() {
         return [
+            'defaultOrder' => ['order' => SORT_ASC],
             'attributes' => [
                 'product' => [
                     'asc' => ['product.name' => SORT_ASC],
@@ -96,7 +97,11 @@ class ProductSearch extends Product
                 'active' => [
                     'asc' => ['product.is_active' => SORT_ASC],
                     'desc' => ['product.is_active' => SORT_DESC],
-                ]
+                ],
+                'order' => [
+                    'asc' => ['product.order' => SORT_ASC],
+                    'desc' => ['product.order' => SORT_DESC],
+                ],
             ],
         ];
     }

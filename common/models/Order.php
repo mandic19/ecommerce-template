@@ -3,8 +3,12 @@
 namespace common\models;
 
 use common\components\orm\ActiveRecord;
+use common\helpers\BaseHelper;
+use common\helpers\CountryHelper;
+use common\helpers\EmailHelper;
 use Yii;
 use yii\db\ActiveQuery;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "order".
@@ -41,12 +45,19 @@ use yii\db\ActiveQuery;
  */
 class Order extends ActiveRecord
 {
+    protected static $_i18nCategories = [
+        'bs-BS' => 'app/feminine'
+    ];
+
     const STATUS_PENDING = 1;
     const STATUS_PROCESSING = 2;
     const STATUS_COMPLETED = 3;
     const STATUS_FAILED = 4;
     const STATUS_CANCELLED = 5;
     const STATUS_REFUNDED = 6;
+
+    const SCENARIO_UPDATE_STATUS = 'update-status';
+    const SCENARIO_ORDER_UPDATE = 'order-update';
 
     /**
      * {@inheritdoc}
@@ -68,10 +79,10 @@ class Order extends ActiveRecord
             [['code', 'delivery_phone'], 'string', 'max' => 45],
             [['currency'], 'string', 'max' => 3],
             [['delivery_first_name', 'delivery_last_name', 'delivery_address', 'delivery_city', 'delivery_zip', 'delivery_country', 'delivery_notes', 'customer_ip_address', 'customer_user_agent'], 'string', 'max' => 255],
-            [['status'],  'in', 'range' => [
+            [['status'], 'in', 'range' => [
                 self::STATUS_PENDING, self::STATUS_PROCESSING, self::STATUS_COMPLETED, self::STATUS_CANCELLED, self::STATUS_FAILED, self::STATUS_REFUNDED
             ]],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['user_id'], 'exist', 'targetRelation' => 'user'],
         ];
     }
 
@@ -99,7 +110,7 @@ class Order extends ActiveRecord
             'delivery_country' => Yii::t('app', 'Delivery Country'),
             'delivery_phone' => Yii::t('app', 'Delivery Phone'),
             'delivery_notes' => Yii::t('app', 'Delivery Notes'),
-            'customer_ip_address' => Yii::t('app', 'Customer Ip Address'),
+            'customer_ip_address' => Yii::t('app', 'Customer IP Address'),
             'customer_user_agent' => Yii::t('app', 'Customer User Agent'),
             'request' => Yii::t('app', 'Request'),
             'created_at' => Yii::t('app', 'Created At'),
@@ -110,8 +121,72 @@ class Order extends ActiveRecord
         ];
     }
 
-    public function getTotalOrderItems() {
+    public function scenarios()
+    {
+        return ArrayHelper::merge(parent::scenarios(), [
+            self::SCENARIO_UPDATE_STATUS => ['status'],
+            self::SCENARIO_ORDER_UPDATE => [
+                'delivery_first_name', 'delivery_last_name', 'delivery_address', 'delivery_city', 'delivery_zip', 'delivery_country', 'delivery_phone', 'delivery_notes'
+            ]
+        ]);
+    }
+
+    public function fields()
+    {
+        $fields = parent::fields();
+
+        $fields['order_items'] = function () {
+            return $this->orderItems;
+        };
+
+        unset($fields['user_id']);
+        unset($fields['customer_ip_address']);
+        unset($fields['customer_user_agent']);
+        unset($fields['request']);
+        unset($fields['created_at']);
+        unset($fields['created_by']);
+        unset($fields['updated_at']);
+        unset($fields['updated_by']);
+        unset($fields['is_deleted']);
+
+        return $fields;
+    }
+
+    public function getFormattedDeliveryAddress()
+    {
+        $cityInfoArray = [$this->delivery_zip, $this->delivery_city];
+        $cityInfo = BaseHelper::formatToCharSeparatedString($cityInfoArray, ' ');
+
+        $items = [$this->delivery_address, $cityInfo,];
+
+        if ($this->delivery_country) {
+            $items[] = CountryHelper::getNameByCode($this->delivery_country);
+        }
+
+        return BaseHelper::formatToCharSeparatedString($items, ',<br>');
+    }
+
+    public function getCustomerFullName()
+    {
+        $nameArray = [$this->delivery_first_name, $this->delivery_last_name];
+        return BaseHelper::formatToCharSeparatedString($nameArray, ' ');
+    }
+
+    public function getTotalOrderItems()
+    {
         return $this->getOrderItems()->count();
+    }
+
+    public function sendNewOrderEmail()
+    {
+        return EmailHelper::sendMessage(
+            ['html' => 'new-order'],
+            Yii::$app->params['admin.email'],
+            Yii::t("app", "You have a new order {code}", [
+                'code' => "#{$this->code}"
+            ]),
+            ['model' => $this]
+        );
     }
 
     /**
@@ -131,6 +206,6 @@ class Order extends ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::className(), ['id' => 'user_id'])->onCondition([]);
     }
 }

@@ -1,0 +1,61 @@
+<div id="cart" class="card mt-4 cart-card">
+  <div class="card-header bg-deep-blue text-white text-center">
+    <h4 class="my-1">
+      <i class="fa fa-shopping-cart me-2"></i>
+      {{'base.cart' | translate}}
+    </h4>
+  </div>
+  <div class="card-body">
+    <div *ngIf="!checkoutActive">
+      <div *ngFor="let item of items" class="cart-item">
+        <div class="row align-items-center">
+          <div class="col-8">
+            {{item.quantity}} x {{item.name}}
+          </div>
+          <div class="col-3 text-end text-nowrap">
+            {{(item.price * item.quantity) | currency}}
+          </div>
+          <div class="col-1 text-end">
+        <span (click)="removeFromCart(item)"
+              class="removeBtn"
+              title="Remove from cart"
+        >
+          <i class="fa fa-times-circle"></i>
+        </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="items.length > 0" class="cart-total">
+      {{'base.total' | translate}}: {{total | currency}}
+    </div>
+    <ng-container *ngIf="!isCheckoutActive()">
+      <div *ngIf="items.length < 1" class="cart-empty">
+        {{'cart.empty' | translate}}
+      </div>
+      <div *ngIf="showToggleCheckout()" class="cart-checkout">
+        <button class="btn btn-primary px-5" (click)="toggleCheckout()">
+          {{'cart.checkout' | translate}}
+        </button>
+      </div>
+    </ng-container>
+    <div *ngIf="isCheckoutActive()">
+      <ecm-checkout
+        (backClicked)='toggleCheckout()'
+        (checkoutCompleted)="onOrderCompleted()"
+        [items]="items"
+      >
+      </ecm-checkout>
+    </div>
+  </div>
+  <div *ngIf="!isBusinessHour()" class="card-footer text-center">
+    <small>
+      {{'cart.closed' | translate}}
+    </small>
+  </div>
+  <div class="card-footer text-center">
+    <small>
+      {{'cart.minOrderTotalMsg' | translate: {"param": minOrderTotal + "KM"} }}
+    </small>
+  </div>
+</div>

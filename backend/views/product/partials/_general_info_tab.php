@@ -40,13 +40,10 @@ use yii\widgets\ActiveForm;
                     ],
                 ]); ?>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <?= $form->field($model, 'sku')->textInput(); ?>
             </div>
-            <div class="col-md-4">
-                <?= $form->field($model, 'quantity')->textInput(['type' => 'number', 'min' => 0]); ?>
-            </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <?= $form->field($model, 'price')->textInput(); ?>
             </div>
             <div class="col-12">

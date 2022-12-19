@@ -3,15 +3,18 @@
 namespace common\models\search;
 
 use common\helpers\SearchHelper;
+use common\helpers\TimeHelper;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\Order;
+use yii\db\ActiveQuery;
 
 /**
  * OrderSearch represents the model behind the search form of `common\models\Order`.
  */
 class OrderSearch extends Order
 {
+    public $showTodayOrders = false;
     public $q;
 
     /**
@@ -61,6 +64,14 @@ class OrderSearch extends Order
             return $dataProvider;
         }
 
+        if($this->showTodayOrders) {
+            $todayDate = new \DateTime('today');
+
+            $query->andFilterWhere([
+                '>=', 'order.created_at', $todayDate->getTimestamp()
+            ]);
+        }
+
         $query->andFilterWhere([
             'user_id' => $this->user_id
         ]);
@@ -83,6 +94,9 @@ class OrderSearch extends Order
 
     protected function getSort() {
         return [
+            'defaultOrder' => [
+                "order" => SORT_DESC
+            ],
             'attributes' => [
                 'order' => [
                     'asc' => ["order.created_at" => SORT_ASC],
@@ -106,8 +120,31 @@ class OrderSearch extends Order
                         'delivery_zip' => SORT_DESC
                     ],
                 ],
-                'total'
+                'subtotal',
+                'total_tax',
+                'total',
             ],
         ];
+    }
+
+    public function getPendingOrdersCount(ActiveQuery $query) {
+        $q = clone($query);
+        return $q->andWhere(['order.status' => self::STATUS_PENDING])->count();
+    }
+
+    public function getProcessingOrdersCount(ActiveQuery $query) {
+        $q = clone($query);
+        return $q->andWhere(['order.status' => self::STATUS_PROCESSING])->count();
+    }
+
+    public function getCompletedOrdersCount(ActiveQuery $query) {
+        $q = clone($query);
+        return $q->andWhere(['order.status' => self::STATUS_COMPLETED])->count();
+    }
+
+    public function getOrdersTotalSum(ActiveQuery $query) {
+        $q = clone($query);
+
+        return $q->sum('total');
     }
 }

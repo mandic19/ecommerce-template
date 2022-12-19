@@ -8,14 +8,13 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 /* @var $gridId string */
-/* @var $pjaxId string */
 /* @var $dataProvider ActiveDataProvider */
+/* @var $pjaxId string */
 
 ?>
 
 <?= TreeGrid::widget([
     'id' => $gridId,
-    'pjaxId' => $pjaxId,
     'dataProvider' => $dataProvider,
     'keyColumnName' => 'id',
     'parentColumnName' => 'parent_category_id',
@@ -43,7 +42,43 @@ use yii\helpers\Url;
 
                 return "{$img} {$model->name}";
             },
-            'contentOptions' => ['class' => 'text-nowrap']
+            'contentOptions' => ['class' => 'text-nowrap', 'style' => 'width:90%;']
+        ],
+        [
+            'label' => Yii::t('app', 'Active'),
+            'attribute' => 'active',
+            'format' => 'raw',
+            'contentOptions' => ['style' => 'width:10%;'],
+            'value' => function (ProductCategory $model) use ($pjaxId) {
+                $input = Html::activeInput('checkbox', $model, "[{$model->id}]is_active", [
+                    'checked' => $model->is_active === ProductCategory::STATUS_ACTIVE
+                ]);
+                $label = Html::label('', Html::getInputId($model, "[{$model->id}]is_active"));
+
+                $content =
+                    "<div class='toggle-switch-wrap'>
+                            <span class='toggle-switch toggle-switch-reverse'>
+                                {$input}
+                                {$label}
+                            </span>
+                        </div>";
+
+                $action = $model->is_active === ProductCategory::STATUS_ACTIVE ?
+                    Yii::t('app', 'deactivate') :
+                    Yii::t('app', 'activate');
+
+                return Html::tag('span', $content, [
+                    'class' => 'btn-control-confirm',
+                    'data-msg' => Yii::t('app', "Are you sure you want to {:action} category: {:category}?", [
+                        ':action' => $action,
+                        ':category' => $model->name
+                    ]),
+                    'data-url' => Url::to(['product-category/toggle-status', 'id' => $model->id]),
+                    'data-json-response' => 1,
+                    'data-loader' => 0,
+                    'data-pjax-id' => $pjaxId
+                ]);
+            }
         ],
         [
             'class' => 'yii\grid\ActionColumn',
@@ -54,6 +89,7 @@ use yii\helpers\Url;
 
                     return Html::tag('span', '<i class="fa fa-wrench"></i>', [
                         'data-href' => $url,
+                        'data-size' => 'modal-lg',
                         'class' => 'btn btn-sm btn-round btn-white btn-just-icon btn-loading btn-modal-control mr-2',
                         'title' => Yii::t('app', 'Update')
                     ]);
@@ -65,7 +101,7 @@ use yii\helpers\Url;
                     return Html::tag('span', '<i class="fa fa-trash"></i>', [
                         'data-href' => $url,
                         'data-confirm-msg' => $msg,
-                        'data-grid' => $pjaxId,
+                        'data-pjax-id' => $pjaxId,
                         'data-type' => 'post',
                         'class' => 'btn btn-sm btn-round btn-white btn-just-icon btn-control-pjax-action',
                         'title' => Yii::t('app', 'Delete')

@@ -2,7 +2,6 @@
 
 namespace api\models;
 
-use common\models\User as UserAlias;
 use filsh\yii2\oauth2server\Module;
 use OAuth2\Storage\UserCredentialsInterface;
 use Yii;
@@ -90,7 +89,7 @@ class User extends \common\models\User implements UserCredentialsInterface
      * @return array|ActiveRecord|null
      *
      */
-    protected function findByUsernameOrEmail($key, $onlyActive = false)
+    public static function findByUsernameOrEmail($key, $onlyActive = false)
     {
         $query = static::find()->where(['OR', ['username' => $key], ['email' => $key]]);
 

@@ -24,6 +24,7 @@ use yii\web\IdentityInterface;
  * @property string $email
  * @property string $auth_key
  * @property integer $status
+ * @property integer $is_staff
  * @property string $first_name
  * @property string $last_name
  * @property string $address
@@ -43,8 +44,14 @@ use yii\web\IdentityInterface;
  */
 class User extends ActiveRecord implements IdentityInterface
 {
+    protected static $_i18nCategories = [
+        'bs-BS' => 'app/masculine'
+    ];
+
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
+
+    const INDEX_GRID_ID = 'user-index-grid';
 
     private $_role;
 
@@ -74,12 +81,42 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['email', 'first_name', 'last_name', 'username'], 'required'],
+            [['email', 'username'], 'required'],
             [['first_name', 'last_name', 'username', 'role', 'address', 'city', 'country', 'zip', 'phone'], 'string'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE]],
             [['email'], 'email'],
             [['email', 'username'], 'checkUniqueness']
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => Yii::t('app', 'ID'),
+            'email' => Yii::t('app', 'Email'),
+            'username' => Yii::t('app', 'Username'),
+            'password_hash' => Yii::t('app', 'Password Hash'),
+            'password_reset_token' => Yii::t('app', 'Password Reset Token'),
+            'verification_token' => Yii::t('app', 'Verification Token'),
+            'auth_key' => Yii::t('app', 'Auth Key'),
+            'status' => Yii::t('app', 'Status'),
+            'is_staff' => Yii::t('app', 'Is Staff'),
+            'first_name' => Yii::t('app', 'First Name'),
+            'last_name' => Yii::t('app', 'Last Name'),
+            'address' => Yii::t('app', 'Address'),
+            'city' => Yii::t('app', 'City'),
+            'country' => Yii::t('app', 'Country'),
+            'zip' => Yii::t('app', 'Zip'),
+            'phone' => Yii::t('app', 'Phone'),
+            'created_at' => Yii::t('app', 'Created At'),
+            'created_by' => Yii::t('app', 'Created By'),
+            'updated_at' => Yii::t('app', 'Updated At'),
+            'updated_by' => Yii::t('app', 'Updated By'),
+            'is_deleted' => Yii::t('app', 'Is Deleted'),
         ];
     }
 
@@ -141,7 +178,7 @@ class User extends ActiveRecord implements IdentityInterface
      * @return array|\yii\db\ActiveRecord|null
      *
      */
-    protected function findByUsernameOrEmail($key, $onlyActive = false)
+    public static function findByUsernameOrEmail($key, $onlyActive = false)
     {
         $query = static::find()->where(['OR', ['username' => $key], ['email' => $key]]);
 

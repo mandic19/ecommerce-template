@@ -1,9 +1,18 @@
 <?php
 return [
-    'adminEmail' => 'admin@example.com',
-    'supportEmail' => 'support@example.com',
-    'senderEmail' => 'noreply@example.com',
-    'senderName' => 'Example.com mailer',
+    'admin.email' => 'marko.mandic.etf@gmail.com',
+    'support.email' => 'noreply@example.com',
+    'contact.email' => 'info@example.com',
+    'deliveryCity' => 'Istočno Sarajevo',
+    'deliveryCountry' => 'BA',
+    'currency' => 'BAM',
+    'tax' => 17,
+    'minOrderTotalAmount' => 4,
+    'businessDays' => [0, 1, 2, 3, 4, 5, 6],
+    'businessHours' => [
+        'from' => 8,
+        'to' => 13
+    ],
     'user.passwordResetTokenExpire' => 3600,
     'user.passwordMinLength' => 8,
     'pattern' => [
@@ -11,6 +20,7 @@ return [
         'digit' => '/[0-9]/',
         'specialChar' => '/[^A-Za-z0-9\s]/'
     ],
+    'orderNoPrefix' => 'ORD-NO-',
     'resourceManager' => [
         's3.path.prefix' => 'local',
         's3.file.prefix' => '',

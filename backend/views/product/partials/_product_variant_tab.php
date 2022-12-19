@@ -27,7 +27,6 @@ use yii\widgets\ActiveForm;
     'formFields' => [
         'name',
         'sku',
-        'quantity',
         'price',
     ],
 ]); ?>
@@ -50,11 +49,8 @@ use yii\widgets\ActiveForm;
                 <div class="card-body">
                     <?= !$productVariant->isNewRecord ? Html::activeHiddenInput($productVariant, "[{$index}]id") : null ?>
                     <div class="row">
-                        <div class="col-lg-8">
+                        <div class="col-lg-12">
                             <?= $form->field($productVariant, "[{$index}]name")->textInput(['maxlength' => true]) ?>
-                        </div>
-                        <div class="col-lg-4">
-                            <?= $form->field($productVariant, "[{$index}]quantity")->textInput(['type' => 'number', 'min' => 0]) ?>
                         </div>
                         <div class="col-lg-8">
                             <?= $form->field($productVariant, "[{$index}]sku")->textInput(['maxlength' => true]) ?>

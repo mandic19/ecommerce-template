@@ -1,0 +1,28 @@
+<ecm-header [categories]="categories"></ecm-header>
+<section class="container">
+  <div class="row">
+    <div class="col-lg-7">
+      <div class="card mt-4">
+        <div class="card-body text-center p-2">
+          <h5 class="m-0">{{'base.workingHours' | translate: {"param": '08:00h - 22:00h'} }}</h5>
+        </div>
+      </div>
+      <div *ngFor="let category of categories">
+        <ecm-category-card
+          [category]="category"
+          (productThumbClicked)="openImageViewer($event)"
+        ></ecm-category-card>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <ecm-cart></ecm-cart>
+    </div>
+  </div>
+  <ecm-image-viewer
+    *ngIf="showImageViewer"
+    [imageIds]="imageViewerImageIds"
+    (closeClicked)="closeImageViewer()"
+  >
+  </ecm-image-viewer>
+</section>
+<ecm-footer></ecm-footer>

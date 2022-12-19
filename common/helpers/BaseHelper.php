@@ -5,6 +5,7 @@ namespace common\helpers;
 use common\components\image\ImageSpecification;
 use common\models\Image;
 use Yii;
+use yii\bootstrap4\Breadcrumbs;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -12,7 +13,6 @@ class BaseHelper
 {
     public static function formatToCharSeparatedString($array, $separator = ', ')
     {
-
         $array = array_filter($array, function ($value) {
             return !empty($value);
         });
@@ -69,7 +69,7 @@ class BaseHelper
                 <li>8 ". Yii::t('app', 'characters') ."</li>
                 <li>1 ". Yii::t('app', 'letter') ."</li>
                 <li>1 ". Yii::t('app', 'number') ."</li>
-                <li>1 ". Yii::t('app', 'special characters') ."</li>
+                <li>1 ". Yii::t('app', 'special character') ."</li>
             </ul>";
 
         return Html::tag('i', '', [
@@ -78,6 +78,17 @@ class BaseHelper
             'data-placement' => 'top',
             'data-html' => 'true',
             'title' => $tooltipContent
+        ]);
+    }
+
+    public static function renderBreadcrumbs($links, $hasHomeLink) {
+        return Breadcrumbs::widget([
+            'links' => $links,
+            'options' => ['class' => 'py-0 my-auto d-none d-md-flex'],
+            'homeLink' => $hasHomeLink ? [
+                'label' => Yii::t('app', 'Home'),
+                'url' => Yii::$app->homeUrl,
+            ] : false
         ]);
     }
 }

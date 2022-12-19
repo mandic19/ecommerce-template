@@ -139,7 +139,7 @@ class SwaggerController extends Controller
      *              @SWG\Property(property="country", type="string", default="USA"),
      *              @SWG\Property(property="zip", type="string", default="10003"),
      *              @SWG\Property(property="password", type="string"),
-     *              @SWG\Property(property="password_repeat", type="string"),
+     *              @SWG\Property(property="confirm_password", type="string"),
      *          ),
      *	   ),
      *     @SWG\Response(

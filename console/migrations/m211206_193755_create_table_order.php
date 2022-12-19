@@ -38,7 +38,7 @@ class m211206_193755_create_table_order extends Migration
             'updated_at' => $this->integer(),
             'updated_by' => $this->integer(),
             'is_deleted' => $this->tinyInteger()->defaultValue(0)
-        ]);
+        ], 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB');
     }
 
     /**

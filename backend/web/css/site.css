@@ -80,3 +80,38 @@
 .cursor-pointer {
     cursor: pointer;
 }
+
+.line-order-item {
+    min-height: 40px;
+}
+
+.line-order-item .image > img {
+    background: #eee;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-right: 20px;
+    object-fit: cover;
+    width: 80px;
+}
+
+.line-order-item .name {
+    margin-right: auto;
+}
+
+.line-order-item .total {
+    min-width: 100px;
+    padding-left: 8px;
+}
+
+.line-order-item .quantity {
+    padding-left: 16px;
+}
+
+.line-order-item .quantity, .line-order-item .total {
+    text-align: right;
+    white-space: nowrap;
+}
+
+.cb-padding {
+    padding: 1.25rem;
+}

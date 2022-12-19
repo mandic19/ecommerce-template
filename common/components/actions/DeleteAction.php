@@ -12,7 +12,6 @@ use common\components\orm\ActiveRecord;
  *
  * @author 2amigOS! <http://2amigos.us/>
  */
-
 class DeleteAction extends ItemAction
 {
     /**
@@ -59,10 +58,18 @@ class DeleteAction extends ItemAction
 
         if ($this->ajaxResponse) {
             \Yii::$app->response->format = Response::FORMAT_JSON;
+            $i18nCategory = $model->getI18nCategory(\Yii::$app->language);
 
             return [
                 'success' => true,
-                'message' => $this->responseMessage?: Yii::t('app', '{:model} successfully deleted!', [':model' => $model->getPublicName()])
+                'message' => $this->responseMessage ?: ($i18nCategory ?
+                    Yii::t($i18nCategory, '{:model} successfully deleted!', [
+                        ':model' => $model->getPublicName()
+                    ]) :
+                    Yii::t('app', '{:model} successfully deleted!', [
+                        ':model' => $model->getPublicName()
+                    ])
+                )
             ];
         }
 

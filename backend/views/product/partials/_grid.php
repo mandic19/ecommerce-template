@@ -1,6 +1,7 @@
 <?php
 
 use common\components\image\ImageSpecification;
+use common\helpers\PriceHelper;
 use common\helpers\RbacHelper;
 use common\models\Product;
 use common\widgets\grid\GridView;
@@ -12,12 +13,10 @@ use yii\helpers\Url;
 /* @var $gridId string */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-
 ?>
 
 <?= GridView::widget([
     'id' => $gridId,
-    'pjaxId' => $pjaxId,
     'dataProvider' => $dataProvider,
     'enableAdd' => true,
     'addButtonOption' => [
@@ -50,13 +49,18 @@ use yii\helpers\Url;
         [
             'label' => Yii::t('app', 'Category'),
             'attribute' => 'category',
-            'value' => function(Product $model) {
+            'value' => function (Product $model) {
                 return !empty($model->category) ? $model->category->name : null;
             }
         ],
-        'sku',
-        'quantity',
-        'price',
+//        'sku',
+//        'quantity',
+        [
+            'attribute' => 'price',
+            'value' => function (Product $model) {
+                return PriceHelper::format($model->price);
+            }
+        ],
         [
             'label' => Yii::t('app', 'Active'),
             'attribute' => 'active',
@@ -76,10 +80,10 @@ use yii\helpers\Url;
                         </div>";
 
                 $action = $model->is_active === Product::STATUS_ACTIVE ?
-                    Yii::t('app', 'activate') :
-                    Yii::t('app', 'deactivate');
+                    Yii::t('app', 'deactivate') :
+                    Yii::t('app', 'activate');
 
-                return Html::tag('div', $content, [
+                return Html::tag('span', $content, [
                     'class' => 'btn-control-confirm',
                     'data-msg' => Yii::t('app', "Are you sure you want to {:action} product: {:product}?", [
                         ':action' => $action,
@@ -90,7 +94,8 @@ use yii\helpers\Url;
                     'data-loader' => 0,
                     'data-pjax-id' => $pjaxId
                 ]);
-            }],
+            }
+        ],
         [
             'class' => 'yii\grid\ActionColumn',
             'template' => '<div class="d-flex justify-content-end">{update}{delete}</div>',
@@ -114,11 +119,13 @@ use yii\helpers\Url;
                     }
 
                     $url = Url::to(['/product/delete', 'id' => $model->id]);
-                    $msg = Yii::t('app', 'Are you sure you want to delete product: ') . $model->name;
+                    $msg = Yii::t('app', 'Are you sure you want to delete product: {:name}', [
+                        ':name' => $model->name
+                    ]);
                     return Html::tag('span', '<i class="fa fa-trash"></i>', [
                         'data-href' => $url,
                         'data-confirm-msg' => $msg,
-                        'data-grid' => $pjaxId,
+                        'data-pjax-id' => $pjaxId,
                         'data-type' => 'post',
                         'class' => 'btn btn-sm btn-round btn-white btn-just-icon btn-control-pjax-action',
                         'title' => Yii::t('app', 'Delete')

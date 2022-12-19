@@ -3,6 +3,7 @@
 namespace api\components\web;
 
 use api\components\actions\CreateAction;
+use api\components\actions\SearchAction;
 use api\components\actions\UpdateAction;
 use api\components\filters\OAuth2AccessFilter;
 use api\extensions\CorsFilter;
@@ -95,7 +96,7 @@ abstract class BaseApiController extends ActiveController
     {
         return [
             'index' => [
-                'class' => IndexAction::class,
+                'class' => SearchAction::class,
                 'modelClass' => $this->modelClass,
                 'checkAccess' => [$this, 'checkAccess'],
             ],

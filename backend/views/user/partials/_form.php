@@ -3,18 +3,24 @@
 use common\helpers\BaseHelper;
 use common\helpers\CountryHelper;
 use common\helpers\RbacHelper;
+use common\models\User;
 use kartik\select2\Select2;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\ActiveForm;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\User */
-/* @var $form yii\widgets\ActiveForm */
+/* @var $this View */
+/* @var $model User */
+/* @var $form ActiveForm */
 
 ?>
 
 <div class="user-form">
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'options' => [
+            'data-grid-id' => User::INDEX_GRID_ID,
+        ]
+    ]); ?>
     <div class="row">
         <div class="col-md-6 col-sm-12">
             <?= $form->field($model, 'first_name')->textInput(['maxlength' => true]) ?>
@@ -23,12 +29,18 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'last_name')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-6 col-sm-12">
-            <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'username')->textInput([
+                'maxlength' => true,
+                'disabled' => !$model->isNewRecord
+            ]) ?>
         </div>
         <div class="col-md-6 col-sm-12">
             <?= $form->field($model, 'role')->widget(Select2::class, [
                 'data' => RbacHelper::ROLES,
-                'options' => ['value' => !$model->isNewRecord ? $model->getRole() : null]
+                'options' => [
+                    'value' => !$model->isNewRecord ? $model->getRole() : null,
+                    'disabled' => !$model->isNewRecord
+                ]
             ]) ?>
         </div>
         <div class="col-md-6 col-sm-12">
@@ -57,7 +69,7 @@ use yii\widgets\ActiveForm;
                 <?= $form->field($model, 'password')->passwordInput()->label($passwordLabel) ?>
             </div>
             <div class="col-md-6 col-sm-12">
-                <?= $form->field($model, 'password_repeat')->passwordInput() ?>
+                <?= $form->field($model, 'confirm_password')->passwordInput() ?>
             </div>
         <?php endif; ?>
     </div>

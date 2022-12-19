@@ -34,6 +34,10 @@ use yii\helpers\ArrayHelper;
  */
 class Product extends ActiveRecord
 {
+    protected static $_i18nCategories = [
+        'bs-BS' => 'app/masculine'
+    ];
+
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
 
@@ -51,7 +55,7 @@ class Product extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'category_id', 'price', 'quantity'], 'required'],
+            [['name', 'category_id', 'price'], 'required'],
             [['price'], 'number', 'min' => 0, 'max' => 99999999.99],
             [['quantity'], 'integer', 'min' => 0],
             [['quantity'], 'default', 'value' => 0],
@@ -60,7 +64,7 @@ class Product extends ActiveRecord
             [['category_id', 'cover_image_id', 'order', 'created_at', 'created_by', 'updated_at', 'updated_by', 'is_deleted'], 'integer'],
             [['cover_image_id'], 'exist', 'skipOnError' => true, 'targetClass' => Image::className(), 'targetAttribute' => ['cover_image_id' => 'id']],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductCategory::className(), 'targetAttribute' => ['category_id' => 'id']],
-            [['is_active'], 'default', 'value' => static::STATUS_INACTIVE],
+            [['is_active'], 'default', 'value' => static::STATUS_ACTIVE],
             ['is_active', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE]],
             [['sku'], 'unique']
         ];
@@ -88,6 +92,27 @@ class Product extends ActiveRecord
             'updated_at' => Yii::t('app', 'Updated At'),
             'updated_by' => Yii::t('app', 'Updated By'),
             'is_deleted' => Yii::t('app', 'Is Deleted')
+        ];
+    }
+
+    public function fields()
+    {
+        return [
+            'id',
+            'category_id',
+            'cover_image_id',
+            'name',
+            'sku',
+            'price',
+            'short_description',
+            'variants' => function() {
+                return $this->productVariants;
+            },
+            'additional_image_ids' => function() {
+                return array_map(function (ProductImage $productImage) {
+                    return $productImage->image_id;
+                }, $this->productImages);
+            }
         ];
     }
 
