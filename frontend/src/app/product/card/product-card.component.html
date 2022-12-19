@@ -11,7 +11,7 @@
       <div class="d-flex flex-column product-card-content me-3">
         <h5 class="m-0">{{product.name}}</h5>
         <span class="description">{{product.short_description}}</span>
-        <div class="mt-auto pt-1" *ngIf="product.variants.length">
+        <div class="mt-2" *ngIf="product.variants.length">
           <select
             #productVariantSelect
             (change)='selectVariant(productVariantSelect.value)'
@@ -28,7 +28,7 @@
         </div>
         <h6
           *ngIf="product.variants.length < 1"
-          class="mt-auto pt-1 mb-0">
+          class="mt-2 mb-0">
           {{product.price | currency}}
         </h6>
       </div>
