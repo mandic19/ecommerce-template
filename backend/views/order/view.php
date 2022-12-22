@@ -88,36 +88,46 @@ $orderItemsListId = 'order-items-list-view';
     <div class="col-xl-5">
         <?php Pjax::begin(['id' => $statusCardPjaxId]); ?>
         <div class="card mb-4">
-            <div class="card-body d-flex align-items-center">
-                <h5 class="m-0 mr-2">
-                    <i class="fa fa-tasks mr-1"></i>
-                    <?= Yii::t('app', 'Status') ?>
-                </h5>
-                <?= OrderStatusHelper::getStatusBadge($model->status, [
-                    'class' => "badge badge-circle badge-sm d-block-inline",
-                ]); ?>
-                <div class="btn-group ml-auto">
-                    <?= Html::button(OrderStatusHelper::getLabelById($model->status), [
-                        'class' => 'btn btn-secondary'
-                    ]) ?>
-                    <?= Html::button('', [
-                        'id' => 'status-dropdown',
-                        'class' => 'btn btn-secondary dropdown-toggle',
-                        'data-toggle' => 'dropdown',
-                        'aria-expanded' => false,
-                        'data-reference' => 'parent'
-                    ]) ?>
-                    <div class="dropdown-menu dropdown-menu-right mw-auto" aria-labelledby="status-dropdown">
-                        <?php foreach (OrderStatusHelper::getOptions() as $status => $statusLabel) : ?>
-                            <?php if ($status == $model->status) {
-                                continue;
-                            } ?>
-                            <?= Html::tag('button', $statusLabel, [
-                                'data-href' => Url::to(['order/update-status', 'id' => $model->id, 'status' => $status]),
-                                'data-pjax-id' => $statusCardPjaxId,
-                                'class' => 'dropdown-item btn-control-pjax-action'
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-auto col-md-4 d-flex align-items-center">
+                        <i class="fa fa-tasks mr-1 fa-lg"></i>
+                        <h5 class="m-0 mr-2"><?= Yii::t('app', 'Status') ?></h5>
+                        <?= OrderStatusHelper::getStatusBadge($model->status, [
+                            'class' => "badge badge-circle badge-sm d-block-inline",
+                        ]); ?>
+                    </div>
+
+                    <div class="col-auto col-md-8 text-left text-sm-right">
+                        <?= Html::a("<i class='fa fa-download mr-2'></i>Download Invoice", Url::to(['order/invoice', 'id' => $model->id]), [
+                            'target' => '_blank',
+                            'data-pjax' => 0,
+                            'class' => 'btn btn-secondary my-2 my-sm-0'
+                        ]) ?>
+                        <div class="btn-group my-1 my-sm-0">
+                            <?= Html::button(OrderStatusHelper::getLabelById($model->status), [
+                                'class' => 'btn btn-secondary'
                             ]) ?>
-                        <?php endforeach; ?>
+                            <?= Html::button('', [
+                                'id' => 'status-dropdown',
+                                'class' => 'btn btn-secondary dropdown-toggle',
+                                'data-toggle' => 'dropdown',
+                                'aria-expanded' => false,
+                                'data-reference' => 'parent'
+                            ]) ?>
+                            <div class="dropdown-menu dropdown-menu-right mw-auto" aria-labelledby="status-dropdown">
+                                <?php foreach (OrderStatusHelper::getOptions() as $status => $statusLabel) : ?>
+                                    <?php if ($status == $model->status) {
+                                        continue;
+                                    } ?>
+                                    <?= Html::tag('button', $statusLabel, [
+                                        'data-href' => Url::to(['order/update-status', 'id' => $model->id, 'status' => $status]),
+                                        'data-pjax-id' => $statusCardPjaxId,
+                                        'class' => 'dropdown-item btn-control-pjax-action'
+                                    ]) ?>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -6,6 +6,7 @@ use common\components\actions\SearchAction;
 use common\components\actions\UpdateAction;
 use common\components\actions\ViewAction;
 use common\components\controllers\BaseController;
+use common\helpers\PDFHelper;
 use common\models\Order;
 use common\models\search\OrderItemSearch;
 use common\models\search\OrderSearch;
@@ -14,6 +15,7 @@ use yii\bootstrap4\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\web\ForbiddenHttpException;
 use yii\web\MethodNotAllowedHttpException;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
@@ -35,7 +37,7 @@ class OrderController extends BaseController
                 'class' => ViewAction::class,
                 'modelClass' => $this->modelClass,
                 'modalView' => 'view',
-                'params' => function($action, Order $model) {
+                'params' => function ($action, Order $model) {
                     $searchModel = new OrderItemSearch(['order_id' => $model->id]);
                     return [
                         'model' => $model,
@@ -51,8 +53,9 @@ class OrderController extends BaseController
         ]);
     }
 
-    public function actionUpdateStatus($id, $status) {
-        if(!Yii::$app->request->isAjax) {
+    public function actionUpdateStatus($id, $status)
+    {
+        if (!Yii::$app->request->isAjax) {
             throw new MethodNotAllowedHttpException();
         }
 
@@ -63,7 +66,7 @@ class OrderController extends BaseController
 
         $model->status = $status;
 
-        if(!$model->save()) {
+        if (!$model->save()) {
             return [
                 'success' => false,
                 'message' => 'Order status canno\'t be updated!<br>' . implode('<br>', $model->getFirstErrors()),
@@ -75,5 +78,22 @@ class OrderController extends BaseController
             'success' => true,
             'message' => 'Order status successfully updated!'
         ];
+    }
+
+    public function actionInvoice($id)
+    {
+        /* @var $model Order */
+        $model = Order::findOne($id);
+
+        if (!$model) {
+            throw new NotFoundHttpException('Page not found!');
+        }
+
+        $content = $this->renderPartial('partials/_invoice', [
+            'model' => $model,
+        ]);
+
+        $fileName = "Invoice - {$model->code}.pdf";
+        PDFHelper::generatePDF($content, $fileName);
     }
 }
