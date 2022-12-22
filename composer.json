@@ -28,7 +28,8 @@
         "yiisoft/yii2-jui": "~2.0.0",
         "rmrevin/yii2-fontawesome": "3.7.0",
         "wbraganca/yii2-dynamicform": "dev-master",
-        "hosannahighertech/yii2-oauth2-server": "*"
+        "hosannahighertech/yii2-oauth2-server": "*",
+        "kartik-v/yii2-mpdf": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
