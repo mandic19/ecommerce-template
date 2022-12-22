@@ -80,15 +80,16 @@ use yii\helpers\Url;
                            width="100%">
                         <tr>
                             <td style="width: 50%; padding-right: 20px;" valign="center">
-                                <a href="<?= Yii::$app->params['backendUrl'] ?>" style="outline:none" tabindex="-1" target="_blank">
+                                <a href="<?= Yii::$app->params['backendUrl'] ?>" style="outline:none" tabindex="-1"
+                                   target="_blank">
                                     <img alt="Logo" src="<?= Url::to('/img/logo.png', true) ?>"
                                          style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: none; width: 100%; max-width: 201px; display: block;"
                                          title="Image" width="201"/>
                                 </a>
                             </td>
                             <td style="width: 50%; text-align: right;" valign="center">
-                                <a href="mailto:<?= Yii::$app->params['contact.email']?>">
-                                    <?= Yii::$app->params['contact.email']?>
+                                <a href="mailto:<?= Yii::$app->params['contact']['email'] ?>">
+                                    <?= Yii::$app->params['contact']['email'] ?>
                                 </a>
                             </td>
                         </tr>

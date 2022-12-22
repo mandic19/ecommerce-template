@@ -133,6 +133,7 @@ use yii\helpers\Html;
                         </th>
                     </tr>
                     </thead>
+                    <tbody>
                     <tr>
                         <td valign="top"
                             style="width: 50%;border: 1px solid #dedede;border-collapse: collapse;padding: 15px;">
@@ -150,6 +151,7 @@ use yii\helpers\Html;
                             <?= $model->delivery_phone ?>
                         </td>
                     </tr>
+                    </tbody>
                 </table>
             </td>
         </tr>
