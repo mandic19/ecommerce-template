@@ -247,7 +247,6 @@ section.content-container {
     min-height: 100%;
     height: 100%;
     width: calc(100% - 230px);
-    overflow: hidden auto;
     position: fixed;
     left: 230px;
     transition: 0.4s width, 0.4s left;
@@ -277,9 +276,9 @@ nav .btn-toggle-sidebar:before {
 }
 
 section.content-container .content-body {
-    min-height: calc(100% - 139px);
-    height: auto;
-    margin-bottom: 20px;
+    min-height: calc(100% - 101px);
+    height: calc(100% - 101px);
+    overflow: hidden auto;
 }
 
 section.content-container > .backdrop-box {

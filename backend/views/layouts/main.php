@@ -97,7 +97,7 @@ AppAsset::register($this);
 <!-- content container -->
 <section class="content-container">
     <!-- navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light mb-4">
+    <nav class="navbar navbar-expand-lg navbar-light">
             <span class="btn btn-secondary btn-toggle-sidebar">
             </span>
         <?= BaseHelper::renderBreadcrumbs($breadcrumbParams, $hasHomeLink); ?>
@@ -141,7 +141,7 @@ AppAsset::register($this);
         </ul>
     </nav>
     <!-- /navbar -->
-    <div class="content-body px-3">
+    <div class="content-body p-4">
         <?= $content ?>
     </div>
     <!-- footer container -->
