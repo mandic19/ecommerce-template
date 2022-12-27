@@ -1,19 +1,19 @@
 Ecommerce template app
 ============================
 
-### Description
+## Description
 
 This is a dockerized e-commerce sample project that introduces all the main concepts of a modern e-commerce application.
 The purpose is to create a customizable and extensible template and save me a lot of time on repetitive work in feature projects.
 
-###Technologies used:
+## Technologies used:
 
     ├── FRONTEND                             # Angular 14
     ├── ADMIN PANEL                          # Yii2 PHP Framework
     ├── RESTFUL API                          # Yii2 PHP Framework
     ├── WEBSERVER                            # Nginx
 
-### Directory structure
+## Directory structure
 
     ├── api                                  # Yii2 RESTFUL API application
     ├── backend                              # Yii2 ADMIN PANEL application
@@ -49,7 +49,7 @@ The purpose is to create a customizable and extensible template and save me a lo
     ├── composer.lock
     └── README.md
 
-### Development
+## Development
 
 1. Navigate to a following directory: `cd docker/dev`
 2. Run command: `docker-compose -p ecommerce_template_local up --build`
@@ -60,7 +60,7 @@ The purpose is to create a customizable and extensible template and save me a lo
    - Run `php init` and chose in which environment you want to run it
    - Run `php yii migrate`
 
-### Production
+## Production
 
 1. Navigate to a following directory: `cd docker/prod`
 2. Run command: `docker-compose -p ecommerce_template_prod up --build`
