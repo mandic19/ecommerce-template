@@ -2,7 +2,10 @@
 return [
     'admin.email' => 'marko.mandic.etf@gmail.com',
     'support.email' => 'noreply@example.com',
-    'contact.email' => 'info@example.com',
+    'contact' => [
+        'email' => 'info@example.com',
+        'address' => '4565 Westwood Av New York, NY 10001',
+    ],
     'deliveryCity' => 'Istočno Sarajevo',
     'deliveryCountry' => 'BA',
     'currency' => 'BAM',
