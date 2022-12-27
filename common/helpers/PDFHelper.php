@@ -12,7 +12,7 @@ class PDFHelper
     public static function generatePDF($content, $fileName, $outputDest = 'I', array $options = [])
     {
         $defaultOptions = [
-            'tempDir' => Yii::getAlias("@frontend") . '/runtime/mpdf',
+            'tempDir' => Yii::getAlias("@backend") . '/runtime/mpdf',
             'setAutoTopMargin' => 'stretch',
             'setAutoBottomMargin' => 'stretch',
             'showWatermarkImage' => true,
