@@ -1,22 +1,66 @@
-# Ecommerce Template
-========
+Ecommerce template app
+============================
 
-# Development
+### Description
 
-To install development follow steps below:
+This is a dockerized e-commerce sample project that introduces all the main concepts of a modern e-commerce application.
+The purpose is to create a customizable and extensible template and save me a lot of time on repetitive work.
 
-## In windows:
-1. Clone this project.
-2. Add this at the end of the windows hosts file `127.0.0.1 ecommerce_template.local admin.ecommerce_template.local api.ecommerce_template.local`
-3. Execute `docker-compose up`
-4. Go into the project with `winpty docker-compose exec php-fpm bash` and in the docker container:
-    - Run `apt-get update`
-    - Run `composer install`
-    - Run `php init` and chose in which environment you want to run it
-    - Run `php yii migrate`
+###Technologies used:
 
-5. Go into the project with `winpty docker-compose exec mariadb bash` and in the docker container:
-    - Insert database dump with `mysql -u root -p ecommerce_template_local < dump_name.sql`
+    ├── FRONTEND                             # Angular 14
+    ├── ADMIN PANEL                          # Yii2 PHP Framework
+    ├── RESTFUL API                          # Yii2 PHP Framework
+    ├── WEBSERVER                            # Nginx
 
-6. Start developing.
+### Directory structure
 
+    ├── api                                  # Yii2 RESTFUL API application
+    ├── backend                              # Yii2 ADMIN PANEL application
+    ├── frontend                             # Angular 14 FRONTEND application
+    ├── console                              # Yii2 CONSOLE application
+    ├── common                               # Contains shared portion between api, backend and console application
+    ├── environments                         # Contains environment-based overrides
+    ├── vendor                               # Contains dependent 3rd-party packages
+    ├── docker                               # Docker configuration
+    │   ├── nginx                   
+    │   │   ├── dev              
+    │   │   │   ├── default.config           # nginx default configuration for dev/local environment
+    │   │   ├── prod              
+    │   │   │   ├── default.config           # nginx default configuration for production environment
+    │   ├── php-fpm
+    │   │   │   ├── Dockerfile               # php-fpm container build instructions
+    │   │   │   ├── pho-ini-overrides.ini    # Config for overriding php.ini settings
+    │   ├── docker-database.env              # Development environment db variables
+    │   ├── docker-database-prod.env         # Production environment db variables
+    ├── logs                                 # NGINX access/error logs
+    ├── Dockerfile.prod                      # NGINX container build instructions for production environment
+    ├── docker-compose.yml                   # compose boilerplate file for development environment
+    ├── docker-compose-prod.yml              # compose boilerplate file for production environment
+    ├── composer.json
+    ├── composer.lock
+    └── README.md
+
+### Development
+
+In a project root:
+
+1. Run command: `docker-compose up --build`
+2. Run command: `winpty docker-compose exec api bash` and in the docker container:
+   - Navigate to `application/api` subdirectory
+   - Run `apt-get update`
+   - Run `composer install`
+   - Run `php init` and chose in which environment you want to run it
+   - Run `php yii migrate`
+
+### Production
+
+In a project root:
+
+1. Run command: `docker-compose -f docker-compose-prod.yml up --build`
+2. Run command: `winpty docker-compose exec api bash` and in the docker container:
+   - Navigate to `application/api` subdirectory
+   - Run `apt-get update`
+   - Run `composer install`
+   - Run `php init` and chose in which environment you want to run it
+   - Run `php yii migrate`
