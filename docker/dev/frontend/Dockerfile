@@ -4,9 +4,9 @@ FROM node:16-alpine
 # Set the working directory to /application inside the container
 WORKDIR /application
 # Copy app files
-COPY ./package-lock.json ./
-COPY ./package.json ./
-COPY ./src ./src
+COPY ./frontend/package-lock.json ./
+COPY ./frontend/package.json ./
+COPY ./frontend/src ./src
 # Install dependencies (npm ci makes sure the exact versions in the lockfile gets installed)
 RUN npm install
 # ==== RUN =======
