@@ -4,7 +4,7 @@ Ecommerce template app
 ### Description
 
 This is a dockerized e-commerce sample project that introduces all the main concepts of a modern e-commerce application.
-The purpose is to create a customizable and extensible template and save me a lot of time on repetitive work.
+The purpose is to create a customizable and extensible template and save me a lot of time on repetitive work in feature projects.
 
 ###Technologies used:
 
@@ -22,31 +22,38 @@ The purpose is to create a customizable and extensible template and save me a lo
     ├── common                               # Contains shared portion between api, backend and console application
     ├── environments                         # Contains environment-based overrides
     ├── vendor                               # Contains dependent 3rd-party packages
-    ├── docker                               # Docker configuration
-    │   ├── nginx                   
-    │   │   ├── dev              
-    │   │   │   ├── default.config           # nginx default configuration for dev/local environment
-    │   │   ├── prod              
-    │   │   │   ├── default.config           # nginx default configuration for production environment
-    │   ├── php-fpm
+    ├── docker                               # Dockerization config
+    │   ├── dev
+    │   │   ├── frontend
+    │   │   │   ├── Dockerfile               # frontend container build instructions
+    │   │   ├── nginx                        
+    │   │   │   ├── default.config           # Nginx default configuration
+    │   │   ├── php-fpm
     │   │   │   ├── Dockerfile               # php-fpm container build instructions
     │   │   │   ├── pho-ini-overrides.ini    # Config for overriding php.ini settings
-    │   ├── docker-database.env              # Development environment db variables
-    │   ├── docker-database-prod.env         # Production environment db variables
-    ├── logs                                 # NGINX access/error logs
-    ├── Dockerfile.prod                      # NGINX container build instructions for production environment
-    ├── docker-compose.yml                   # compose boilerplate file for development environment
-    ├── docker-compose-prod.yml              # compose boilerplate file for production environment
+    │   │   ├── .env                         # Environment variables
+    │   │   ├── docker-compose.yml           # Docker compose boilerplate file
+    │   │   ├── docker-database.env          # Database environment variables
+    │   ├── prod
+    │   │   ├── nginx                        
+    │   │   │   ├── Dockerfile               # Nginx container build instructions
+    │   │   │   ├── default.config           # Nginx default configuration
+    │   │   ├── php-fpm
+    │   │   │   ├── Dockerfile               # php-fpm container build instructions
+    │   │   │   ├── pho-ini-overrides.ini    # Config for overriding php.ini settings
+    │   │   ├── .env                         # Environment variables
+    │   │   ├── docker-compose.yml           # Docker compose boilerplate file
+    │   │   ├── docker-database.env          # Database environment variables
+    ├── logs                                 # Nginx access/error logs
     ├── composer.json
     ├── composer.lock
     └── README.md
 
 ### Development
 
-In a project root:
-
-1. Run command: `docker-compose up --build`
-2. Run command: `winpty docker-compose exec api bash` and in the docker container:
+1. Navigate to a following directory: `cd docker/dev`
+2. Run command: `docker-compose -p ecommerce_template_local up --build`
+3. Run command: `winpty docker-compose exec api bash` and in the docker container:
    - Navigate to `application/api` subdirectory
    - Run `apt-get update`
    - Run `composer install`
@@ -55,10 +62,9 @@ In a project root:
 
 ### Production
 
-In a project root:
-
-1. Run command: `docker-compose -f docker-compose-prod.yml up --build`
-2. Run command: `winpty docker-compose exec api bash` and in the docker container:
+1. Navigate to a following directory: `cd docker/prod`
+2. Run command: `docker-compose -p ecommerce_template_prod up --build`
+3. Run command: `winpty docker-compose exec api bash` and in the docker container:
    - Navigate to `application/api` subdirectory
    - Run `apt-get update`
    - Run `composer install`
