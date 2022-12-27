@@ -16,4 +16,3 @@ ENV NODE_ENV development
 EXPOSE 4200
 # Install dependencies on host and start the app
 CMD "node_modules" && npm run start:docker || npm ci && npm run start:docker
-
