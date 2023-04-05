@@ -84,7 +84,7 @@ The purpose is to create a customizable and extensible template and save me a lo
 
 ### Frontend
 
-![Site Image](./demo/site.png)
+![Site Image](./demo/site.gif)
 
 ### Admin Panel
 
