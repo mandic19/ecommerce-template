@@ -1,12 +1,43 @@
-Ecommerce template app
-============================
+# Ecommerce Template App
 
-## Description
+- [Introduction](#Introduction)
+- [Instalation](#Instalation)
+- [Technologies](#Technologies)
+- [Directory structure](#Directory-Structure)
+- [Demo](#Demo)
+- [License](#License)
+
+## Introduction
 
 This is a dockerized e-commerce sample project that introduces all the main concepts of a modern e-commerce application.
 The purpose is to create a customizable and extensible template and save me a lot of time on repetitive work in feature projects.
 
-## Technologies used:
+## Instalation
+
+### Development
+
+1. Navigate to a following directory: `cd docker/dev`
+2. Run command: `docker-compose -p ecommerce_template_local up --build`
+3. Run command: `winpty docker-compose exec api bash` and in the docker container:
+   - Navigate to `application/api` subdirectory
+   - Run `apt-get update`
+   - Run `composer install`
+   - Run `php init` and chose in which environment you want to run it
+   - Run `php yii migrate`
+
+### Production
+
+1. Navigate to a following directory: `cd docker/prod`
+2. Run command: `docker-compose -p ecommerce_template_prod up --build`
+3. Run command: `winpty docker-compose exec api bash` and in the docker container:
+   - Navigate to `application/api` subdirectory
+   - Run `apt-get update`
+   - Run `composer install`
+   - Run `php init` and chose in which environment you want to run it
+   - Run `php yii migrate`
+
+
+## Technologies
 
     ├── FRONTEND                             # Angular 14
     ├── ADMIN PANEL                          # Yii2 PHP Framework
@@ -26,7 +57,7 @@ The purpose is to create a customizable and extensible template and save me a lo
     │   ├── dev
     │   │   ├── frontend
     │   │   │   ├── Dockerfile               # frontend container build instructions
-    │   │   ├── nginx                        
+    │   │   ├── nginx
     │   │   │   ├── default.config           # Nginx default configuration
     │   │   ├── php-fpm
     │   │   │   ├── Dockerfile               # php-fpm container build instructions
@@ -35,7 +66,7 @@ The purpose is to create a customizable and extensible template and save me a lo
     │   │   ├── docker-compose.yml           # Docker compose boilerplate file
     │   │   ├── docker-database.env          # Database environment variables
     │   ├── prod
-    │   │   ├── nginx                        
+    │   │   ├── nginx
     │   │   │   ├── Dockerfile               # Nginx container build instructions
     │   │   │   ├── default.config           # Nginx default configuration
     │   │   ├── php-fpm
@@ -49,24 +80,34 @@ The purpose is to create a customizable and extensible template and save me a lo
     ├── composer.lock
     └── README.md
 
-## Development
+## Demo
 
-1. Navigate to a following directory: `cd docker/dev`
-2. Run command: `docker-compose -p ecommerce_template_local up --build`
-3. Run command: `winpty docker-compose exec api bash` and in the docker container:
-   - Navigate to `application/api` subdirectory
-   - Run `apt-get update`
-   - Run `composer install`
-   - Run `php init` and chose in which environment you want to run it
-   - Run `php yii migrate`
+### Frontend
 
-## Production
+![Site Image](./demo/site.png)
 
-1. Navigate to a following directory: `cd docker/prod`
-2. Run command: `docker-compose -p ecommerce_template_prod up --build`
-3. Run command: `winpty docker-compose exec api bash` and in the docker container:
-   - Navigate to `application/api` subdirectory
-   - Run `apt-get update`
-   - Run `composer install`
-   - Run `php init` and chose in which environment you want to run it
-   - Run `php yii migrate`
+### Admin Panel
+
+#### Dashboard
+
+![Dashboard](./demo/dashboard.png)
+
+#### Order Details
+
+![Order Details](./demo/order.png)
+
+#### Categories
+
+![Categories](./demo/category.png)
+
+#### Products
+
+![Products](./demo/products.png)
+
+#### Product Details
+
+![Product Details](./demo/product.png)
+
+## License
+
+This project is licensed under the MIT License.
