@@ -15,7 +15,7 @@
           <select
             #productVariantSelect
             (change)='selectVariant(productVariantSelect.value)'
-            class="form-select pv-dropdown mt-auto"
+            class="form-select pv-dropdown mt-auto w-auto"
           >
             <option
               *ngFor="let productVariant of product.variants"
